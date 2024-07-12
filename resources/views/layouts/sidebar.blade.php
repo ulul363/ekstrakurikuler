@@ -1,23 +1,3 @@
-<!-- [ navigation menu ] start -->
-
-<style>
-    .pcoded-navbar {
-        height: 100vh;
-        overflow-y: auto;
-        background-color: #343a40;
-    }
-
-    .navbar-wrapper {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .navbar-content {
-        flex-grow: 1;
-    }
-</style>
-
 <nav class="pcoded-navbar  ">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div ">
@@ -63,7 +43,7 @@
                             <span class="pcoded-micon"><i class="feather icon-user-check"></i></span>
                             <span class="pcoded-mtext d-none d-md-inline">Pembina</span>
                         </a>
-                    </li>                    
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('manage.ekstrakurikuler') }}" class="nav-link">
@@ -209,4 +189,3 @@
         </div>
     </div>
 </nav>
-<!-- [ navigation menu ] end -->

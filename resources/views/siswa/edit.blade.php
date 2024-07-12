@@ -21,4 +21,4 @@
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" class="form-control" value="{{ $siswa->nama }}" required>
-    
+

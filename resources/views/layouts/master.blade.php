@@ -17,56 +17,37 @@
     <meta name="keywords" content="">
     <meta name="author" content="Phoenixcoded" />
     <!-- Favicon icon -->
-    <link rel="icon" href="{{ asset('dist/assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ URL::to("assets/images/favicon.ico") }}" type="image/x-icon">
+
     <!-- vendor css -->
-    <link rel="stylesheet" href="{{ asset('dist/assets/css/style.css') }}">
-    {{-- header css --}}
-    <link rel="stylesheet" href="{{ asset('dist/assets/css/header.css') }}">
-    {{-- font awesome --}}
+    <link rel="stylesheet" href="{{ URL::to("assets/css/style.css") }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    
+
 </head>
 
 <body class="">
-
-    {{-- nav --}}
     @include('layouts.sidebar')
 
-    {{-- header --}}
     @include('layouts.header')
 
-    <!-- [ Main Content ] start -->
-    @yield('content')
-    <!-- [ Main Content ] end -->
+    <div class="pcoded-main-container">
+        @yield('content')
+    </div>
 
     <!-- Required Js -->
-    <!-- Misal menggunakan CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="/path/to/vendor-all.min.js"></script>
-    <script src="/path/to/bootstrap.min.js"></script>
-    <script src="/path/to/pcoded.min.js"></script>
-    <script src="/path/to/apexcharts.min.js"></script>
-    <script src="/path/to/dashboard-main.js"></script>
-    <script src="/path/to/app.js"></script>
-    <script src="{{ asset('dist/js/app.js') }}" defer></script>
-    <script src="{{ asset('dist/js/vendor-all.min.js') }}"></script>
-    <script src="{{ asset('dist/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('dist/js/pcoded.min.js') }}"></script>
-    <script src="{{ asset('dist/js/plugins/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('dist/js/pages/dashboard-main.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ URL::to("assets/js/vendor-all.min.js") }}"></script>
+    <script src="{{ URL::to("assets/js/plugins/bootstrap.min.js") }}"></script>
+    <script src="{{ URL::to("assets/js/pcoded.min.js") }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function() {
-            $('#mobile-collapse').click(function(e) {
-                e.preventDefault();
-                $('body').toggleClass('sidebar-collapsed');
-            });
-        });
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+<!-- Apex Chart -->
+<script src="{{ URL::to("assets/js/plugins/apexcharts.min.js") }}"></script>
+
+
+<!-- custom-chart js -->
+<script src="{{ URL::to("assets/js/pages/dashboard-main.js") }}"></script>
 </body>
 
 </html>
