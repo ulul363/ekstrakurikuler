@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nip_pembina');
             $table->string('nama_ekstrakurikuler', 50)->nullable(false);
             $table->string('nama', 50);
-            $table->foreign('nip_pembina')->references('nip_pembina')->on('pembinas')->onDelete('cascade');
+            $table->foreign('nip_pembina')->references('nip_pembina')->on('pembina')->onDelete('cascade');
             $table->timestamps();
         });
     }
