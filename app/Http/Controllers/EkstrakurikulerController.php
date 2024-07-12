@@ -23,7 +23,7 @@ class EkstrakurikulerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nip_pembina' => 'required|exists:pembinas,nip_pembina',
+            'nip_pembina' => 'required|exists:pembina,nip_pembina',
             'nama_ekstrakurikuler' => 'required',
             'nama' => 'required',
         ]);
@@ -48,7 +48,7 @@ class EkstrakurikulerController extends Controller
     public function update(Request $request, Ekstrakurikuler $ekstrakurikuler)
     {
         $request->validate([
-            'nip_pembina' => 'required|exists:pembinas,nip_pembina',
+            'nip_pembina' => 'required|exists:pembina,nip_pembina',
             'nama_ekstrakurikuler' => 'required',
             'nama' => 'required',
         ]);
