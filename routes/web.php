@@ -54,7 +54,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     Route::get('/manage/siswa', [SiswaController::class, 'index'])->name('manage.siswa');
     Route::resource('siswa', SiswaController::class);
-    
+
     Route::get('/manage/pembina', [PembinaController::class, 'index'])->name('manage.pembina');
     Route::resource('pembina', PembinaController::class);
 
