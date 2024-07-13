@@ -7,17 +7,17 @@ use App\Models\Ekstrakurikuler;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Pembina extends Model
+class Ketua extends Model
 {
     use HasFactory;
 
-    protected $table = 'pembina';
-    protected $primaryKey = 'id_pembina';
+    protected $table = 'ketua';
+    protected $primaryKey = 'id_ketua';
 
     protected $fillable = [
         'user_id',
         'ekstrakurikuler_id',
-        'nip',
+        'nis',
         'nama',
         'alamat',
         'jk',
