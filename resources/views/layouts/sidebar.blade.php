@@ -40,6 +40,15 @@
                             <span class="pcoded-mtext d-none d-md-inline">User Management</span>
                         </a>
                     </li>
+
+                    @can('ekstrakurikuler.index')
+                        <li class="nav-item">
+                            <a href="{{ route('ekstrakurikuler.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+                                <span class="pcoded-mtext">Ekstrakurikuler</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
                 {{-- @hasrole('admin')

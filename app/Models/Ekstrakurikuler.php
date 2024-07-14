@@ -11,14 +11,11 @@ class Ekstrakurikuler extends Model
 {
     use HasFactory;
 
+    protected $table = 'ekstrakurikuler';
     protected $primaryKey = 'id_ekstrakurikuler';
     public $incrementing = false;
-    protected $keyType = 'string';
-
     protected $fillable = [
         'id_ekstrakurikuler',
-        'nip_pembina',
-        'nama_ekstrakurikuler',
         'nama',
     ];
 
@@ -31,5 +28,4 @@ class Ekstrakurikuler extends Model
     {
         return $this->hasMany(Kehadiran::class, 'ekstrakurikuler_id', 'id_ekstrakurikuler');
     }
-
 }

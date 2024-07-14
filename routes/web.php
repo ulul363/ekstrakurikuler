@@ -134,6 +134,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/role/destroy{id}', [RoleController::class, 'destroy'])->name('role.destroy')->middleware('permission:role.destroy');
     Route::get('/role/getRoutesAll', [RoleController::class, 'getRoutesAllJson'])->name('role.getRoutesAllJson')->middleware('permission:role.getRoutesAllJson');
     Route::get('/role/getRoutesRefreshDelete', [RoleController::class, 'getRefreshAndDeleteJson'])->name('role.getRefreshAndDeleteJson')->middleware('permission:role.getRefreshAndDeleteJson');
+
+    // Menu Ekstrakurikuler
+    Route::get('/ekstrakurikuler', [EkstrakurikulerController::class, 'index'])->name('ekstrakurikuler.index')->middleware('permission:ekstrakurikuler.index');
+    Route::get('/ekstrakurikuler/create', [EkstrakurikulerController::class, 'create'])->name('ekstrakurikuler.create')->middleware('permission:ekstrakurikuler.create');
+    Route::post('/ekstrakurikuler/store', [EkstrakurikulerController::class, 'store'])->name('ekstrakurikuler.store')->middleware('permission:ekstrakurikuler.store');
+    Route::get('/ekstrakurikuler/{id}/edit', [EkstrakurikulerController::class, 'edit'])->name('ekstrakurikuler.edit')->middleware('permission:ekstrakurikuler.edit');
+    Route::put('/ekstrakurikuler/{id}/update', [EkstrakurikulerController::class, 'update'])->name('ekstrakurikuler.update')->middleware('permission:ekstrakurikuler.update');
+    Route::delete('/ekstrakurikuler/destroy/{id}', [EkstrakurikulerController::class, 'destroy'])->name('ekstrakurikuler.destroy')->middleware('permission:ekstrakurikuler.destroy');
 });
 
 
