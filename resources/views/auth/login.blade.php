@@ -43,13 +43,13 @@
                                         name="remember">
                                     <label class="custom-control-label" for="customCheck1">Save credentials.</label>
                                 </div>
-                                <button type="submit" class="btn btn-block btn-primary mb-4">Signin</button>
+                                <button type="submit" class="btn btn-block btn-primary mb-4">Masuk</button>
                             </form>
-                            <hr>
+                            {{-- <hr>
                             <p class="mb-2 text-muted">Lupa Password?<a href="{{ route('password.request') }}"
                                     class="f-w-400">Reset</a></p>
                             <p class="mb-0 text-muted">Tidak memiliki akun? <a href="{{ route('register') }}"
-                                    class="f-w-400">Daftar</a></p>
+                                    class="f-w-400">Daftar</a></p> --}}
                         </div>
                     </div>
                 </div>
