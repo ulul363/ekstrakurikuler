@@ -2,68 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ekstrakurikuler;
-use App\Models\Pembina;
 use Illuminate\Http\Request;
+use App\Models\Ekstrakurikuler;
 
 class EkstrakurikulerController extends Controller
 {
     public function index()
     {
-        $ekstrakurikuler = Ekstrakurikuler::all();
-        return view('ekstrakurikuler.index', compact('ekstrakurikuler'));
+        $ekstrakurikulers = Ekstrakurikuler::all();
+        return view('ekstrakurikuler.index', compact('ekstrakurikulers'));
     }
 
     public function create()
     {
-        $pembina = Pembina::all();
-        return view('ekstrakurikuler.create', compact('pembina'));
+        return view('ekstrakurikuler.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nip_pembina' => 'required|exists:pembina,nip_pembina',
-            'nama_ekstrakurikuler' => 'required',
-            'nama' => 'required',
+            'nama' => 'required|string|max:20',
         ]);
 
-        Ekstrakurikuler::create($request->all());
+        Ekstrakurikuler::create([
+            'nama' => $request->nama,
+        ]);
 
-        return redirect()->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil dibuat.');
+        return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler created successfully.');
     }
 
-    public function show(Ekstrakurikuler $ekstrakurikuler)
+    public function edit($id)
     {
-        return view('ekstrakurikuler.show', compact('ekstrakurikuler'));
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+        return view('ekstrakurikuler.edit', compact('ekstrakurikuler'));
     }
 
-    public function edit(Ekstrakurikuler $ekstrakurikuler)
-    {
-        $pembina = Pembina::all();
-        return view('ekstrakurikuler.edit', compact('ekstrakurikuler', 'pembina'));
-    }
-
-    public function update(Request $request, Ekstrakurikuler $ekstrakurikuler)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'nip_pembina' => 'required|exists:pembina,nip_pembina',
-            'nama_ekstrakurikuler' => 'required',
-            'nama' => 'required',
+            'nama' => 'required|string|max:20',
         ]);
 
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
         $ekstrakurikuler->update($request->all());
 
-        return redirect()->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil diperbaharui.');
+        return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler updated successfully.');
     }
 
-    public function destroy(Ekstrakurikuler $ekstrakurikuler)
+    public function destroy($id)
     {
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
         $ekstrakurikuler->delete();
 
-        return redirect()->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil dihapus.');
+        return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler deleted successfully.');
     }
 }
