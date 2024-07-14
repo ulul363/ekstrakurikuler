@@ -47,12 +47,6 @@
                             </ul>
                         </li>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('ekstrakurikuler.index') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">Ekstraakurikuler</span>
-                        </a>
-                    </li>
 
                     @can('ekstrakurikuler.index')
                         <li class="nav-item">
