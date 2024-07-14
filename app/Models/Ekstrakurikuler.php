@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Pembina;
+use App\Models\Kehadiran;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ekstrakurikuler extends Model
 {
@@ -24,5 +26,10 @@ class Ekstrakurikuler extends Model
     {
         return $this->belongsTo(Pembina::class, 'nip_pembina', 'nip_pembina');
     }
-    
+
+    public function kehadiran()
+    {
+        return $this->hasMany(Kehadiran::class, 'ekstrakurikuler_id', 'id_ekstrakurikuler');
+    }
+
 }
