@@ -24,8 +24,8 @@ class KetuaController extends Controller
     public function create()
     {
         $users = User::all();
-        $ekstrakurikulers = Ekstrakurikuler::all();
-        return view('ketua.create', compact('users', 'ekstrakurikulers'));
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('ketua.create', compact('users', 'ekstrakurikuler'));
     }
 
     /**
