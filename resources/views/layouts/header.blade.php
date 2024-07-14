@@ -3,8 +3,8 @@
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
             <!-- ========   change your logo hear   ============ -->
-            <img src="{{ asset('dist/assets/images/logo.png')}}" alt="" class="logo">
-            <img src="{{ asset('dist/assets/images/logo-icon.png')}}" alt="" class="logo-thumb">
+            <img src="{{ asset('dist/assets/images/logo.png') }}" alt="" class="logo">
+            <img src="{{ asset('dist/assets/images/logo-icon.png') }}" alt="" class="logo-thumb">
         </a>
         <a href="#!" class="mob-toggler">
             <i class="feather icon-more-vertical"></i>
@@ -65,18 +65,18 @@
                             <div class="col">
                                 <h6 class="mega-title">Forms</h6>
                                 <ul class="pro-body">
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Elements</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Validation</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Masking</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Wizard</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Picker</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-minus"></i> Select</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Elements</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Validation</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Masking</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Wizard</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Picker</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-minus"></i>
+                                            Select</a></li>
                                 </ul>
                             </div>
                             <div class="col">
@@ -88,8 +88,8 @@
                                                 class="feather icon-clipboard"></i> Task</a></li>
                                     <li><a href="#!" class="dropdown-item"><i
                                                 class="feather icon-check-square"></i> To-Do</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-image"></i> Gallery</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-image"></i>
+                                            Gallery</a></li>
                                     <li><a href="#!" class="dropdown-item"><i
                                                 class="feather icon-help-circle"></i> Helpdesk</a></li>
                                 </ul>
@@ -101,12 +101,12 @@
                                                 class="feather icon-file-plus"></i> Editor</a></li>
                                     <li><a href="#!" class="dropdown-item"><i
                                                 class="feather icon-file-minus"></i> Invoice</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-calendar"></i> Full calendar</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-calendar"></i>
+                                            Full calendar</a></li>
                                     <li><a href="#!" class="dropdown-item"><i
                                                 class="feather icon-upload-cloud"></i> File upload</a></li>
-                                    <li><a href="#!" class="dropdown-item"><i
-                                                class="feather icon-scissors"></i> Image cropper</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="feather icon-scissors"></i>
+                                            Image cropper</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                             </li>
                             <li class="notification">
                                 <div class="media">
-                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-1.jpg')}}"
+                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-1.jpg') }}"
                                         alt="Generic placeholder image">
                                     <div class="media-body">
                                         <p><strong>John Doe</strong><span class="n-time text-muted"><i
@@ -149,7 +149,7 @@
                             </li>
                             <li class="notification">
                                 <div class="media">
-                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-2.jpg')}}"
+                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-2.jpg') }}"
                                         alt="Generic placeholder image">
                                     <div class="media-body">
                                         <p><strong>Joseph William</strong><span class="n-time text-muted"><i
@@ -160,7 +160,7 @@
                             </li>
                             <li class="notification">
                                 <div class="media">
-                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-1.jpg')}}"
+                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-1.jpg') }}"
                                         alt="Generic placeholder image">
                                     <div class="media-body">
                                         <p><strong>Sara Soudein</strong><span class="n-time text-muted"><i
@@ -171,7 +171,7 @@
                             </li>
                             <li class="notification">
                                 <div class="media">
-                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-2.jpg')}}"
+                                    <img class="img-radius" src="{{ asset('dist/assets/images/user/avatar-2.jpg') }}"
                                         alt="Generic placeholder image">
                                     <div class="media-body">
                                         <p><strong>Joseph William</strong><span class="n-time text-muted"><i
@@ -194,20 +194,27 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
-                            <img src="{{ asset('dist/assets/images/user/avatar-1.jpg')}}" class="img-radius"
+                            <img src="{{ asset('dist/assets/images/user/avatar-1.jpg') }}" class="img-radius"
                                 alt="User-Profile-Image">
                             <span>John Doe</span>
-                            <a href="auth-signin.html" class="dud-logout" title="Logout">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                            <a href="javascript:void(0);"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>
                             </a>
+
                         </div>
                         <ul class="pro-body">
-                            <li><a href="user-profile.html" class="dropdown-item"><i
-                                        class="feather icon-user"></i> Profile</a></li>
-                            <li><a href="email_inbox.html" class="dropdown-item"><i
-                                        class="feather icon-mail"></i> My Messages</a></li>
-                            <li><a href="auth-signin.html" class="dropdown-item"><i
-                                        class="feather icon-lock"></i> Lock Screen</a></li>
+                            <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i>
+                                    Profile</a></li>
+                            <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My
+                                    Messages</a></li>
+                            <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i>
+                                    Lock Screen</a></li>
                         </ul>
                     </div>
                 </div>
@@ -217,5 +224,3 @@
 
 
 </header>
-
-

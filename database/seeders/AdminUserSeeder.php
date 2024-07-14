@@ -32,29 +32,36 @@ class AdminUserSeeder extends Seeder
             'role.destroy',
             'role.getRoutesAllJson',
             'role.getRefreshAndDeleteJson',
+            
         ];
 
-        // Create Permissions
+        // Create Permissions if they don't exist
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            if (!Permission::where('name', $permission)->exists()) {
+                Permission::create(['name' => $permission]);
+            }
         }
 
-        // Create Admin Role
-        $adminRole = Role::create(['name' => 'Admin']);
+        // Create Admin Role if it doesn't exist
+        if (!Role::where('name', 'Admin')->exists()) {
+            $adminRole = Role::create(['name' => 'Admin']);
 
-        // Assign Permissions to Admin Role
-        foreach ($permissions as $permission) {
-            $adminRole->givePermissionTo($permission);
+            // Assign Permissions to Admin Role
+            foreach ($permissions as $permission) {
+                $adminRole->givePermissionTo($permission);
+            }
+
+            // Create Admin User if it doesn't exist
+            if (!User::where('email', 'admin@example.com')->exists()) {
+                $adminUser = User::create([
+                    'name' => 'Admin User',
+                    'email' => 'admin@example.com',
+                    'password' => bcrypt('password'),
+                ]);
+
+                // Assign Admin Role to Admin User
+                $adminUser->assignRole($adminRole);
+            }
         }
-
-        // Create Admin User
-        $adminUser = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-        ]);
-
-        // Assign Admin Role to Admin User
-        $adminUser->assignRole($adminRole);
     }
 }

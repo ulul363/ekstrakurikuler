@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\KetuaController;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KehadiranController;
@@ -134,6 +134,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/role/destroy{id}', [RoleController::class, 'destroy'])->name('role.destroy')->middleware('permission:role.destroy');
     Route::get('/role/getRoutesAll', [RoleController::class, 'getRoutesAllJson'])->name('role.getRoutesAllJson')->middleware('permission:role.getRoutesAllJson');
     Route::get('/role/getRoutesRefreshDelete', [RoleController::class, 'getRefreshAndDeleteJson'])->name('role.getRefreshAndDeleteJson')->middleware('permission:role.getRefreshAndDeleteJson');
+
+    //Menu Pembina
+    Route::get('/pembina', [PembinaController::class, 'index'])->name('pembina.index')->middleware('permission:pembina.index');
+    Route::get('/pembina/create', [PembinaController::class, 'create'])->name('pembina.create')->middleware('permission:pembina.create');
+    Route::post('/pembina/store', [PembinaController::class, 'store'])->name('pembina.store')->middleware('permission:pembina.store');
+    Route::get('/pembina/{id}/edit', [PembinaController::class, 'edit'])->name('pembina.edit')->middleware('permission:pembina.edit');
+    Route::put('/pembina/{id}/update', [PembinaController::class, 'update'])->name('pembina.update')->middleware('permission:pembina.update');
+    Route::delete('/pembina/destroy/{id}', [PembinaController::class, 'destroy'])->name('pembina.destroy')->middleware('permission:pembina.destroy');
+
+    //Menu Ketua
+    Route::get('/ketua', [KetuaController::class, 'index'])->name('ketua.index')->middleware('permission:ketua.index');
+    Route::get('/ketua/create', [KetuaController::class, 'create'])->name('ketua.create')->middleware('permission:ketua.create');
+    Route::post('/ketua/store', [KetuaController::class, 'store'])->name('ketua.store')->middleware('permission:ketua.store');
+    Route::get('/ketua/{id}/edit', [KetuaController::class, 'edit'])->name('ketua.edit')->middleware('permission:ketua.edit');
+    Route::put('/ketua/{id}/update', [KetuaController::class, 'update'])->name('ketua.update')->middleware('permission:ketua.update');
+    Route::delete('/ketua/destroy/{id}', [KetuaController::class, 'destroy'])->name('ketua.destroy')->middleware('permission:ketua.destroy');
+
 
     // Menu Ekstrakurikuler
     Route::get('/ekstrakurikuler', [EkstrakurikulerController::class, 'index'])->name('ekstrakurikuler.index')->middleware('permission:ekstrakurikuler.index');
