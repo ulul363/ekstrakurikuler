@@ -25,7 +25,24 @@
                     </a>
                 </li>
 
-                @hasrole('admin')
+
+                @hasrole('Admin')
+                    <li class="nav-item">
+                        <a href="{{ route('role.index') }}" class="nav-link">
+                            <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
+                            <span class="pcoded-mtext d-none d-md-inline">Role Management</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('user.index') }}" class="nav-link">
+                            <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
+                            <span class="pcoded-mtext d-none d-md-inline">User Management</span>
+                        </a>
+                    </li>
+                @endhasrole
+
+                {{-- @hasrole('admin')
                     <li class="nav-item">
                         <a href="{{ route('manage.users') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-list"></i></span>
@@ -53,44 +70,44 @@
                     </li>
 
                     <li class="nav-item">
-                        {{-- <a href="{{ route('manage.program.kegiatan') }}" class="nav-link">
+                        <a href="{{ route('manage.program.kegiatan') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
                             <span class="pcoded-mtext">Program Kegiatan</span>
-                        </a> --}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a href="{{ route('manage.kehadiran') }}" class="nav-link">
+                        <a href="{{ route('manage.kehadiran') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-check-circle"></i></span>
                             <span class="pcoded-mtext">Kehadiran</span>
-                        </a> --}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a href="{{ route('manage.jadwal.ekstrakurikuler') }}" class="nav-link">
+                        <a href="{{ route('manage.jadwal.ekstrakurikuler') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
                             <span class="pcoded-mtext">Jadwal Ekstrakurikuler</span>
-                        </a> --}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a href="{{ route('manage.prestasi.ekstrakurikuler') }}" class="nav-link">
+                        <a href="{{ route('manage.prestasi.ekstrakurikuler') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-award"></i></span>
                             <span class="pcoded-mtext">Prestasi Ekstrakurikuler</span>
-                        </a> --}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a href="{{ route('manage.prestasi.peserta') }}" class="nav-link">
+                        <a href="{{ route('manage.prestasi.peserta') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-star"></i></span>
                             <span class="pcoded-mtext">Prestasi Peserta</span>
-                        </a> --}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a href="{{ route('chat.with.pembina') }}" class="nav-link">
+                        <a href="{{ route('chat.with.pembina') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
                             <span class="pcoded-mtext">Chat</span>
-                        </a> --}}
+                        </a>
                     </li>
-                @endhasrole
+                @endhasrole --}}
 
-                @hasrole('pembina')
+                {{-- @hasrole('pembina')
                     <li class="nav-item">
                         <a href="{{ route('review.program.kegiatan') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
@@ -133,9 +150,9 @@
                             <span class="pcoded-mtext">Review Pertemuan</span>
                         </a>
                     </li>
-                @endhasrole
+                @endhasrole --}}
 
-                @hasrole('siswa')
+                {{-- @hasrole('siswa')
                     <li class="nav-item">
                         <a href="{{ route('view.ekstrakurikuler') }}" class="nav-link">
                             <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
@@ -184,7 +201,7 @@
                             <span class="pcoded-mtext">Chat with Pembina</span>
                         </a>
                     </li>
-                @endhasrole
+                @endhasrole --}}
             </ul>
         </div>
     </div>
