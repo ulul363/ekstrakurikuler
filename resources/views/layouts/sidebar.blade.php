@@ -34,19 +34,18 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        {{-- <a href="{{ route('user.index') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-box"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">User Management</span>
-                        </a> --}}
-                        <li class="nav-item pcoded-hasmenu">
-                            <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">User Management</span></a>
-                            <ul class="pcoded-submenu">
-                                <li><a href="{{ route('ketua.index') }}" >Ketua</a></li>
-                                <li><a href="{{ route('pembina.index') }}" >Pembina</a></li>
-                            </ul>
-                        </li>
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-layout"></i></span><span class="pcoded-mtext">User
+                                Management</span></a>
+                        <ul class="pcoded-submenu">
+                            @can('ketua.index')
+                                <li><a href="{{ route('ketua.index') }}">Ketua</a></li>
+                            @endcan
+                            <li><a href="{{ route('pembina.index') }}">Pembina</a></li>
+                        </ul>
                     </li>
+
 
                     @can('ekstrakurikuler.index')
                         <li class="nav-item">

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ketua;
-use App\Models\Ekstrakurikuler;
 use App\Models\User;
+use App\Models\Ketua;
 use Illuminate\Http\Request;
+use App\Models\Ekstrakurikuler;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class KetuaController extends Controller
 {
@@ -18,34 +21,76 @@ class KetuaController extends Controller
         return view('ketua.index', compact('ketua'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function createUser()
     {
-        $users = User::all();
-        $ekstrakurikuler = Ekstrakurikuler::all();
-        return view('ketua.create', compact('users', 'ekstrakurikuler'));
+        $user = new User();
+        return view('ketua.createuser', compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        $role = Role::where('name', 'Ketua')->first();
+        $user->assignRole($role);
+        $user->syncPermissions($role->permissions);
+
+        // Store user id and name in session
+        $request->session()->put('id_user', $user->id);
+        $request->session()->put('user_name', $user->name);
+
+        return redirect()->route('ketua.create');
+    }
+
+    public function create(Request $request)
+    {
+        $id_user = $request->session()->get('id_user');
+        $user_name = $request->session()->get('user_name');
+        $ekstrakurikuler = Ekstrakurikuler::all();
+
+        return view('ketua.create', compact('id_user', 'user_name', 'ekstrakurikuler'));
+    }
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler|unique:ketua,ekstrakurikuler_id',
-            'nis' => 'required|string|max:20|unique:ketua,nis',
+            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler',
+            'nis' => 'required|string|max:20|unique:ketua',
             'nama' => 'required|string|max:50',
             'alamat' => 'required|string|max:50',
             'jk' => 'required|in:L,P',
             'no_hp' => 'required|string|max:15',
         ]);
 
-        Ketua::create($request->all());
+        // Cek apakah `ekstrakurikuler_id` sudah ada di tabel ketua
+        $exists = Ketua::where('ekstrakurikuler_id', $validated['ekstrakurikuler_id'])->exists();
 
-        return redirect()->route('ketua.index')->with('success', 'Ketua berhasil ditambahkan.');
+        if ($exists) {
+            return redirect()->back()->with('error', 'Ekstrakurikuler ini sudah memiliki ketua.');
+        }
+
+        Ketua::create([
+            'user_id' => $validated['user_id'],
+            'ekstrakurikuler_id' => $validated['ekstrakurikuler_id'],
+            'nis' => $validated['nis'],
+            'nama' => $validated['nama'],
+            'alamat' => $validated['alamat'],
+            'jk' => $validated['jk'],
+            'no_hp' => $validated['no_hp'],
+        ]);
+
+        return redirect()->route('ketua.index')->with('success', 'Ketua berhasil dibuat.');
     }
 
     /**
@@ -59,39 +104,62 @@ class KetuaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ketua $ketua)
+    public function edit($id)
     {
-        $users = User::all();
-        $ekstrakurikulers = Ekstrakurikuler::all();
-        return view('ketua.edit', compact('ketua', 'users', 'ekstrakurikulers'));
+        $ketua = Ketua::with('user', 'ekstrakurikuler')->findOrFail($id);
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('ketua.edit', compact('ketua', 'ekstrakurikuler'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ketua $ketua)
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler|unique:ketua,ekstrakurikuler_id,'.$ketua->id_ketua.',id_ketua',
-            'nis' => 'required|string|max:20|unique:ketua,nis,'.$ketua->id_ketua.',id_ketua',
+            'ekstrakurikuler_id' => ['required', 'exists:ekstrakurikuler,id_ekstrakurikuler', Rule::unique('ketua')->ignore($id, 'id_ketua')],
+            'nis' => 'required|string|max:20|unique:ketua,nis,' . $id . ',id_ketua',
             'nama' => 'required|string|max:50',
             'alamat' => 'required|string|max:50',
             'jk' => 'required|in:L,P',
             'no_hp' => 'required|string|max:15',
         ]);
 
-        $ketua->update($request->all());
+        $ketua = Ketua::findOrFail($id);
+        $ketua->update($validated);
 
-        return redirect()->route('ketua.index')->with('success', 'Ketua berhasil diperbarui.');
+        return redirect()->route('ketua.index')->with('success', 'Data ketua berhasil diperbarui.');
+    }
+
+    public function updateUser(Request $request, $user_id)
+    {
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($user_id);
+        $user->password = Hash::make($validated['password']);
+        $user->save();
+
+        // Redirect kembali ke halaman edit ketua
+        $ketua = Ketua::where('user_id', $user_id)->first();
+        return redirect()
+            ->route('ketua.edit', $ketua->id_ketua)
+            ->with('success', 'Password user berhasil direset.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ketua $ketua)
+    public function destroy($id)
     {
+        $ketua = Ketua::findOrFail($id);
+        $user = User::findOrFail($ketua->user_id);
+
+        // Menghapus user terlebih dahulu
+        $user->delete();
+
+        // Menghapus ketua setelah user dihapus
         $ketua->delete();
-        return redirect()->route('ketua.index')->with('success', 'Ketua berhasil dihapus.');
+
+        return redirect()->route('ketua.index')->with('success', 'Data ketua dan akun pengguna berhasil dihapus.');
     }
 }
