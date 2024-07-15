@@ -152,14 +152,12 @@ class KetuaController extends Controller
     public function destroy($id)
     {
         $ketua = Ketua::findOrFail($id);
+        $user = User::findOrFail($ketua->user_id);
 
-        // Hapus terlebih dahulu pengguna terkait
-        $user = User::where('id', $ketua->user_id)->first();
-        if ($user) {
-            $user->delete();
-        }
+        // Menghapus user terlebih dahulu
+        $user->delete();
 
-        // Hapus data ketua setelah pengguna dihapus
+        // Menghapus ketua setelah user dihapus
         $ketua->delete();
 
         return redirect()->route('ketua.index')->with('success', 'Data ketua dan akun pengguna berhasil dihapus.');

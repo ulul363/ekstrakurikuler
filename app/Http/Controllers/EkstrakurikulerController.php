@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ketua;
 use Illuminate\Http\Request;
 use App\Models\Ekstrakurikuler;
 
@@ -50,10 +51,18 @@ class EkstrakurikulerController extends Controller
     }
 
     public function destroy($id)
-    {
-        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
-        $ekstrakurikuler->delete();
+{
+    $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
 
-        return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler deleted successfully.');
+    // Pastikan tidak ada Ketua yang terkait dengan Ekstrakurikuler ini
+    $relatedKetua = Ketua::where('ekstrakurikuler_id', $ekstrakurikuler->id_ekstrakurikuler)->first();
+    if ($relatedKetua) {
+        return redirect()->back()->with('error', 'Tidak dapat menghapus Ekstrakurikuler ini karena masih terdapat Ketua yang terkait.');
     }
+
+    // Jika tidak ada Ketua yang terkait, lakukan penghapusan
+    $ekstrakurikuler->delete();
+
+    return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler deleted successfully.');
+}
 }

@@ -65,49 +65,21 @@
                                         <td>{{ $item->alamat }}</td>
                                         <td>{{ $item->ekstrakurikuler->nama }}</td>
                                         <td>
+                                            <form id="delete-ketua-{{ $item->id_ketua }}" action="{{ route('ketua.destroy', $item->id_ketua) }}" method="POST">
+                                                @can('ketua.edit')
+                                                    <a href="{{ route('ketua.edit', $item->id_ketua) }}" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('ketua.destroy')
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-ketua-{{ $item->id_ketua }}')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                @endcan
+                                            </form>
 
-                                            
-                                            <a href="{{ route('ketua.edit', $item->id_ketua) }}"
-                                                class="btn btn-warning btn-sm">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteModal{{ $item->id_ketua }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-
-                                            <div class="modal fade" id="deleteModal{{ $item->id_ketua }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="deleteModalLabel{{ $item->id_ketua }}"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="deleteModalLabel{{ $item->id_ketua }}">Hapus Ketua</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Batal</button>
-                                                            <form action="{{ route('ketua.destroy', $item->id_ketua) }}"
-                                                                method="POST" style="display: inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger">
-                                                                    <i class="fa fa-trash"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
