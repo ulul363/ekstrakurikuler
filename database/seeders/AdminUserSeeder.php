@@ -32,7 +32,6 @@ class AdminUserSeeder extends Seeder
             'role.destroy',
             'role.getRoutesAllJson',
             'role.getRefreshAndDeleteJson',
-            
         ];
 
         // Create Permissions if they don't exist

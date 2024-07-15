@@ -137,15 +137,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Menu Pembina
     Route::get('/pembina', [PembinaController::class, 'index'])->name('pembina.index')->middleware('permission:pembina.index');
-    Route::get('/pembina/create', [PembinaController::class, 'create'])->name('pembina.create')->middleware('permission:pembina.create');
+    Route::get('/pembina/createuser', [PembinaController::class, 'createuser'])->name('pembina.createuser')->middleware('permission:pembina.createuser');
     Route::post('/pembina/store', [PembinaController::class, 'store'])->name('pembina.store')->middleware('permission:pembina.store');
+    Route::get('/pembina/createuser', [PembinaController::class, 'createUser'])->name('pembina.createuser')->middleware('permission:pembina.createuser');
+    Route::post('/pembina/storeuser', [PembinaController::class, 'storeUser'])->name('pembina.storeuser')->middleware('permission:pembina.storeuser');
     Route::get('/pembina/{id}/edit', [PembinaController::class, 'edit'])->name('pembina.edit')->middleware('permission:pembina.edit');
     Route::put('/pembina/{id}/update', [PembinaController::class, 'update'])->name('pembina.update')->middleware('permission:pembina.update');
     Route::delete('/pembina/destroy/{id}', [PembinaController::class, 'destroy'])->name('pembina.destroy')->middleware('permission:pembina.destroy');
 
     //Menu Ketua
     Route::get('/ketua', [KetuaController::class, 'index'])->name('ketua.index')->middleware('permission:ketua.index');
-    Route::get('/ketua/create', [KetuaController::class, 'create'])->name('ketua.create')->middleware('permission:ketua.create');
+    Route::get('/ketua/createuser', [KetuaController::class, 'createuser'])->name('ketua.createuser')->middleware('permission:ketua.createuser');
     Route::post('/ketua/store', [KetuaController::class, 'store'])->name('ketua.store')->middleware('permission:ketua.store');
     Route::get('/ketua/{id}/edit', [KetuaController::class, 'edit'])->name('ketua.edit')->middleware('permission:ketua.edit');
     Route::put('/ketua/{id}/update', [KetuaController::class, 'update'])->name('ketua.update')->middleware('permission:ketua.update');

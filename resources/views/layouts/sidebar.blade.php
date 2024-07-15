@@ -43,7 +43,11 @@
                             <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">User Management</span></a>
                             <ul class="pcoded-submenu">
                                 <li><a href="{{ route('ketua.index') }}" >Ketua</a></li>
+                                
+                                @can('pembina.index')
                                 <li><a href="{{ route('pembina.index') }}" >Pembina</a></li>
+                                @endcan
+                                
                             </ul>
                         </li>
                     </li>

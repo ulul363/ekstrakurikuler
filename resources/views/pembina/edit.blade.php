@@ -2,21 +2,8 @@
 @section('content')
 
 <div class="pcoded-content">
-
     <div class="page-header">
-        <div class="page-block">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="page-header-title">
-                        <h5 class="m-b-10">Selamat Datang <span>{{ Auth::user()->name }}</span></h5>
-                    </div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard Analytics</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <!-- Page Header Content -->
     </div>
 
     <div class="row">
@@ -25,23 +12,34 @@
                 <div class="card-header">Edit Pembina</div>
 
                 <div class="card-body">
-                    <form action="{{ route('pembina.update', $pembina->nip_pembina) }}" method="POST">
+                    <form action="{{ route('pembina.update', $pembina->id_pembina) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="nip_pembina">NIP Pembina</label>
-                            <input type="text" name="nip_pembina" class="form-control" value="{{ $pembina->nip_pembina }}" required>
+                            <label for="user_id">User</label>
+                            <input type="text" name="user_id" id="user_id" class="form-control" value="{{ $pembina->user_id }}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ekstrakurikuler_id">Ekstrakurikuler</label>
+                            <select name="ekstrakurikuler_id" id="ekstrakurikuler_id" class="form-control">
+                                @foreach ($ekstrakurikuler as $item)
+                                    <option value="{{ $item->id_ekstrakurikuler }}" {{ $pembina->ekstrakurikuler_id == $item->id_ekstrakurikuler ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nip">NIP Pembina</label>
+                            <input type="text" name="nip" class="form-control" value="{{ $pembina->nip }}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="nama">Nama</label>
                             <input type="text" name="nama" class="form-control" value="{{ $pembina->nama }}" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" value="{{ $pembina->email }}" required>
                         </div>
 
                         <div class="form-group">
@@ -55,10 +53,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="form-control" required>
-                                <option value="L" {{ $pembina->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-Laki</option>
-                                <option value="P" {{ $pembina->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            <label for="jk">Jenis Kelamin</label>
+                            <select name="jk" class="form-control" required>
+                                <option value="L" {{ $pembina->jk == 'L' ? 'selected' : '' }}>Laki-Laki</option>
+                                <option value="P" {{ $pembina->jk == 'P' ? 'selected' : '' }}>Perempuan</option>
                             </select>
                         </div>
 
@@ -68,10 +66,6 @@
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
 </div>
+
 @endsection
-
-
-
-

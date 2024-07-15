@@ -1,8 +1,8 @@
 @extends('layouts.master')
+
 @section('content')
 
 <div class="pcoded-content">
-
     <div class="page-header">
         <div class="page-block">
             <div class="row align-items-center">
@@ -32,7 +32,7 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('pembina.create') }}" class="btn btn-primary mb-3">
+                    <a href="{{ route('pembina.createuser') }}" class="btn btn-primary mb-3">
                         <i class="fa fa-plus"></i> Tambah Pembina
                     </a>
 
@@ -42,7 +42,6 @@
                                 <th>No</th>
                                 <th>NIP</th>
                                 <th>Nama</th>
-                                <th>Email</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
                                 <th>Jenis Kelamin</th>
@@ -53,29 +52,27 @@
                             @foreach ($pembina as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nip_pembina }}</td>
+                                    <td>{{ $item->nip }}</td>
                                     <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->email }}</td>
                                     <td>{{ $item->no_hp }}</td>
                                     <td>{{ $item->alamat }}</td>
-                                    <td>{{ $item->jenis_kelamin }}</td>
+                                    <td>{{ $item->jk }}</td>
                                     <td>
                                         <!-- Edit Button with Icon -->
-                                        <a href="{{ route('pembina.edit', $item->nip_pembina) }}" class="btn btn-warning btn-sm">
+                                        <a href="{{ route('pembina.edit', $item->id_pembina) }}" class="btn btn-warning btn-sm">
                                             <i class="fa fa-edit"></i>
-                                        </a>
-
+                                        </a>                                                                            
                                         <!-- Delete Modal Trigger with Icon -->
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ $item->nip_pembina }}">
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ $item->id_pembina }}">
                                             <i class="fa fa-trash"></i>
                                         </button>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ $item->nip_pembina }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $item->nip_pembina }}" aria-hidden="true">
+                                        <div class="modal fade" id="deleteModal{{ $item->id_pembina }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ $item->id_pembina }}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel{{ $item->nip_pembina }}">Hapus Pembina</h5>
+                                                        <h5 class="modal-title" id="deleteModalLabel{{ $item->id_pembina }}">Hapus Pembina</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -85,7 +82,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('pembina.destroy', $item->nip_pembina) }}" method="POST" style="display: inline-block;">
+                                                        <form action="{{ route('pembina.destroy', $item->id_pembina) }}" method="POST" style="display: inline-block;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">
@@ -105,10 +102,5 @@
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
 </div>
 @endsection
-
-
-
-
