@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ketua', function (Blueprint $table) {
             $table->id('id_ketua');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('ekstrakurikuler_id')->unique();
+            $table->unsignedBigInteger('ekstrakurikuler_id');
             $table->string('nis', 20)->unique();
             $table->string('nama', 50);
             $table->string('alamat', 50);

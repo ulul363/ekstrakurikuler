@@ -196,7 +196,7 @@
                         <div class="pro-head">
                             <img src="{{ asset('dist/assets/images/user/avatar-1.jpg') }}" class="img-radius"
                                 alt="User-Profile-Image">
-                            <span>John Doe</span>
+                            <span>{{ Auth::user()->name }}</span>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                 style="display: none;">
                                 @csrf

@@ -150,6 +150,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/ketua/{id}/edit', [KetuaController::class, 'edit'])->name('ketua.edit')->middleware('permission:ketua.edit');
     Route::put('/ketua/{id}/update', [KetuaController::class, 'update'])->name('ketua.update')->middleware('permission:ketua.update');
     Route::delete('/ketua/destroy/{id}', [KetuaController::class, 'destroy'])->name('ketua.destroy')->middleware('permission:ketua.destroy');
+    Route::get('/ketua/createuser', [KetuaController::class, 'createUser'])->name('ketua.createuser')->middleware('permission:ketua.createuser');
+    Route::post('/ketua/storeuser', [KetuaController::class, 'storeUser'])->name('ketua.storeuser')->middleware('permission:ketua.storeuser');
+    Route::put('/ketua/{id}/updateUser', [KetuaController::class, 'updateUser'])->name('ketua.updateUser')->middleware('permission:ketua.updateUser');
 
 
     // Menu Ekstrakurikuler

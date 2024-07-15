@@ -1,81 +1,79 @@
 @extends('layouts.master')
+
+@section('template_title')
+    Buat Ketua
+@endsection
+
 @section('content')
-
-<div class="pcoded-content">
-
-    <div class="page-header">
-        <div class="page-block">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="page-header-title">
-                        <h5 class="m-b-10">Selamat Datang <span>{{ Auth::user()->name }}</span></h5>
+    <div class="pcoded-content">
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Buat Ketua</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('ketua.index') }}">Ketua</a></li>
+                            <li class="breadcrumb-item">Buat Ketua</li>
+                        </ul>
                     </div>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#!">Dashboard Analytics</a></li>
-                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">Buat Ketua</div>
+
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('ketua.store') }}" role="form">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ $id_user }}">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="ekstrakurikuler_id">Ekstrakurikuler</label>
+                                        <select name="ekstrakurikuler_id" class="form-control" id="ekstrakurikuler_id" required>
+                                            @foreach($ekstrakurikuler as $item)
+                                                <option value="{{ $item->id_ekstrakurikuler }}">{{ $item->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nis">NIS</label>
+                                        <input type="text" name="nis" class="form-control" id="nis" placeholder="NIS" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nama">Nama</label>
+                                        <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama" value="{{ $user_name }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat</label>
+                                        <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Alamat" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jk">Jenis Kelamin</label>
+                                        <select name="jk" class="form-control" id="jk" required>
+                                            <option value="L">Laki-laki</option>
+                                            <option value="P">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_hp">No HP</label>
+                                        <input type="text" name="no_hp" class="form-control" id="no_hp" placeholder="No HP" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">Tambah Ketua</div>
-
-                <div class="card-body">
-                    <form action="{{ route('ketua.store') }}" method="POST">
-                        @csrf
-
-                        <div class="form-group">
-                            <label for="nis">NIS Ketua</label>
-                            <input type="text" name="nis" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" name="nama" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="no_hp">No HP</label>
-                            <input type="text" name="no_hp" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <input type="text" name="alamat" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="jk">Jenis Kelamin</label>
-                            <select name="jk" class="form-control" required>
-                                <option value="L">Laki-Laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ekstrakurikuler_id">Ekstrakurikuler</label>
-                            <select name="ekstrakurikuler_id" class="form-control" required>
-                                @foreach($ekstrakurikuler as $item)
-                                    <option value="{{ $item->id_ekstrakurikuler }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- [ Main Content ] end -->
-</div>
 @endsection
