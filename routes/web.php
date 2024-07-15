@@ -162,6 +162,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/ekstrakurikuler/{id}/edit', [EkstrakurikulerController::class, 'edit'])->name('ekstrakurikuler.edit')->middleware('permission:ekstrakurikuler.edit');
     Route::put('/ekstrakurikuler/{id}/update', [EkstrakurikulerController::class, 'update'])->name('ekstrakurikuler.update')->middleware('permission:ekstrakurikuler.update');
     Route::delete('/ekstrakurikuler/destroy/{id}', [EkstrakurikulerController::class, 'destroy'])->name('ekstrakurikuler.destroy')->middleware('permission:ekstrakurikuler.destroy');
+
+    // Meny Jadwal Ekstrakurikuler
+    Route::get('/jadwal_ekstrakurikuler', [JadwalEkstrakurikulerController::class, 'index'])->name('jadwal_ekstrakurikuler.index')->middleware('permission:jadwal_ekstrakurikuler.index');
+    Route::get('/jadwal_ekstrakurikuler/create', [JadwalEkstrakurikulerController::class, 'create'])->name('jadwal_ekstrakurikuler.create')->middleware('permission:jadwal_ekstrakurikuler.create');
+    Route::post('/jadwal_ekstrakurikuler/store', [JadwalEkstrakurikulerController::class, 'store'])->name('jadwal_ekstrakurikuler.store')->middleware('permission:jadwal_ekstrakurikuler.store');
+    Route::get('/jadwal_ekstrakurikuler/{id}/edit', [JadwalEkstrakurikulerController::class, 'edit'])->name('jadwal_ekstrakurikuler.edit')->middleware('permission:jadwal_ekstrakurikuler.edit');
+    Route::put('/jadwal_ekstrakurikuler/{id}/update', [JadwalEkstrakurikulerController::class, 'update'])->name('jadwal_ekstrakurikuler.update')->middleware('permission:jadwal_ekstrakurikuler.update');
+    Route::delete('/jadwal_ekstrakurikuler/destroy/{id}', [JadwalEkstrakurikulerController::class, 'destroy'])->name('jadwal_ekstrakurikuler.destroy')->middleware('permission:jadwal_ekstrakurikuler.destroy');
 });
 
 
