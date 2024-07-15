@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('hari', 8);
             $table->time('waktu');
             $table->string('lokasi', 30);
-            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
             $table->timestamps();
 
             $table->foreign('ekstrakurikuler_id')->references('id_ekstrakurikuler')->on('ekstrakurikuler')->onUpdate('restrict')->onDelete('restrict');
