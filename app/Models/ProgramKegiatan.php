@@ -21,6 +21,8 @@ class ProgramKegiatan extends Model
         'nama_program',
         'tahun_ajaran',
         'deskripsi',
+        'verifikasi_id',
+        'status',
     ];
 
     public function ekstrakurikuler()

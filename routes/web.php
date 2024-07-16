@@ -170,6 +170,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/jadwal_ekstrakurikuler/{id}/edit', [JadwalEkstrakurikulerController::class, 'edit'])->name('jadwal_ekstrakurikuler.edit')->middleware('permission:jadwal_ekstrakurikuler.edit');
     Route::put('/jadwal_ekstrakurikuler/{id}/update', [JadwalEkstrakurikulerController::class, 'update'])->name('jadwal_ekstrakurikuler.update')->middleware('permission:jadwal_ekstrakurikuler.update');
     Route::delete('/jadwal_ekstrakurikuler/destroy/{id}', [JadwalEkstrakurikulerController::class, 'destroy'])->name('jadwal_ekstrakurikuler.destroy')->middleware('permission:jadwal_ekstrakurikuler.destroy');
+
+    // Menu Program Kegiatan
+    Route::get('/program_kegiatan', [ProgramKegiatanController::class, 'index'])->name('program_kegiatan.index')->middleware('permission:program_kegiatan.index');
+    Route::get('/program_kegiatan/create', [ProgramKegiatanController::class, 'create'])->name('program_kegiatan.create')->middleware('permission:program_kegiatan.create');
+    Route::post('/program_kegiatan/store', [ProgramKegiatanController::class, 'store'])->name('program_kegiatan.store')->middleware('permission:program_kegiatan.store');
+    Route::get('/program_kegiatan/{id}/edit', [ProgramKegiatanController::class, 'edit'])->name('program_kegiatan.edit')->middleware('permission:program_kegiatan.edit');
+    Route::put('/program_kegiatan/{id}/update', [ProgramKegiatanController::class, 'update'])->name('program_kegiatan.update')->middleware('permission:program_kegiatan.update');
+    Route::delete('/program_kegiatan/destroy/{id}', [ProgramKegiatanController::class, 'destroy'])->name('program_kegiatan.destroy')->middleware('permission:program_kegiatan.destroy');
+
 });
 
 
