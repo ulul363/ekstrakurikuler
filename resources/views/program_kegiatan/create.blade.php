@@ -42,7 +42,7 @@
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
                                 <input type="number" name="tahun_ajaran" id="tahun_ajaran"
                                     class="form-control @error('tahun_ajaran') is-invalid @enderror"
-                                    value="{{ old('tahun_ajaran') }}" required>
+                                    value="{{ old('tahun_ajaran') }}" required max="9999">
                                 @error('tahun_ajaran')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
