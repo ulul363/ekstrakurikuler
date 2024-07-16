@@ -15,7 +15,8 @@
     <!-- vendor css -->
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 </head>
 
@@ -42,6 +43,8 @@
     <!-- custom-chart js -->
     <script src="{{ URL::to('assets/js/pages/dashboard-main.js') }}"></script>
     <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <!-- Script untuk SweetAlert2 konfirmasi penghapusan -->
     <script>
         function confirmDelete(formId) {
@@ -61,6 +64,8 @@
             });
         }
     </script>
+
+    @yield('scripts')
 </body>
 
 </html>
