@@ -43,7 +43,7 @@
     <!-- custom-chart js -->
     <script src="{{ URL::to('assets/js/pages/dashboard-main.js') }}"></script>
     <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <!-- Script untuk SweetAlert2 konfirmasi penghapusan -->
     <script>
