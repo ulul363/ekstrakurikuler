@@ -55,6 +55,16 @@
                             </a>
                         </li>
                     @endcan
+
+
+                    @can('jadwal_ekstrakurikuler.index')
+                        <li class="nav-item">
+                            <a href="{{ route('jadwal_ekstrakurikuler.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                                <span class="pcoded-mtext">Jadwal Ekstrakurikuler</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
                 {{-- @hasrole('admin')

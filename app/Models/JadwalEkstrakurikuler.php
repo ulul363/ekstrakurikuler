@@ -17,8 +17,7 @@ class JadwalEkstrakurikuler extends Model
         'ekstrakurikuler_id',
         'hari',
         'waktu',
-        'lokasi',
-        'status',
+        'lokasi'
     ];
 
     public function ekstrakurikuler()

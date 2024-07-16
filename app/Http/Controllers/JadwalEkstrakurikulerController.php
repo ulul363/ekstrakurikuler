@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ekstrakurikuler;
+use App\Models\JadwalEkstrakurikuler;
 use Illuminate\Http\Request;
 
 class JadwalEkstrakurikulerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $jadwalEkstrakurikuler = JadwalEkstrakurikuler::with('ekstrakurikuler')->get();
+        return view('jadwal_ekstrakurikuler.index', compact('jadwalEkstrakurikuler'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('jadwal_ekstrakurikuler.create', compact('ekstrakurikuler'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler',
+            'hari' => 'required|string|max:8',
+            'waktu' => 'required|date_format:H:i',
+            'lokasi' => 'required|string|max:30',
+        ]);
+
+        JadwalEkstrakurikuler::create($request->all());
+
+        return redirect()->route('jadwal_ekstrakurikuler.index')->with('success', 'Jadwal Ekstrakurikuler berhasil dibuat.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $jadwalEkstrakurikuler = JadwalEkstrakurikuler::findOrFail($id);
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('jadwal_ekstrakurikuler.edit', compact('jadwalEkstrakurikuler', 'ekstrakurikuler'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler',
+            'hari' => 'required|string|max:8',
+            'waktu' => 'required|date_format:H:i',
+            'lokasi' => 'required|string|max:30',
+        ]);
+
+        $jadwalEkstrakurikuler = JadwalEkstrakurikuler::findOrFail($id);
+        $jadwalEkstrakurikuler->update([
+            'ekstrakurikuler_id' => $request->ekstrakurikuler_id,
+            'hari' => $request->hari,
+            'waktu' => $request->waktu,
+            'lokasi' => $request->lokasi,
+        ]);
+
+        return redirect()->route('jadwal_ekstrakurikuler.index')->with('success', 'Jadwal Ekstrakurikuler berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $jadwalEkstrakurikuler = JadwalEkstrakurikuler::findOrFail($id);
+        $jadwalEkstrakurikuler->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('jadwal_ekstrakurikuler.index')->with('success', 'Jadwal Ekstrakurikuler berhasil dihapus.');
     }
 }
