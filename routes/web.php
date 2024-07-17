@@ -180,7 +180,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/program_kegiatan/destroy/{id}', [ProgramKegiatanController::class, 'destroy'])->name('program_kegiatan.destroy')->middleware('permission:program_kegiatan.destroy');
     Route::get('/program_kegiatan/{id}', [ProgramKegiatanController::class, 'show'])->name('program_kegiatan.show')->middleware('permission:program_kegiatan.show');
 
-
+    // Menu Kehadiran
+    Route::get('/kehadiran', [KehadiranController::class, 'index'])->name('kehadiran.index')->middleware('permission:kehadiran.index');
+    Route::get('/kehadiran/create', [KehadiranController::class, 'create'])->name('kehadiran.create')->middleware('permission:kehadiran.create');
+    Route::post('/kehadiran/store', [KehadiranController::class, 'store'])->name('kehadiran.store')->middleware('permission:kehadiran.store');
+    Route::get('/kehadiran/{id}/edit', [KehadiranController::class, 'edit'])->name('kehadiran.edit')->middleware('permission:kehadiran.edit');
+    Route::put('/kehadiran/{id}/update', [KehadiranController::class, 'update'])->name('kehadiran.update')->middleware('permission:kehadiran.update');
+    Route::delete('/kehadiran/destroy/{id}', [KehadiranController::class, 'destroy'])->name('kehadiran.destroy')->middleware('permission:kehadiran.destroy');
+    Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
 
 });
 
