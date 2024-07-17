@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('verifikasi_id')->nullable();
             $table->date('tanggal');
             $table->string('berkas', 150);
-            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
+            $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
 
             $table->foreign('ekstrakurikuler_id')->references('id_ekstrakurikuler')->on('ekstrakurikuler')->onUpdate('restrict')->onDelete('restrict');

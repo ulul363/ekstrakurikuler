@@ -60,10 +60,14 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($item->status == 'aktif')
-                                                <span class="badge badge-success">Aktif</span>
+                                            @if ($item->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif ($item->status == 'disetujui')
+                                                <span class="badge badge-success">Disetujui</span>
+                                            @elseif ($item->status == 'ditolak')
+                                                <span class="badge badge-danger">Ditolak</span>
                                             @else
-                                                <span class="badge badge-danger">Tidak Aktif</span>
+                                                <span class="badge badge-secondary">{{ $item->status }}</span>
                                             @endif
                                         </td>
                                         <td>
