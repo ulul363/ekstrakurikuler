@@ -46,7 +46,7 @@ class KehadiranController extends Controller
         $berkasPath = null;
         if ($request->hasFile('berkas')) {
             $berkas = $request->file('berkas');
-            $fileName = time() . '_' . $berkas->getClientOriginalName();
+            $fileName = time();
             $berkasPath = $request->file('berkas')->storeAs('uploads/kehadiran', $fileName, 'public');
         }
 
@@ -55,7 +55,7 @@ class KehadiranController extends Controller
             'ketua_id' => $ketua_id,
             'tanggal' => $request->tanggal,
             'berkas' => $berkasPath,
-            'status' => 'pending', // atau biarkan default di database
+            'status' => 'pending',
         ]);
 
         return redirect()->route('kehadiran.index')->with('success', 'Kehadiran berhasil diajukan.');
@@ -91,7 +91,7 @@ class KehadiranController extends Controller
             }
 
             // Upload file baru
-            $fileName = time() . '_' . $request->file('berkas')->getClientOriginalName();
+            $fileName = time();
             $filePath = $request->file('berkas')->storeAs('uploads/kehadiran', $fileName, 'public');
             $kehadiran->berkas = $filePath;
         }

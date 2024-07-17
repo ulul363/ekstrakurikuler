@@ -9,11 +9,9 @@
                             <h5 class="m-b-10">Edit Kehadiran</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                        class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('kehadiran.index') }}">Kehadiran</a></li>
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('kehadiran.edit', $kehadiran->id_kehadiran) }}">Edit Kehadiran</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('kehadiran.edit', $kehadiran->id_kehadiran) }}">Edit Kehadiran</a></li>
                         </ul>
                     </div>
                 </div>
@@ -25,64 +23,31 @@
                 <div class="card">
                     <div class="card-header">Edit Kehadiran</div>
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="{{ route('kehadiran.update', $kehadiran->id_kehadiran) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('kehadiran.update', $kehadiran->id_kehadiran) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <label for="ekstrakurikuler_id">Ekstrakurikuler</label>
-                                <select name="ekstrakurikuler_id" id="ekstrakurikuler_id" class="form-control">
-                                    <option value="">Pilih Ekstrakurikuler</option>
-                                    @foreach ($ekstrakurikulers as $ekstrakurikuler)
-                                        <option value="{{ $ekstrakurikuler->id_ekstrakurikuler }}"
-                                            {{ $ekstrakurikuler->id_ekstrakurikuler == $kehadiran->ekstrakurikuler_id ? 'selected' : '' }}>
-                                            {{ $ekstrakurikuler->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="ketua_id">Ketua</label>
-                                <select name="ketua_id" id="ketua_id" class="form-control">
-                                    <option value="">Pilih Ketua</option>
-                                    @foreach ($ketuas as $ketua)
-                                        <option value="{{ $ketua->id_ketua }}"
-                                            {{ $ketua->id_ketua == $kehadiran->ketua_id ? 'selected' : '' }}>
-                                            {{ $ketua->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control"
-                                    value="{{ old('tanggal', $kehadiran->tanggal) }}">
+                                <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
+                                    value="{{ old('tanggal', $kehadiran->tanggal) }}" required>
+                                @error('tanggal')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="berkas">Berkas</label>
-                                <input type="file" name="berkas" id="berkas" class="form-control">
+                                <input type="file" name="berkas" id="berkas" class="form-control @error('berkas') is-invalid @enderror">
+                                @error('berkas')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                                 @if ($kehadiran->berkas)
-                                    <a href="{{ asset('storage/' . $kehadiran->berkas) }}"
-                                        target="_blank">{{ $kehadiran->berkas }}</a>
+                                    <a href="{{ asset('storage/' . $kehadiran->berkas) }}" target="_blank">Lihat Berkas</a>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="aktif" {{ $kehadiran->status == 'aktif' ? 'selected' : '' }}>Aktif
-                                    </option>
-                                    <option value="tidak aktif"
-                                        {{ $kehadiran->status == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+
+                            <button type="submit" class="btn btn-primary">Perbarui</button>
                         </form>
                     </div>
                 </div>

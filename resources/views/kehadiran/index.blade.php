@@ -50,8 +50,9 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->tanggal }}</td>
-                                        <td><a href="{{ asset('storage/' . $item->berkas) }}"
-                                                target="_blank">{{ $item->berkas }}</a></td>
+                                        <td>
+                                            <a href="{{ Storage::url($item->berkas) }}"
+                                                target="_blank">{{ $item->berkas }}</a>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
