@@ -18,6 +18,8 @@ class ProgramKegiatanController extends Controller
         // Dapatkan program kegiatan yang hanya berhubungan dengan ketua yang sedang login
         $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
 
+        // dd($programKegiatan);
+
         return view('program_kegiatan.index', compact('programKegiatan'));
     }
 

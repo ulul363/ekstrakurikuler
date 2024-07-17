@@ -50,13 +50,12 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                <input type="text" name="deskripsi" id="deskripsi"
-                                    class="form-control @error('deskripsi') is-invalid @enderror"
-                                    value="{{ old('deskripsi') }}" required>
+                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required style="width: 100%; height: 150px;">{{ old('deskripsi') }}</textarea>
                                 @error('deskripsi')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
+
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>

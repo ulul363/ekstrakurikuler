@@ -54,10 +54,10 @@
                                         <td>{{ $item->tahun_ajaran }}</td>
                                         <td>{{ $item->deskripsi }}</td>
                                         <td>
-                                            @if ($item->verifikasi_id)
-                                                {{ $item->verifikasi->pembina->nama }}
+                                            @if ($item->pembina && $item->pembina->nama)
+                                                {{ $item->pembina->nama }}
                                             @else
-                                                -
+                                                Belum diverifikasi
                                             @endif
                                         </td>
                                         <td>
@@ -112,10 +112,10 @@
                                                             <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
                                                             <p><strong>Deskripsi:</strong> {{ $item->deskripsi }}</p>
                                                             <p><strong>Diverifikasi oleh:</strong>
-                                                                @if ($item->verifikasi_id)
-                                                                    {{ $item->verifikasi->pembina->nama }}
+                                                                @if ($item->pembina && $item->pembina->nama)
+                                                                    {{ $item->pembina->nama }}
                                                                 @else
-                                                                    -
+                                                                    Belum diverifikasi
                                                                 @endif
                                                             </p>
                                                             <p><strong>Status:</strong>
@@ -149,24 +149,26 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            $('button[data-toggle="modal"]').click(function() {
-                var id = $(this).data('id');
-                var modal = $('#showModal' + id);
-                $.ajax({
-                    url: '/program_kegiatan/' + id,
-                    method: 'GET',
-                    success: function(data) {
-                        modal.find('.modal-body').html(`
-                        <p><strong>Nama Program:</strong> ${data.nama_program}</p>
-                        <p><strong>Tahun Ajaran:</strong> ${data.tahun_ajaran}</p>
-                        <p><strong>Deskripsi:</strong> ${data.deskripsi}</p>
-                        <p><strong>Diverifikasi oleh:</strong> ${data.verifikasi_id ? data.verifikasi.pembina.nama : '-'}</p>
-                        <p><strong>Status:</strong> <span class="badge badge-${data.status == 'pending' ? 'warning' : (data.status == 'disetujui' ? 'success' : 'danger')}">${data.status.charAt(0).toUpperCase() + data.status.slice(1)}</span></p>
-                    `);
-                    }
-                });
+        function showDetail(id) {
+            $.ajax({
+                url: "{{ url('program_kegiatan') }}/" + id,
+                method: 'GET',
+                success: function(data) {
+                    $('#modalNamaProgram').text(data.nama_program);
+                    $('#modalTahunAjaran').text(data.tahun_ajaran);
+                    $('#modalDeskripsi').text(data.deskripsi);
+                    $('#modalVerifikasiOleh').text(data.verifikasi ? data.verifikasi.pembina.nama : '-');
+                    $('#modalStatus').text(data.status.charAt(0).toUpperCase() + data.status.slice(1));
+
+                    $('#programKegiatanModal').modal('show');
+                }
             });
-        });
+        }
+
+        function confirmDelete(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                document.getElementById(`delete-program-${id}`).submit();
+            }
+        }
     </script>
 @endsection
