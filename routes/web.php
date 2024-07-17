@@ -178,6 +178,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/program_kegiatan/{id}/edit', [ProgramKegiatanController::class, 'edit'])->name('program_kegiatan.edit')->middleware('permission:program_kegiatan.edit');
     Route::put('/program_kegiatan/{id}/update', [ProgramKegiatanController::class, 'update'])->name('program_kegiatan.update')->middleware('permission:program_kegiatan.update');
     Route::delete('/program_kegiatan/destroy/{id}', [ProgramKegiatanController::class, 'destroy'])->name('program_kegiatan.destroy')->middleware('permission:program_kegiatan.destroy');
+    Route::get('/program_kegiatan/{id}', [ProgramKegiatanController::class, 'show'])->name('program_kegiatan.show')->middleware('permission:program_kegiatan.show');
+
+
 
 });
 

@@ -49,7 +49,7 @@ class ProgramKegiatanController extends Controller
                 'status' => 'pending', // atau biarkan default di database
             ]);
 
-            return redirect()->route('program_kegiatan.index')->with('success', 'Program Kegiatan berhasil dibuat.');
+            return redirect()->route('program_kegiatan.index')->with('success', 'Program Kegiatan berhasil diajukan.');
         } else {
             return redirect()->route('program_kegiatan.create')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
         }
@@ -81,5 +81,11 @@ class ProgramKegiatanController extends Controller
         $programKegiatan->delete();
 
         return redirect()->route('program_kegiatan.index')->with('success', 'Program Kegiatan berhasil dihapus.');
+    }
+
+    public function show($id)
+    {
+        $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua', 'pembina')->findOrFail($id);
+        return response()->json($programKegiatan);
     }
 }
