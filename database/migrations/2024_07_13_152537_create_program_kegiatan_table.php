@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('ketua_id');
             $table->unsignedBigInteger('verifikasi_id')->nullable();
             $table->string('nama_program', 50);
-            $table->string('tahun_ajaran', 11);
-            $table->string('deskripsi', 50);
+            $table->integer('tahun_ajaran');
+            $table->string('deskripsi', 200);
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
 

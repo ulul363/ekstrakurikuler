@@ -65,6 +65,27 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('program_kegiatan.index')
+                        <li class="nav-item">
+                            <a href="{{ route('program_kegiatan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+                                <span class="pcoded-mtext">Program Kegiatan</span>
+                            </a>
+                        </li>
+                    @endcan
+                @endhasrole
+
+
+                @hasrole('Ketua')
+                    @can('program_kegiatan.index')
+                        <li class="nav-item">
+                            <a href="{{ route('program_kegiatan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+                                <span class="pcoded-mtext">Program Kegiatan</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
                 {{-- @hasrole('admin')

@@ -18,13 +18,13 @@
 
 <body>
     <!-- [ auth-signin ] start -->
-    <div class="auth-wrapper">
+    <div class="auth-wrapper" style="background-image: url({{ asset('/assets/images/bg-man.jpg') }})">
         <div class="auth-content text-center">
             <div class="card borderless">
                 <div class="row align-items-center ">
                     <div class="col-md-12">
                         <div class="card-body">
-                            <img src="{{ asset('assets/images/logo man3.png') }}" alt="" class="img-fluid mb-4">
+                            <img src="{{ asset('assets/images/logo man3.png') }}" alt="bg-man" class="img-fluid mb-4">
                             <h5 class="mb-3 f-w-400"> <b>Sistem Informasi Ekstrakurikuler</b> </h5>
                             <h5> <b>MA Negeri Demak</b> </h5>
                             <hr>
@@ -45,11 +45,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-block btn-primary mb-4">Masuk</button>
                             </form>
-                            {{-- <hr>
-                            <p class="mb-2 text-muted">Lupa Password?<a href="{{ route('password.request') }}"
-                                    class="f-w-400">Reset</a></p>
-                            <p class="mb-0 text-muted">Tidak memiliki akun? <a href="{{ route('register') }}"
-                                    class="f-w-400">Daftar</a></p> --}}
                         </div>
                     </div>
                 </div>
