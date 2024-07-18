@@ -101,7 +101,7 @@ class PrestasiController extends Controller
 
         return redirect()->route('prestasi.index')->with('success', 'Prestasi berhasil diperbarui.');
     }
-    
+
     public function destroy($id)
     {
         $prestasi = Prestasi::findOrFail($id);
@@ -111,5 +111,11 @@ class PrestasiController extends Controller
         $prestasi->delete();
 
         return redirect()->route('prestasi.index')->with('success', 'Prestasi berhasil dihapus.');
+    }
+
+    public function show($id)
+    {
+        $prestasi = Prestasi::with('ekstrakurikuler', 'ketua', 'pembina')->findOrFail($id);
+        return response()->json($prestasi);
     }
 }
