@@ -27,18 +27,32 @@ class PrestasiController extends Controller
             'prestasi' => 'required|string|max:50',
             'nama_siswa.*' => 'required|string|max:50',
             'tahun_ajaran' => 'required|integer',
-            'berkas' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
 
-        $fileName = time() . '_' . $request->file('berkas')->getClientOriginalName();
-        $filePath = $request->file('berkas')->storeAs('uploads/prestasi', $fileName, 'public');
+        // Pastikan pengguna yang login memiliki data ketua
+        if (!Auth::user()->ketua) {
+            return redirect()->route('prestasi.index')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
+        }
+
+        $ekstrakurikuler_id = Auth::user()->ketua->ekstrakurikuler_id;
+        $ketua_id = Auth::user()->ketua->id_ketua;
+
+        // Proses upload berkas jika ada
+        $berkasPath = null;
+        if ($request->hasFile('berkas')) {
+            $berkas = $request->file('berkas');
+            $fileName = time() . '_' . $berkas->getClientOriginalName();
+            $berkasPath = $berkas->storeAs('uploads/prestasi', $fileName, 'public');
+        }
 
         Prestasi::create([
-            'ekstrakurikuler_id' => Auth::user()->ketua->ekstrakurikuler_id,
-            'ketua_id' => Auth::user()->ketua->id_ketua,
-            'nama_siswa' => $request->nama_siswa,
+            'prestasi' => $request->prestasi,
+            'ekstrakurikuler_id' => $ekstrakurikuler_id,
+            'ketua_id' => $ketua_id,
+            'nama_siswa' => json_encode($request->nama_siswa), // Jika nama_siswa adalah array
             'tahun_ajaran' => $request->tahun_ajaran,
-            'berkas' => $filePath,
+            'berkas' => $berkasPath,
             'status' => 'pending',
         ]);
 
@@ -61,10 +75,19 @@ class PrestasiController extends Controller
         ]);
 
         $prestasi = Prestasi::findOrFail($id);
-        $prestasi->nama_siswa = $request->nama_siswa;
+
+        // Pastikan pengguna yang login memiliki data ketua
+        if (!Auth::user()->ketua) {
+            return redirect()->route('prestasi.index')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
+        }
+
+        $prestasi->prestasi = $request->prestasi;
+        $prestasi->nama_siswa = json_encode($request->nama_siswa);
         $prestasi->tahun_ajaran = $request->tahun_ajaran;
 
+        // Proses upload berkas jika ada
         if ($request->hasFile('berkas')) {
+            // Hapus berkas lama jika ada
             if (Storage::disk('public')->exists($prestasi->berkas)) {
                 Storage::disk('public')->delete($prestasi->berkas);
             }
@@ -78,7 +101,7 @@ class PrestasiController extends Controller
 
         return redirect()->route('prestasi.index')->with('success', 'Prestasi berhasil diperbarui.');
     }
-
+    
     public function destroy($id)
     {
         $prestasi = Prestasi::findOrFail($id);

@@ -46,8 +46,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama
-                                Siswa</button>
+                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama Siswa</button>
 
                             <div class="form-group">
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
