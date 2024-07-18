@@ -81,7 +81,7 @@
                     @can('program_kegiatan.index')
                         <li class="nav-item">
                             <a href="{{ route('program_kegiatan.index') }}" class="nav-link">
-                                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+                                <span class="pcoded-micon"><i class="feather icon-clipboard"></i></span>
                                 <span class="pcoded-mtext">Program Kegiatan</span>
                             </a>
                         </li>
@@ -90,8 +90,17 @@
                     @can('kehadiran.index')
                         <li class="nav-item">
                             <a href="{{ route('kehadiran.index') }}" class="nav-link">
-                                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+                                <span class="pcoded-micon"><i class="feather icon-check-circle"></i></span>
                                 <span class="pcoded-mtext">Kehadiran</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('prestasi.index')
+                        <li class="nav-item">
+                            <a href="{{ route('prestasi.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-award"></i></span>
+                                <span class="pcoded-mtext">Prestasi</span>
                             </a>
                         </li>
                     @endcan

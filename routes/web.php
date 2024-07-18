@@ -8,8 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KetuaController;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\KehadiranController;
-use App\Http\Controllers\PrestasiSiswaController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
 use App\Http\Controllers\JadwalEkstrakurikulerController;
@@ -188,6 +188,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/kehadiran/{id}/update', [KehadiranController::class, 'update'])->name('kehadiran.update')->middleware('permission:kehadiran.update');
     Route::delete('/kehadiran/destroy/{id}', [KehadiranController::class, 'destroy'])->name('kehadiran.destroy')->middleware('permission:kehadiran.destroy');
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
+
+    // Menu Prestasi
+    Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');
+    Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create')->middleware('permission:prestasi.create');
+    Route::post('/prestasi/store', [PrestasiController::class, 'store'])->name('prestasi.store')->middleware('permission:prestasi.store');
+    Route::get('/prestasi/{id}/edit', [PrestasiController::class, 'edit'])->name('prestasi.edit')->middleware('permission:prestasi.edit');
+    Route::put('/prestasi/{id}/update', [PrestasiController::class, 'update'])->name('prestasi.update')->middleware('permission:prestasi.update');
+    Route::delete('/prestasi/{id}/destroy', [PrestasiController::class, 'destroy'])->name('prestasi.destroy')->middleware('permission:prestasi.destroy');
+    Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
 
 });
 
