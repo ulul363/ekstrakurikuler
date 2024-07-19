@@ -97,6 +97,13 @@ class PembinaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    public function edit($id)
+    {
+        $pembina = Pembina::with('user', 'ekstrakurikuler')->findOrFail($id);
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('pembina.edit', compact('pembina', 'ekstrakurikuler'));
+    }
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
