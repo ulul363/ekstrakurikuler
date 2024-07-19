@@ -136,12 +136,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/role/getRoutesRefreshDelete', [RoleController::class, 'getRefreshAndDeleteJson'])->name('role.getRefreshAndDeleteJson')->middleware('permission:role.getRefreshAndDeleteJson');
 
     //Menu Pembina
+    // Route::get('/pembina', [PembinaController::class, 'index'])->name('pembina.index')->middleware('permission:pembina.index');
+    // Route::get('/pembina/create', [PembinaController::class, 'create'])->name('pembina.create')->middleware('permission:pembina.create');
+    // Route::post('/pembina/store', [PembinaController::class, 'store'])->name('pembina.store')->middleware('permission:pembina.store');
+    // Route::get('/pembina/{id}/edit', [PembinaController::class, 'edit'])->name('pembina.edit')->middleware('permission:pembina.edit');
+    // Route::put('/pembina/{id}/update', [PembinaController::class, 'update'])->name('pembina.update')->middleware('permission:pembina.update');
+    // Route::delete('/pembina/destroy/{id}', [PembinaController::class, 'destroy'])->name('pembina.destroy')->middleware('permission:pembina.destroy');
+
+
+    // Menu Pembina
     Route::get('/pembina', [PembinaController::class, 'index'])->name('pembina.index')->middleware('permission:pembina.index');
     Route::get('/pembina/create', [PembinaController::class, 'create'])->name('pembina.create')->middleware('permission:pembina.create');
     Route::post('/pembina/store', [PembinaController::class, 'store'])->name('pembina.store')->middleware('permission:pembina.store');
     Route::get('/pembina/{id}/edit', [PembinaController::class, 'edit'])->name('pembina.edit')->middleware('permission:pembina.edit');
     Route::put('/pembina/{id}/update', [PembinaController::class, 'update'])->name('pembina.update')->middleware('permission:pembina.update');
-    Route::delete('/pembina/destroy/{id}', [PembinaController::class, 'destroy'])->name('pembina.destroy')->middleware('permission:pembina.destroy');
+    Route::delete('/pembina/{id}', [PembinaController::class, 'destroy'])->name('pembina.destroy')->middleware('permission:pembina.destroy');
+    Route::get('/pembina/createuser', [PembinaController::class, 'createUser'])->name('pembina.createuser')->middleware('permission:pembina.createuser');
+    Route::post('/pembina/storeuser', [PembinaController::class, 'storeUser'])->name('pembina.storeuser')->middleware('permission:pembina.storeuser');
+    Route::put('/pembina/{id}/updateUser', [PembinaController::class, 'updateUser'])->name('pembina.updateUser')->middleware('permission:pembina.updateUser');
+
 
     //Menu Ketua
     Route::get('/ketua', [KetuaController::class, 'index'])->name('ketua.index')->middleware('permission:ketua.index');
