@@ -70,73 +70,70 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <form id="delete-program-{{ $item->id_program_kegiatan }}"
-                                                action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
-                                                method="POST">
-                                                @if ($item->status == 'pending')
-                                                    @can('program_kegiatan.edit')
-                                                        <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
-                                                            class="btn btn-warning btn-sm">
-                                                            <i class="fa fa-pencil-alt"></i>
-                                                        </a>
-                                                    @endcan
-
-                                                    @can('program_kegiatan.destroy')
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                            onclick="confirmDelete({{ $item->id_program_kegiatan }})">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    @endcan
-                                                @endif
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id_program_kegiatan }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            </form>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="showModal{{ $item->id_program_kegiatan }}"
-                                                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Program
-                                                                Kegiatan</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p><strong>Nama Program:</strong> {{ $item->nama_program }}</p>
-                                                            <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
-                                                            <p><strong>Deskripsi:</strong> {{ $item->deskripsi }}</p>
-                                                            <p><strong>Diverifikasi oleh:</strong>
-                                                                @if ($item->pembina && $item->pembina->nama)
-                                                                    {{ $item->pembina->nama }}
-                                                                @else
-                                                                    Belum diverifikasi
-                                                                @endif
-                                                            </p>
-                                                            <p><strong>Status:</strong>
-                                                                @if ($item->status == 'pending')
-                                                                    <span class="badge badge-warning">Pending</span>
-                                                                @elseif ($item->status == 'disetujui')
-                                                                    <span class="badge badge-success">Disetujui</span>
-                                                                @elseif ($item->status == 'ditolak')
-                                                                    <span class="badge badge-danger">Ditolak</span>
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @can('program_kegiatan.edit')
+                                                <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
+                                                    class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                            @endcan
+                                            @can('program_kegiatan.destroy')
+                                                <form
+                                                    action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                data-target="#showModal{{ $item->id_program_kegiatan }}">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                     </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="showModal{{ $item->id_program_kegiatan }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Detail Program Kegiatan
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Nama Program:</strong> {{ $item->nama_program }}</p>
+                                                    <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
+                                                    <p><strong>Deskripsi:</strong> {{ $item->deskripsi }}</p>
+                                                    <p><strong>Diverifikasi oleh:</strong>
+                                                        @if ($item->pembina && $item->pembina->nama)
+                                                            {{ $item->pembina->nama }}
+                                                        @else
+                                                            Belum diverifikasi
+                                                        @endif
+                                                    </p>
+                                                    <p><strong>Status:</strong>
+                                                        @if ($item->status == 'pending')
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        @elseif ($item->status == 'disetujui')
+                                                            <span class="badge badge-success">Disetujui</span>
+                                                        @elseif ($item->status == 'ditolak')
+                                                            <span class="badge badge-danger">Ditolak</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -149,22 +146,6 @@
 
 @section('scripts')
     <script>
-        function showDetail(id) {
-            $.ajax({
-                url: "{{ url('program_kegiatan') }}/" + id,
-                method: 'GET',
-                success: function(data) {
-                    $('#modalNamaProgram').text(data.nama_program);
-                    $('#modalTahunAjaran').text(data.tahun_ajaran);
-                    $('#modalDeskripsi').text(data.deskripsi);
-                    $('#modalVerifikasiOleh').text(data.verifikasi ? data.verifikasi.pembina.nama : '-');
-                    $('#modalStatus').text(data.status.charAt(0).toUpperCase() + data.status.slice(1));
-
-                    $('#programKegiatanModal').modal('show');
-                }
-            });
-        }
-
         function confirmDelete(id) {
             if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
                 document.getElementById(`delete-program-${id}`).submit();
