@@ -76,20 +76,29 @@
                                         </td>
                                         <td>{{ ucfirst($item->status) }}</td>
                                         <td>
-                                            <a href="{{ route('prestasi.edit', $item->id_prestasi) }}"
-                                                class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                                            <form action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i
-                                                        class="fa fa-trash"></i></button>
+                                            <form id="delete-prestasi-{{ $item->id_prestasi }}"
+                                                action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
+                                                method="POST">
+                                                @can('prestasi.edit')
+                                                    <a href="{{ route('prestasi.edit', $item->id_prestasi) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('prestasi.destroy')
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="confirmDelete('delete-prestasi-{{ $item->id_prestasi }}')">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                @endcan
+
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showModal{{ $item->id_prestasi }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
                                             </form>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showModal{{ $item->id_prestasi }}">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
                                         </td>
                                     </tr>
 

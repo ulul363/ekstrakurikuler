@@ -70,26 +70,30 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @can('program_kegiatan.edit')
-                                                <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
-                                                    class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                                            @endcan
-                                            @can('program_kegiatan.destroy')
-                                                <form
-                                                    action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
-                                                    method="POST" style="display:inline;">
+                                            <form id="delete-program-{{ $item->id_program_kegiatan }}"
+                                                action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
+                                                method="POST">
+                                                @can('program_kegiatan.edit')
+                                                    <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('program_kegiatan.destroy')
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="confirmDelete('delete-program-{{ $item->id_program_kegiatan }}')">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
-                                                </form>
-                                            @endcan
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showModal{{ $item->id_program_kegiatan }}">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
+                                                @endcan
+
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showModal{{ $item->id_program_kegiatan }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </form>
+
                                         </td>
                                     </tr>
 
@@ -142,14 +146,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        function confirmDelete(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById(`delete-program-${id}`).submit();
-            }
-        }
-    </script>
 @endsection

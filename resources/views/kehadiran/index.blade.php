@@ -75,17 +75,17 @@
                                             <form id="delete-kehadiran-{{ $item->id_kehadiran }}"
                                                 action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
                                                 method="POST">
-                                                @csrf
-                                                @method('DELETE')
                                                 @can('kehadiran.edit')
                                                     <a href="{{ route('kehadiran.edit', $item->id_kehadiran) }}"
                                                         class="btn btn-warning btn-sm">
-                                                        <i class="fa fa-pencil-alt"></i>
+                                                        <i class="fa fa-edit"></i>
                                                     </a>
                                                 @endcan
                                                 @can('kehadiran.destroy')
+                                                    @csrf
+                                                    @method('DELETE')
                                                     <button type="button" class="btn btn-danger btn-sm"
-                                                        onclick="confirmDelete({{ $item->id_kehadiran }})">
+                                                        onclick="confirmDelete('delete-kehadiran-{{ $item->id_kehadiran }}')">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 @endcan
@@ -94,7 +94,6 @@
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                             </form>
-                                            <!-- Modal -->
                                             <!-- Modal -->
                                             <div class="modal fade" id="showModal{{ $item->id_kehadiran }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -147,14 +146,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        function confirmDelete(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById(`delete-kehadiran-${id}`).submit();
-            }
-        }
-    </script>
 @endsection
