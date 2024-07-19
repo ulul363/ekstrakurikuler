@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('no_hp', 15);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('ekstrakurikuler_id')->references('id_ekstrakurikuler')->on('ekstrakurikuler')->onUpdate('restrict')->onDelete('restrict');
         });
     }
