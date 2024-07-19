@@ -15,7 +15,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('ketua.index') }}">Ketua></li>
+                            <li class="breadcrumb-item"><a href="{{ route('ketua.index') }}">Ketua</a></li>
                             <li class="breadcrumb-item">Buat Ketua</li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="nip">NIS</label>
+                                        <label for="nis">NIS</label>
                                         <input type="text" name="nis" class="form-control" id="nis" placeholder="NIS" required>
                                     </div>
                                     <div class="form-group">
