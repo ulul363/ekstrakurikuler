@@ -151,15 +151,25 @@ class KetuaController extends Controller
      */
     public function destroy($id)
     {
-        $ketua = Ketua::findOrFail($id);
-        $user = User::findOrFail($ketua->user_id);
+        try {
+            $ketua = Ketua::findOrFail($id);
+            $user = User::findOrFail($ketua->user_id);
 
-        // Menghapus user terlebih dahulu
-        $user->delete();
+            // Menghapus user terlebih dahulu
+            $user->delete();
 
-        // Menghapus ketua setelah user dihapus
-        $ketua->delete();
+            // Menghapus ketua setelah user dihapus
+            $ketua->delete();
 
-        return redirect()->route('ketua.index')->with('success', 'Data ketua dan akun pengguna berhasil dihapus.');
+            return redirect()->route('ketua.index')->with('success', 'Data ketua dan akun pengguna berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                // Jika terjadi kesalahan integritas, tampilkan pesan error
+                return redirect()->route('ketua.index')->with('error', 'Ketua tidak dapat dihapus karena sudah digunakan di tabel lain.');
+            }
+
+            // Jika terjadi kesalahan lain, tampilkan pesan error umum
+            return redirect()->route('ketua.index')->with('error', 'Terjadi kesalahan saat menghapus ketua.');
+        }
     }
 }
