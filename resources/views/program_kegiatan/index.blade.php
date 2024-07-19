@@ -77,20 +77,20 @@
                                                     @can('program_kegiatan.edit')
                                                         <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
                                                             class="btn btn-warning btn-sm">
-                                                            <i class="fa fa-pencil-alt"></i> Edit
+                                                            <i class="fa fa-pencil-alt"></i>
                                                         </a>
                                                     @endcan
 
                                                     @can('program_kegiatan.destroy')
                                                         <button type="button" class="btn btn-danger btn-sm"
                                                             onclick="confirmDelete({{ $item->id_program_kegiatan }})">
-                                                            <i class="fa fa-trash"></i> Delete
+                                                            <i class="fa fa-trash"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                     data-target="#showModal{{ $item->id_program_kegiatan }}">
-                                                    <i class="fa fa-eye"></i> Show
+                                                    <i class="fa fa-eye"></i>
                                                 </button>
                                             </form>
                                             <!-- Modal -->

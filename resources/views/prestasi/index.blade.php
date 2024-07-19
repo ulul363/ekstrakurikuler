@@ -6,13 +6,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Daftar Kehadiran</h5>
+                            <h5 class="m-b-10">Daftar Prestasi</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                         class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('kehadiran.index') }}">Kehadiran</a>
-                            </li>
+                            <li class="breadcrumb-item"><a href="{{ route('prestasi.index') }}">Prestasi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,7 +21,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Daftar Kehadiran</div>
+                    <div class="card-header">Daftar Prestasi</div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -30,29 +29,44 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('kehadiran.create') }}" class="btn btn-primary mb-3">
-                            <i class="fa fa-plus"></i> Tambah Kehadiran
+                        <a href="{{ route('prestasi.create') }}" class="btn btn-primary mb-3">
+                            <i class="fa fa-plus"></i> Tambah Prestasi
                         </a>
 
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Prestasi</th>
                                     <th>Tanggal</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Tahun Ajaran</th>
                                     <th>Berkas</th>
-                                    <th>Diverifikasi oleh</th>
+                                    <th>Diverifikasi Oleh</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kehadiran as $item)
+                                @foreach ($prestasi as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->tanggal }}</td>
+                                        <td>{{ $item->prestasi }}</td>
+                                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                                        <td>
+                                            @php
+                                                $index = 1;
+                                            @endphp
+                                            @foreach (json_decode($item->nama_siswa) as $siswa)
+                                                <div>{{ $index }}. {{ $siswa }}</div>
+                                                @php
+                                                    $index++;
+                                                @endphp
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $item->tahun_ajaran }}</td>
                                         <td><a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a></td>
-
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
@@ -60,48 +74,30 @@
                                                 Belum diverifikasi
                                             @endif
                                         </td>
+                                        <td>{{ ucfirst($item->status) }}</td>
                                         <td>
-                                            @if ($item->status == 'pending')
-                                                <span class="badge badge-warning">Pending</span>
-                                            @elseif ($item->status == 'disetujui')
-                                                <span class="badge badge-success">Disetujui</span>
-                                            @elseif ($item->status == 'ditolak')
-                                                <span class="badge badge-danger">Ditolak</span>
-                                            @else
-                                                <span class="badge badge-secondary">{{ $item->status }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <form id="delete-kehadiran-{{ $item->id_kehadiran }}"
-                                                action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
-                                                method="POST">
+                                            <a href="{{ route('prestasi.edit', $item->id_prestasi) }}"
+                                                class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                            <form action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
+                                                method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                @can('kehadiran.edit')
-                                                    <a href="{{ route('kehadiran.edit', $item->id_kehadiran) }}"
-                                                        class="btn btn-warning btn-sm">
-                                                        <i class="fa fa-pencil-alt"></i>
-                                                    </a>
-                                                @endcan
-                                                @can('kehadiran.destroy')
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                        onclick="confirmDelete({{ $item->id_kehadiran }})">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                @endcan
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i
+                                                        class="fa fa-trash"></i></button>
+
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id_kehadiran }}">
+                                                    data-target="#showModal{{ $item->id }}">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                             </form>
-                                            <!-- Modal -->
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="showModal{{ $item->id_kehadiran }}" tabindex="-1"
+
+                                            <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Kehadiran
+                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Prestasi
                                                             </h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -109,6 +105,20 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
+                                                            <p><strong>Prestasi:</strong> {{ $item->prestasi }}</p>
+                                                            <p><strong>Nama Siswa:</strong>
+                                                                @php
+                                                                    $index = 1;
+                                                                @endphp
+                                                                @foreach (json_decode($item->nama_siswa) as $siswa)
+                                                                    <div>{{ $index }}. {{ $siswa }}</div>
+                                                                    @php
+                                                                        $index++;
+                                                                    @endphp
+                                                                 @endforeach
+                                                            <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
+                                                            <p><strong>Ekstrakurikuler:</strong>
+                                                                {{ $item->ekstrakurikuler->nama }}</p>
                                                             <p><strong>Ketua:</strong> {{ $item->ketua->nama }}</p>
                                                             <p><strong>Verifikasi oleh:</strong>
                                                                 @if ($item->pembina && $item->pembina->nama)
@@ -117,15 +127,12 @@
                                                                     Belum diverifikasi
                                                                 @endif
                                                             </p>
-                                                            <p><strong>Tanggal:</strong> {{ $item->tanggal }}</p>
-                                                            <p><strong>Berkas:</strong> <a
-                                                                    href="{{ asset('storage/' . $item->berkas) }}"
-                                                                    target="_blank">{{ $item->berkas }}</a></p>
-                                                            <p><strong>Status:</strong>
-                                                                @if ($item->status == 'aktif')
-                                                                    <span class="badge badge-success">Aktif</span>
+                                                            <p><strong>Berkas:</strong>
+                                                                @if ($item->berkas)
+                                                                    <a href="{{ asset('storage/' . $item->berkas) }}"
+                                                                        target="_blank">Lihat Berkas</a>
                                                                 @else
-                                                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                                                    Tidak ada berkas
                                                                 @endif
                                                             </p>
                                                         </div>
@@ -136,7 +143,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach
@@ -147,14 +153,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        function confirmDelete(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-                document.getElementById(`delete-kehadiran-${id}`).submit();
-            }
-        }
-    </script>
 @endsection

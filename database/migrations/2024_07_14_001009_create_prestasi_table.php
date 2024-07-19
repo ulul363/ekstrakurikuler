@@ -10,16 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+{
         Schema::create('prestasi', function (Blueprint $table) {
             $table->id('id_prestasi');
             $table->unsignedBigInteger('ekstrakurikuler_id');
             $table->unsignedBigInteger('ketua_id');
             $table->unsignedBigInteger('verifikasi_id')->nullable();
-            $table->string('nama_siswa', 50);
-            $table->string('tahun_ajaran', 11);
+            $table->string('prestasi', 50);
+            $table->json('nama_siswa');
+            $table->integer('tahun_ajaran');
             $table->string('berkas', 150);
-            $table->enum('status', ['aktif', 'tidak aktif'])->default('aktif');
+            $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
 
             $table->foreign('ekstrakurikuler_id')->references('id_ekstrakurikuler')->on('ekstrakurikuler')->onUpdate('restrict')->onDelete('restrict');
