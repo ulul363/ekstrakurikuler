@@ -85,66 +85,65 @@
                                                 <button type="submit" class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i
                                                         class="fa fa-trash"></i></button>
-
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
                                             </form>
-
-                                            <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Prestasi
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p><strong>Prestasi:</strong> {{ $item->prestasi }}</p>
-                                                            <p><strong>Nama Siswa:</strong>
-                                                                @php
-                                                                    $index = 1;
-                                                                @endphp
-                                                                @foreach (json_decode($item->nama_siswa) as $siswa)
-                                                                    <div>{{ $index }}. {{ $siswa }}</div>
-                                                                    @php
-                                                                        $index++;
-                                                                    @endphp
-                                                                 @endforeach
-                                                            <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
-                                                            <p><strong>Ekstrakurikuler:</strong>
-                                                                {{ $item->ekstrakurikuler->nama }}</p>
-                                                            <p><strong>Ketua:</strong> {{ $item->ketua->nama }}</p>
-                                                            <p><strong>Verifikasi oleh:</strong>
-                                                                @if ($item->pembina && $item->pembina->nama)
-                                                                    {{ $item->pembina->nama }}
-                                                                @else
-                                                                    Belum diverifikasi
-                                                                @endif
-                                                            </p>
-                                                            <p><strong>Berkas:</strong>
-                                                                @if ($item->berkas)
-                                                                    <a href="{{ asset('storage/' . $item->berkas) }}"
-                                                                        target="_blank">Lihat Berkas</a>
-                                                                @else
-                                                                    Tidak ada berkas
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                data-target="#showModal{{ $item->id_prestasi }}">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                     </tr>
+
+                                    <div class="modal fade" id="showModal{{ $item->id_prestasi }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Detail Prestasi</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Prestasi:</strong> {{ $item->prestasi }}</p>
+                                                    <p><strong>Nama Siswa:</strong>
+                                                        @php
+                                                            $index = 1;
+                                                        @endphp
+                                                        @foreach (json_decode($item->nama_siswa) as $siswa)
+                                                            <div>{{ $index }}. {{ $siswa }}</div>
+                                                            @php
+                                                                $index++;
+                                                            @endphp
+                                                        @endforeach
+                                                    </p>
+                                                    <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
+                                                    <p><strong>Ekstrakurikuler:</strong> {{ $item->ekstrakurikuler->nama }}
+                                                    </p>
+                                                    <p><strong>Ketua:</strong> {{ $item->ketua->nama }}</p>
+                                                    <p><strong>Verifikasi oleh:</strong>
+                                                        @if ($item->pembina && $item->pembina->nama)
+                                                            {{ $item->pembina->nama }}
+                                                        @else
+                                                            Belum diverifikasi
+                                                        @endif
+                                                    </p>
+                                                    <p><strong>Berkas:</strong>
+                                                        @if ($item->berkas)
+                                                            <a href="{{ asset('storage/' . $item->berkas) }}"
+                                                                target="_blank">Lihat Berkas</a>
+                                                        @else
+                                                            Tidak ada berkas
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
