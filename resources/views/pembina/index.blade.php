@@ -32,6 +32,12 @@
                             </div>
                         @endif
 
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <a href="{{ route('pembina.createuser') }}" class="btn btn-primary mb-3">
                             <i class="fa fa-plus"></i> Tambah Pembina
                         </a>

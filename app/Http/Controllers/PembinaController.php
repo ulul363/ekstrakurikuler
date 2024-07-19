@@ -144,15 +144,25 @@ class PembinaController extends Controller
      */
     public function destroy($id)
     {
-        $pembina = Pembina::findOrFail($id);
-        $user = User::findOrFail($pembina->user_id);
+        try {
+            $pembina = Pembina::findOrFail($id);
+            $user = User::findOrFail($pembina->user_id);
 
-        // Menghapus user terlebih dahulu
-        $user->delete();
+            // Menghapus user terlebih dahulu
+            $user->delete();
 
-        // Menghapus pembina setelah user dihapus
-        $pembina->delete();
+            // Menghapus pembina setelah user dihapus
+            $pembina->delete();
 
-        return redirect()->route('pembina.index')->with('success', 'Data pembina dan akun pengguna berhasil dihapus.');
+            return redirect()->route('pembina.index')->with('success', 'Data pembina dan akun pengguna berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                // Jika terjadi kesalahan integritas, tampilkan pesan error
+                return redirect()->route('pembina.index')->with('error', 'Pembina tidak dapat dihapus karena sudah digunakan di tabel lain.');
+            }
+
+            // Jika terjadi kesalahan lain, tampilkan pesan error umum
+            return redirect()->route('pembina.index')->with('error', 'Terjadi kesalahan saat menghapus pembina.');
+        }
     }
 }
