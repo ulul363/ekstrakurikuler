@@ -42,7 +42,7 @@
                                     <th>Nama Siswa</th>
                                     <th>Tahun Ajaran</th>
                                     <th>Berkas</th>
-                                    <th>Verifikasi Oleh</th>
+                                    <th>Diverifikasi Oleh</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -67,7 +67,12 @@
                                         <td>{{ $item->tahun_ajaran }}</td>
                                         <td><a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a></td>
-                                        <td>{{ $item->verifikasi_id ? $item->verifikasi->name : 'Belum Diverifikasi' }}
+                                        <td>
+                                            @if ($item->pembina && $item->pembina->nama)
+                                                {{ $item->pembina->nama }}
+                                            @else
+                                                Belum diverifikasi
+                                            @endif
                                         </td>
                                         <td>{{ ucfirst($item->status) }}</td>
                                         <td>
@@ -102,7 +107,15 @@
                                                         <div class="modal-body">
                                                             <p><strong>Prestasi:</strong> {{ $item->prestasi }}</p>
                                                             <p><strong>Nama Siswa:</strong>
-                                                                {{ implode(', ', json_decode($item->nama_siswa)) }}</p>
+                                                                @php
+                                                                    $index = 1;
+                                                                @endphp
+                                                                @foreach (json_decode($item->nama_siswa) as $siswa)
+                                                                    <div>{{ $index }}. {{ $siswa }}</div>
+                                                                    @php
+                                                                        $index++;
+                                                                    @endphp
+                                                                 @endforeach
                                                             <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
                                                             <p><strong>Ekstrakurikuler:</strong>
                                                                 {{ $item->ekstrakurikuler->nama }}</p>
