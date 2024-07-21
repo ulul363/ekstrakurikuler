@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Daftar Kehadiran</div>
+                    <div class="card-header">Pengajuan Kehadiran</div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -30,9 +30,11 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('kehadiran.create') }}" class="btn btn-primary mb-3">
-                            <i class="fa fa-plus"></i> Tambah Kehadiran
-                        </a>
+                        @can('kehadiran.create')
+                            <a href="{{ route('kehadiran.create') }}" class="btn btn-primary mb-3">
+                                <i class="fa fa-plus"></i> Tambah Kehadiran
+                            </a>
+                        @endcan
 
                         <table class="table table-bordered">
                             <thead>
@@ -89,10 +91,12 @@
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 @endcan
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id_kehadiran }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
+                                                @can('kehadiran.show')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showModal{{ $item->id_kehadiran }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                @endcan
                                             </form>
                                             <!-- Modal -->
                                             <div class="modal fade" id="showModal{{ $item->id_kehadiran }}" tabindex="-1"

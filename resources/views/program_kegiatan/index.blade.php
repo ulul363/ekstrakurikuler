@@ -30,9 +30,11 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('program_kegiatan.create') }}" class="btn btn-primary mb-3">
-                            <i class="fa fa-plus"></i> Ajukan Program Kegiatan
-                        </a>
+                        @can('program_kegiatan.create')
+                            <a href="{{ route('program_kegiatan.create') }}" class="btn btn-primary mb-3">
+                                <i class="fa fa-plus"></i> Ajukan Program Kegiatan
+                            </a>
+                        @endcan
 
                         <table class="table table-bordered">
                             <thead>
@@ -87,11 +89,12 @@
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 @endcan
-
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id_program_kegiatan }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
+                                                @can('program_kegiatan.show')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showModal{{ $item->id_program_kegiatan }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                @endcan
                                             </form>
 
                                         </td>

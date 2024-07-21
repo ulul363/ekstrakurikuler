@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Daftar Prestasi</div>
+                    <div class="card-header">Pengajuan Prestasi</div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -29,9 +29,11 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('prestasi.create') }}" class="btn btn-primary mb-3">
-                            <i class="fa fa-plus"></i> Tambah Prestasi
-                        </a>
+                        @can('prestasi.create')
+                            <a href="{{ route('prestasi.create') }}" class="btn btn-primary mb-3">
+                                <i class="fa fa-plus"></i> Tambah Prestasi
+                            </a>
+                        @endcan
 
                         <table class="table table-bordered">
                             <thead>
@@ -93,11 +95,12 @@
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 @endcan
-
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showModal{{ $item->id_prestasi }}">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
+                                                @can('prestasi.show')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showModal{{ $item->id_prestasi }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                @endcan
                                             </form>
                                         </td>
                                     </tr>
