@@ -14,11 +14,42 @@ class KehadiranController extends Controller
 {
     public function index()
     {
-        // Ambil kehadiran yang terhubung dengan ketua yang sedang login
-        $ketuaId = Auth::user()->ketua->id_ketua;
-        $kehadiran = Kehadiran::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
+        $user = auth()->user();
+
+        if ($user->hasRole('Pembina')) {
+            $pembina = $user->pembina;
+
+            if (!$pembina) {
+                abort(403, 'Pembina data not found.');
+            }
+
+            $ekstrakurikulerId = $pembina->ekstrakurikuler_id;
+            $kehadiran = Kehadiran::with('ekstrakurikuler', 'ketua')
+                ->whereHas('ekstrakurikuler', function ($query) use ($ekstrakurikulerId) {
+                    $query->where('id_ekstrakurikuler', $ekstrakurikulerId);
+                })
+                ->get();
+        } else {
+            $ketuaId = $user->ketua->id_ketua;
+            $kehadiran = Kehadiran::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
+        }
 
         return view('kehadiran.index', compact('kehadiran'));
+    }
+
+    public function verifikasi(Request $request, $id)
+    {
+        $kehadiran = Kehadiran::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:disetujui,ditolak',
+        ]);
+
+        $kehadiran->status = $request->input('status');
+        $kehadiran->verifikasi_id = auth()->user()->pembina->id_pembina;
+        $kehadiran->save();
+
+        return redirect()->route('kehadiran.index')->with('success', 'Kehadiran berhasil diverifikasi.');
     }
 
     public function create()

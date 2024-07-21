@@ -77,7 +77,6 @@
                                             @endif
                                         </td>
                                         <td>
-
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('program_kegiatan.verifikasi')
@@ -90,7 +89,6 @@
                                                             <input type="hidden" name="status" value="disetujui">
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Disetujui</button>
-
                                                         </form>
                                                     @endcan
                                                     @can('program_kegiatan.verifikasi')
@@ -148,57 +146,56 @@
                                                         </button>
                                                     @endcan
                                                 @endif
-                                            @endcan
-                                    </td>
-                                </tr>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="showModal{{ $item->id_program_kegiatan }}" tabindex="-1"
-                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Detail Program Kegiatan
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p><strong>Nama Program:</strong> {{ $item->nama_program }}</p>
-                                                <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
-                                                <p><strong>Deskripsi:</strong> {{ $item->deskripsi }}</p>
-                                                <p><strong>Diverifikasi oleh:</strong>
-                                                    @if ($item->pembina && $item->pembina->nama)
-                                                        {{ $item->pembina->nama }}
-                                                    @else
-                                                        Belum diverifikasi
-                                                    @endif
-                                                </p>
-                                                <p><strong>Status:</strong>
-                                                    @if ($item->status == 'pending')
-                                                        <span class="badge badge-warning">Pending</span>
-                                                    @elseif ($item->status == 'disetujui')
-                                                        <span class="badge badge-success">Disetujui</span>
-                                                    @elseif ($item->status == 'ditolak')
-                                                        <span class="badge badge-danger">Ditolak</span>
-                                                    @endif
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="showModal{{ $item->id_program_kegiatan }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Detail Program Kegiatan
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Nama Program:</strong> {{ $item->nama_program }}</p>
+                                                    <p><strong>Tahun Ajaran:</strong> {{ $item->tahun_ajaran }}</p>
+                                                    <p><strong>Deskripsi:</strong> {{ $item->deskripsi }}</p>
+                                                    <p><strong>Diverifikasi oleh:</strong>
+                                                        @if ($item->pembina && $item->pembina->nama)
+                                                            {{ $item->pembina->nama }}
+                                                        @else
+                                                            Belum diverifikasi
+                                                        @endif
+                                                    </p>
+                                                    <p><strong>Status:</strong>
+                                                        @if ($item->status == 'pending')
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        @elseif ($item->status == 'disetujui')
+                                                            <span class="badge badge-success">Disetujui</span>
+                                                        @elseif ($item->status == 'ditolak')
+                                                            <span class="badge badge-danger">Ditolak</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

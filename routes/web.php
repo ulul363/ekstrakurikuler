@@ -203,6 +203,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/kehadiran/{id}/update', [KehadiranController::class, 'update'])->name('kehadiran.update')->middleware('permission:kehadiran.update');
     Route::delete('/kehadiran/destroy/{id}', [KehadiranController::class, 'destroy'])->name('kehadiran.destroy')->middleware('permission:kehadiran.destroy');
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
+    Route::post('kehadiran/verifikasi/{id}', [KehadiranController::class, 'verifikasi'])->name('kehadiran.verifikasi')->middleware('permission:kehadiran.verifikasi');
 
     // Menu Prestasi
     Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');

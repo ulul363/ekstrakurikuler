@@ -15,28 +15,21 @@ class ProgramKegiatanController extends Controller
         $user = auth()->user();
 
         if ($user->hasRole('Pembina')) {
-            $pembina = $user->pembina; // Mengambil data Pembina dari relasi User
+            $pembina = $user->pembina;
 
             if (!$pembina) {
                 abort(403, 'Pembina data not found.');
             }
 
             $ekstrakurikulerId = $pembina->ekstrakurikuler_id;
-
-            // Dapatkan program kegiatan yang berhubungan dengan ekstrakurikuler yang sama dan statusnya pending
             $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua')
                 ->whereHas('ekstrakurikuler', function ($query) use ($ekstrakurikulerId) {
                     $query->where('id_ekstrakurikuler', $ekstrakurikulerId);
                 })
                 ->get();
-            // dd($programKegiatan);
         } else {
-            // Ambil id_ketua dari pengguna yang sedang login
             $ketuaId = $user->ketua->id_ketua;
-
-            // Dapatkan program kegiatan yang hanya berhubungan dengan ketua yang sedang login
             $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
-            // dd($programKegiatan);
         }
 
         return view('program_kegiatan.index', compact('programKegiatan'));
@@ -46,14 +39,12 @@ class ProgramKegiatanController extends Controller
     {
         $programKegiatan = ProgramKegiatan::findOrFail($id);
 
-        // Validasi input
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
         ]);
 
-        // Update status program kegiatan
         $programKegiatan->status = $request->input('status');
-        $programKegiatan->verifikasi_id = auth()->user()->pembina->id_pembina; // Update verifikasi_id
+        $programKegiatan->verifikasi_id = auth()->user()->pembina->id_pembina;
         $programKegiatan->save();
 
         return redirect()->route('program_kegiatan.index')->with('success', 'Program kegiatan berhasil diverifikasi.');
