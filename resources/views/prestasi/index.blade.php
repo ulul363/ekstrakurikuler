@@ -40,7 +40,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Prestasi</th>
-                                    <th>Tanggal</th>
                                     <th>Nama Siswa</th>
                                     <th>Tahun Ajaran</th>
                                     <th>Berkas</th>
@@ -54,7 +53,6 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->prestasi }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                         <td>
                                             @php
                                                 $index = 1;
