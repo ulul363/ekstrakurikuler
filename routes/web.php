@@ -192,6 +192,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/program_kegiatan/{id}/update', [ProgramKegiatanController::class, 'update'])->name('program_kegiatan.update')->middleware('permission:program_kegiatan.update');
     Route::delete('/program_kegiatan/destroy/{id}', [ProgramKegiatanController::class, 'destroy'])->name('program_kegiatan.destroy')->middleware('permission:program_kegiatan.destroy');
     Route::get('/program_kegiatan/{id}', [ProgramKegiatanController::class, 'show'])->name('program_kegiatan.show')->middleware('permission:program_kegiatan.show');
+    Route::post('program_kegiatan/verifikasi/{id}', [ProgramKegiatanController::class, 'verifikasi'])->name('program_kegiatan.verifikasi')->middleware('permission:program_kegiatan.verifikasi');
+
 
     // Menu Kehadiran
     Route::get('/kehadiran', [KehadiranController::class, 'index'])->name('kehadiran.index')->middleware('permission:kehadiran.index');
