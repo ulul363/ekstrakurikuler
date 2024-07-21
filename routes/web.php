@@ -213,7 +213,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/prestasi/{id}/update', [PrestasiController::class, 'update'])->name('prestasi.update')->middleware('permission:prestasi.update');
     Route::delete('/prestasi/{id}/destroy', [PrestasiController::class, 'destroy'])->name('prestasi.destroy')->middleware('permission:prestasi.destroy');
     Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
-
+    Route::post('prestasi/verifikasi/{id}', [PrestasiController::class, 'verifikasi'])->name('prestasi.verifikasi')->middleware('permission:prestasi.verifikasi');
 });
 
 
