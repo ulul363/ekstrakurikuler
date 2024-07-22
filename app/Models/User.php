@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Ketua;
+use App\Models\Pembina;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -38,8 +39,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function pembina()
+    {
+        return $this->hasOne(Pembina::class, 'user_id');
+    }
+
     public function ketua()
     {
-        return $this->hasOne(Ketua::class, 'user_id', 'id');
+        return $this->hasOne(Ketua::class, 'user_id');
     }
 }

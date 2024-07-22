@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Pembina;
 use Illuminate\Http\Request;
+use App\Models\Ekstrakurikuler;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class PembinaController extends Controller
 {
@@ -12,36 +17,73 @@ class PembinaController extends Controller
      */
     public function index()
     {
-        $pembina = Pembina::all();
+        $pembina = Pembina::with('user', 'ekstrakurikuler')->get();
         return view('pembina.index', compact('pembina'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function createUser()
     {
-        return view('pembina.create'); // Mengembalikan view untuk membuat pembina baru
+        $user = new User();
+        return view('pembina.createuser', compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function storeUser(Request $request)
     {
-        $request->validate([
-            'nip_pembina' => 'required|unique:pembina',
-            'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'email' => 'required|email',
-            'no_hp' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        Pembina::create($request->all());
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        return redirect()->route('pembina.index')
-            ->with('success', 'Data pembina berhasil dibuat.');
+        $role = Role::where('name', 'Pembina')->first();
+        $user->assignRole($role);
+        $user->syncPermissions($role->permissions);
+
+        // Store user id and name in session
+        $request->session()->put('id_user', $user->id);
+        $request->session()->put('user_name', $user->name);
+
+        return redirect()->route('pembina.create');
+    }
+
+    public function create(Request $request)
+    {
+        $id_user = $request->session()->get('id_user');
+        $user_name = $request->session()->get('user_name');
+        $ekstrakurikuler = Ekstrakurikuler::all();
+
+        return view('pembina.create', compact('id_user', 'user_name', 'ekstrakurikuler'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'ekstrakurikuler_id' => 'required|exists:ekstrakurikuler,id_ekstrakurikuler',
+            'nip' => 'required|string|max:20|unique:pembina',
+            'nama' => 'required|string|max:50',
+            'alamat' => 'required|string|max:50',
+            'jk' => 'required|in:L,P',
+            'no_hp' => 'required|string|max:15',
+        ]);
+
+        Pembina::create([
+            'user_id' => $validated['user_id'],
+            'ekstrakurikuler_id' => $validated['ekstrakurikuler_id'],
+            'nip' => $validated['nip'],
+            'nama' => $validated['nama'],
+            'alamat' => $validated['alamat'],
+            'jk' => $validated['jk'],
+            'no_hp' => $validated['no_hp'],
+        ]);
+
+        return redirect()->route('pembina.index')->with('success', 'Pembina berhasil dibuat.');
     }
 
     /**
@@ -55,39 +97,72 @@ class PembinaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pembina $pembina)
+    public function edit($id)
     {
-        return view('pembina.edit', compact('pembina'));
+        $pembina = Pembina::with('user', 'ekstrakurikuler')->findOrFail($id);
+        $ekstrakurikuler = Ekstrakurikuler::all();
+        return view('pembina.edit', compact('pembina', 'ekstrakurikuler'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pembina $pembina)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'nip_pembina' => 'required|unique:pembina,nip_pembina,' . $pembina->nip_pembina,
-            'nama' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'email' => 'required|email',
-            'no_hp' => 'required',
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'ekstrakurikuler_id' => ['required', 'exists:ekstrakurikuler,id_ekstrakurikuler'],
+            'nip' => 'required|string|max:20|unique:pembina,nip,' . $id . ',id_pembina',
+            'nama' => 'required|string|max:50',
+            'alamat' => 'required|string|max:50',
+            'jk' => 'required|in:L,P',
+            'no_hp' => 'required|string|max:15',
         ]);
 
-        $pembina->update($request->all());
+        $pembina = Pembina::findOrFail($id);
+        $pembina->update($validated);
 
-        return redirect()->route('pembina.index')
-            ->with('success', 'Pembina updated successfully.');
+        return redirect()->route('pembina.index')->with('success', 'Data pembina berhasil diperbarui.');
+    }
+
+    public function updateUser(Request $request, $user_id)
+    {
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($user_id);
+        $user->password = Hash::make($validated['password']);
+        $user->save();
+
+        // Redirect kembali ke halaman edit pembina
+        $pembina = Pembina::where('user_id', $user_id)->first();
+        return redirect()
+            ->route('pembina.edit', $pembina->id_pembina)
+            ->with('success', 'Password user berhasil direset.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pembina $pembina)
+    public function destroy($id)
     {
-        $pembina->delete();
+        try {
+            $pembina = Pembina::findOrFail($id);
+            $user = User::findOrFail($pembina->user_id);
 
-        return redirect()->route('pembina.index')
-            ->with('success', 'Pembina deleted successfully.');
+            // Menghapus user terlebih dahulu
+            $user->delete();
+
+            // Menghapus pembina setelah user dihapus
+            $pembina->delete();
+
+            return redirect()->route('pembina.index')->with('success', 'Data pembina dan akun pengguna berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                // Jika terjadi kesalahan integritas, tampilkan pesan error
+                return redirect()->route('pembina.index')->with('error', 'Pembina tidak dapat dihapus karena sudah digunakan di tabel lain.');
+            }
+
+            // Jika terjadi kesalahan lain, tampilkan pesan error umum
+            return redirect()->route('pembina.index')->with('error', 'Terjadi kesalahan saat menghapus pembina.');
+        }
     }
 }

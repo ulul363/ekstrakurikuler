@@ -11,9 +11,42 @@ class PrestasiController extends Controller
 {
     public function index()
     {
-        $ketuaId = Auth::user()->ketua->id_ketua;
-        $prestasi = Prestasi::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
+        $user = auth()->user();
+
+        if ($user->hasRole('Pembina')) {
+            $pembina = $user->pembina;
+
+            if (!$pembina) {
+                abort(403, 'Pembina data not found.');
+            }
+
+            $ekstrakurikulerId = $pembina->ekstrakurikuler_id;
+            $prestasi = Prestasi::with('ekstrakurikuler', 'ketua')
+                ->whereHas('ekstrakurikuler', function ($query) use ($ekstrakurikulerId) {
+                    $query->where('id_ekstrakurikuler', $ekstrakurikulerId);
+                })
+                ->get();
+        } else {
+            $ketuaId = $user->ketua->id_ketua;
+            $prestasi = Prestasi::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
+        }
+
         return view('prestasi.index', compact('prestasi'));
+    }
+
+    public function verifikasi(Request $request, $id)
+    {
+        $prestasi = Prestasi::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:disetujui,ditolak',
+        ]);
+
+        $prestasi->status = $request->input('status');
+        $prestasi->verifikasi_id = auth()->user()->pembina->id_pembina;
+        $prestasi->save();
+
+        return redirect()->route('prestasi.index')->with('success', 'Kehadiran berhasil diverifikasi.');
     }
 
     public function create()

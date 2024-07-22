@@ -27,12 +27,14 @@
 
 
                 @hasrole('Admin')
-                    <li class="nav-item">
-                        <a href="{{ route('role.index') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">Role Management</span>
-                        </a>
-                    </li>
+                    @can('role.index')
+                        <li class="nav-item">
+                            <a href="{{ route('role.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
+                                <span class="pcoded-mtext d-none d-md-inline">Role Management</span>
+                            </a>
+                        </li>
+                    @endcan
 
                     <li class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link "><span class="pcoded-micon"><i
@@ -42,10 +44,11 @@
                             @can('ketua.index')
                                 <li><a href="{{ route('ketua.index') }}">Ketua</a></li>
                             @endcan
-                            <li><a href="{{ route('pembina.index') }}">Pembina</a></li>
+                            @can('pembina.index')
+                                <li><a href="{{ route('pembina.index') }}">Pembina</a></li>
+                            @endcan
                         </ul>
                     </li>
-
 
                     @can('ekstrakurikuler.index')
                         <li class="nav-item">
@@ -55,7 +58,6 @@
                             </a>
                         </li>
                     @endcan
-
 
                     @can('jadwal_ekstrakurikuler.index')
                         <li class="nav-item">
@@ -77,7 +79,7 @@
                 @endhasrole
 
 
-                @hasrole('Ketua')
+                @hasrole('Ketua|Pembina')
                     @can('program_kegiatan.index')
                         <li class="nav-item">
                             <a href="{{ route('program_kegiatan.index') }}" class="nav-link">
