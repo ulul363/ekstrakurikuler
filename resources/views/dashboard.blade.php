@@ -2,6 +2,9 @@
 @section('content')
 
 <div class="pcoded-content">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.bootstrap5.css"> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
 
     <div class="page-header">
         <div class="page-block">
@@ -20,249 +23,203 @@
     </div>
 
     <div class="row">
-
-        <div class="col-xl-6 col-md-12">
-            <div class="card table-card">
-                <div class="card-header">
-                    <h5>Projects</h5>
-                    <div class="card-header-right">
-                        <div class="btn-group card-option">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="feather icon-more-horizontal"></i>
-                            </button>
-                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                            </ul>
-                        </div>
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body table-border-style">
+                    <div class="card-header">
+                        <h4 class="card-title">Tabel Program Kegiatan</h4>
                     </div>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
+                    <div>
+                        <table id="tabelEkstrakurikuler" class="display" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <div class="chk-option">
-                                            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-label"></span>
-                                            </label>
-                                        </div>
-                                        Assigned
-                                    </th>
-                                    <th>Name</th>
-                                    <th>Due Date</th>
-                                    <th class="text-right">Priority</th>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="chk-option">
-                                            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-label"></span>
-                                            </label>
-                                        </div>
-                                        <div class="d-inline-block align-middle">
-                                            <img src="assets/images/user/avatar-4.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                            <div class="d-inline-block">
-                                                <h6>John Deo</h6>
-                                                <p class="text-muted m-b-0">Graphics Designer</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Able Pro</td>
-                                    <td>Jun, 26</td>
-                                    <td class="text-right"><label class="badge badge-light-danger">Low</label></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk-option">
-                                            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-label"></span>
-                                            </label>
-                                        </div>
-                                        <div class="d-inline-block align-middle">
-                                            <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                            <div class="d-inline-block">
-                                                <h6>Jenifer Vintage</h6>
-                                                <p class="text-muted m-b-0">Web Designer</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Mashable</td>
-                                    <td>March, 31</td>
-                                    <td class="text-right"><label class="badge badge-light-primary">high</label></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk-option">
-                                            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-label"></span>
-                                            </label>
-                                        </div>
-                                        <div class="d-inline-block align-middle">
-                                            <img src="assets/images/user/avatar-3.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                            <div class="d-inline-block">
-                                                <h6>William Jem</h6>
-                                                <p class="text-muted m-b-0">Developer</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Flatable</td>
-                                    <td>Aug, 02</td>
-                                    <td class="text-right"><label class="badge badge-light-success">medium</label></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk-option">
-                                            <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
-                                                <input type="checkbox" class="custom-control-input">
-                                                <span class="custom-control-label"></span>
-                                            </label>
-                                        </div>
-                                        <div class="d-inline-block align-middle">
-                                            <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                            <div class="d-inline-block">
-                                                <h6>David Jones</h6>
-                                                <p class="text-muted m-b-0">Developer</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Guruable</td>
-                                    <td>Sep, 22</td>
-                                    <td class="text-right"><label class="badge badge-light-primary">high</label></td>
-                                </tr>
+                                @foreach ($ekstrakurikulers as $ekstrakurikuler)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $ekstrakurikuler->nama }}</td> 
+                                        <td></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 col-md-12">
-            <div class="card latest-update-card">
-                <div class="card-header">
-                    <h5>Latest Updates</h5>
-                    <div class="card-header-right">
-                        <div class="btn-group card-option">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="feather icon-more-horizontal"></i>
-                            </button>
-                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                            </ul>
-                        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body table-border-style">
+                    <div class="card-header">
+                        <h4 class="card-title">Tabel Prestasi</h4>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="latest-update-box">
-                        <div class="row p-t-30 p-b-30">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline-flex">2 hrs ago</p>
-                                <i class="feather icon-twitter bg-twitter update-icon"></i>
-                            </div>
-                            <div class="col">
-                                <a href="#!">
-                                    <h6>+ 1652 Followers</h6>
-                                </a>
-                                <p class="text-muted m-b-0">You’re getting more and more followers, keep it up!</p>
-                            </div>
-                        </div>
-                        <div class="row p-b-30">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline-flex">4 hrs ago</p>
-                                <i class="feather icon-briefcase bg-c-red update-icon"></i>
-                            </div>
-                            <div class="col">
-                                <a href="#!">
-                                    <h6>+ 5 New Products were added!</h6>
-                                </a>
-                                <p class="text-muted m-b-0">Congratulations!</p>
-                            </div>
-                        </div>
-                        <div class="row p-b-0">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline-flex">2 day ago</p>
-                                <i class="feather icon-facebook bg-facebook update-icon"></i>
-                            </div>
-                            <div class="col">
-                                <a href="#!">
-                                    <h6>+1 Friend Requests</h6>
-                                </a>
-                                <p class="text-muted m-b-10">This is great, keep it up!</p>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <td class="b-none">
-                                                <a href="#!" class="align-middle">
-                                                    <img src="assets/images/user/avatar-2.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
-                                                    <div class="d-inline-block">
-                                                        <h6>Jeny William</h6>
-                                                        <p class="text-muted m-b-0">Graphic Designer</p>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="#!" class="b-b-primary text-primary">View all Projects</a>
+                    <div>
+                        <table id="tabelPrestasi" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Prestasi</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Tahun Ajaran</th>
+                                    <th>Berkas</th>
+                                    <th>Diverifikasi Oleh</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($prestasi as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->prestasi }}</td>
+                                        <td>
+                                            @php
+                                                $index = 1;
+                                            @endphp
+                                            @foreach (json_decode($item->nama_siswa) as $siswa)
+                                                <div>{{ $index }}. {{ $siswa }}</div>
+                                                @php
+                                                    $index++;
+                                                @endphp
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $item->tahun_ajaran }}</td>
+                                        <td><a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
+                                                Berkas</a></td>
+                                        <td>
+                                            @if ($item->pembina && $item->pembina->nama)
+                                                {{ $item->pembina->nama }}
+                                            @else
+                                                Belum diverifikasi
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif ($item->status == 'disetujui')
+                                                <span class="badge badge-success">Disetujui</span>
+                                            @elseif ($item->status == 'ditolak')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $item->status }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-
-
-
+    <div class="row">
         <div class="col-xl-12">
             <div class="card">
-                <div class="card-header">
-                    <h5>Striped Table</h5>
-                    <span class="d-block m-t-5">use class <code>table-striped</code> inside table element</span>
-                </div>
                 <div class="card-body table-border-style">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
+                    <div class="card-header">
+                        <h4 class="card-title">Tabel Kehadiran</h4>
+                    </div>
+                    <div>
+                        <table id="tabelKehadiran" class="display" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Berkas</th>
+                                    <th>Diverifikasi oleh</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($kehadiran as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
+                                                Berkas</a>
+                                        </td>
+                                        <td>
+                                            @if ($item->pembina && $item->pembina->nama)
+                                                {{ $item->pembina->nama }}
+                                            @else
+                                                Belum diverifikasi
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif ($item->status == 'disetujui')
+                                                <span class="badge badge-success">Disetujui</span>
+                                            @elseif ($item->status == 'ditolak')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $item->status }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body table-border-style">
+                    <div class="card-header">
+                        <h4 class="card-title">Tabel Program Kegiatan</h4>
+                    </div>
+                    <div>
+                        <table id="tabelProgramKegiatan" class="display" style="width:100%">
+                            <thead>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <th>No</th>
+                                    <th>Nama Program</th>
+                                    <th>Tahun Ajaran</th>
+                                    <th>Deskripsi</th>
+                                    <th>Diverifikasi oleh</th>
+                                    <th>Status</th>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($programKegiatan as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_program }}</td>
+                                        <td>{{ $item->tahun_ajaran }}</td>
+                                        <td>{{ $item->deskripsi }}</td>
+                                        <td>
+                                            @if ($item->pembina && $item->pembina->nama)
+                                                {{ $item->pembina->nama }}
+                                            @else
+                                                Belum diverifikasi
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif ($item->status == 'disetujui')
+                                                <span class="badge badge-success">Disetujui</span>
+                                            @elseif ($item->status == 'ditolak')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -272,6 +229,24 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.0/js/dataTables.bootstrap5.js"></script> --}}
+<script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+<script>
+    new DataTable('#tabelEkstrakurikuler');
+</script>
+<script>
+    new DataTable('#tabelPrestasi');
+</script>
+<script>
+    new DataTable('#tabelKehadiran');
+</script>
+<script>
+    new DataTable('#tabelProgramKegiatan');
+</script>
 @endsection
 
 
