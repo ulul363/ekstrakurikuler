@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KetuaController;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
 use App\Http\Controllers\JadwalEkstrakurikulerController;
 use App\Http\Controllers\PrestasiEkstrakurikulerController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +119,9 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Menu Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
     // User Access Management
     Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('permission:user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:user.create');
