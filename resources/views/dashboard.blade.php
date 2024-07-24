@@ -25,23 +25,29 @@
             <div class="card">
                 <div class="card-body table-border-style">
                     <div class="card-header">
-                        <h4 class="card-title">Tabel Ekstrakurikuler</h4>
+                        <h4 class="card-title">Tabel Jadwal Ekstrakurikuler</h4>
                     </div>
                     <div>
                         <table id="tabelEkstrakurikuler" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama</th>
+                                    <th>Ekstrakurikuler</th>
                                     <th>Deskripsi</th>
+                                    <th>Hari</th>
+                                    <th>Waktu</th>
+                                    <th>Lokasi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($ekstrakurikulers as $ekstrakurikuler)
+                                @foreach ($jadwalEkstrakurikuler as $jadwal)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $ekstrakurikuler->nama }}</td> 
-                                        <td>{{ $ekstrakurikuler->deskripsi}}</td>
+                                        <td>{{ $jadwal->ekstrakurikuler->nama }}</td> 
+                                        <td>{{ $jadwal->ekstrakurikuler->deskripsi}}</td>
+                                        <td>{{ $jadwal->hari }}</td>
+                                        <td>{{ $jadwal->waktu }}</td>
+                                        <td>{{ $jadwal->lokasi }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
