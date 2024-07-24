@@ -33,7 +33,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'manage jadwal ekstrakurikuler',
             'manage prestasi ekstrakurikuler',
             'manage prestasi peserta',
-            'chat with pembina'
+            'chat with pembina',
+            'view laporan',
         ];
 
         foreach ($adminPermissions as $permission) {

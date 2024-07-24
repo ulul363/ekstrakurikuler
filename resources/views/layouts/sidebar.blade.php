@@ -76,8 +76,16 @@
                             </a>
                         </li>
                     @endcan
-                @endhasrole
 
+                    @can('laporan.index')
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}" class="nav-link">
+                            <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
+                            <span class="pcoded-mtext">Laporan</span>
+                        </a>
+                    </li>
+                @endcan
+                @endhasrole
 
                 @hasrole('Ketua|Pembina')
                     @can('program_kegiatan.index')

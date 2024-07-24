@@ -43,6 +43,8 @@
                                     <th>No</th>
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
+                                    <th>Kegiatan</th>
+                                    <th>Hasil</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
