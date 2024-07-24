@@ -42,6 +42,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
+                                    <th>Deskripsi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -50,6 +51,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $ekstrakurikuler->nama }}</td>
+                                        <td>{{ $ekstrakurikuler->deskripsi}}</td>
                                         <td>
                                             <form id="delete-ekstrakurikuler-{{ $ekstrakurikuler->id_ekstrakurikuler }}"
                                                 action="{{ route('ekstrakurikuler.destroy', $ekstrakurikuler->id_ekstrakurikuler) }}"
@@ -100,6 +102,11 @@
                                                             <input type="text" class="form-control" id="nama"
                                                                 name="nama" value="{{ $ekstrakurikuler->nama }}"
                                                                 required>
+                                                            <label for="deskripsi">Deskripsi Ekstrakurikuler</label>
+                                                            <input type="text" class="form-control" id="deskripsi"
+                                                                name="deskripsi"
+                                                                value="{{ $ekstrakurikuler->deskripsi }}"
+                                                                required>
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Simpan
                                                             Perubahan</button>
@@ -137,6 +144,8 @@
                         <div class="form-group">
                             <label for="nama">Nama Ekstrakurikuler</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
+                            <label for="deskripsi">Deskripsi Ekstrakurikuler</label>
+                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

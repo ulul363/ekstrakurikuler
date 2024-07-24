@@ -23,10 +23,12 @@ class EkstrakurikulerController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:20',
+            'deskripsi' => 'required|string|max:200',
         ]);
 
         Ekstrakurikuler::create([
             'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
         ]);
 
         return redirect()->route('ekstrakurikuler.index')->with('success', 'Ekstrakurikuler created successfully.');

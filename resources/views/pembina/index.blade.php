@@ -42,7 +42,7 @@
                             <i class="fa fa-plus"></i> Tambah Pembina
                         </a>
 
-                        <table class="table table-bordered">
+                        <table id="tabelKetua" class="display" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>No</th>
