@@ -41,11 +41,16 @@ class DashboardController extends Controller
                 $query->where('id_ekstrakurikuler', $ekstrakurikulerId);
             })
             ->get();
-        } else {
+        } else if ($user->hasRole('Ketua')){
             $ketuaId = $user->ketua->id_ketua;
             $prestasi = Prestasi::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
             $kehadiran = Kehadiran::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
             $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
+        } else {
+            $ketua = Ketua::all();
+            $prestasi = Prestasi::all();
+            $kehadiran = Kehadiran::all();
+            $programKegiatan = ProgramKegiatan::all();
         }
         $ekstrakurikulers = Ekstrakurikuler::all();
         return view('dashboard', compact('ekstrakurikulers', 'prestasi', 'kehadiran', 'programKegiatan'));

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('verifikasi_id')->nullable();
             $table->string('prestasi', 50);
             $table->json('nama_siswa');
+            $table->json('kelas');
             $table->integer('tahun_ajaran');
             $table->string('berkas', 150);
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');

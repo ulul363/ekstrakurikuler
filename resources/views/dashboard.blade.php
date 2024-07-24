@@ -2,9 +2,7 @@
 @section('content')
 
 <div class="pcoded-content">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.bootstrap5.css"> --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" /> --}}
 
     <div class="page-header">
         <div class="page-block">
@@ -27,7 +25,7 @@
             <div class="card">
                 <div class="card-body table-border-style">
                     <div class="card-header">
-                        <h4 class="card-title">Tabel Program Kegiatan</h4>
+                        <h4 class="card-title">Tabel Ekstrakurikuler</h4>
                     </div>
                     <div>
                         <table id="tabelEkstrakurikuler" class="display" style="width:100%">
@@ -43,7 +41,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $ekstrakurikuler->nama }}</td> 
-                                        <td></td>
+                                        <td>{{ $ekstrakurikuler->deskripsi}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -66,8 +64,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    @if (auth()->user()->hasRole('Admin'))
+                                        <th>Ekstrakurikuler</th>
+                                    @endif
                                     <th>Prestasi</th>
                                     <th>Nama Siswa</th>
+                                    <th>Kelas</th>
                                     <th>Tahun Ajaran</th>
                                     <th>Berkas</th>
                                     <th>Diverifikasi Oleh</th>
@@ -78,16 +80,32 @@
                                 @foreach ($prestasi as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        @if (auth()->user()->hasRole('Admin'))
+                                        <td>{{ $item->ekstrakurikuler->nama }}</td>
+                                        @endif
                                         <td>{{ $item->prestasi }}</td>
                                         <td>
                                             @php
-                                                $index = 1;
+                                                $siswaList = json_decode($item->nama_siswa);
                                             @endphp
-                                            @foreach (json_decode($item->nama_siswa) as $siswa)
-                                                <div>{{ $index }}. {{ $siswa }}</div>
-                                                @php
-                                                    $index++;
-                                                @endphp
+                                            @foreach ($siswaList as $index => $siswa)
+                                                @if(count($siswaList) > 1)
+                                                    <div>{{ $loop->iteration }}. {{ $siswa }}</div>
+                                                @else
+                                                    <div>{{ $siswa }}</div>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @php
+                                                $kelasList = json_decode($item->kelas);
+                                            @endphp
+                                            @foreach ($kelasList as $index => $kls)
+                                                @if(count($kelasList) > 1)
+                                                    <div>{{ $loop->iteration }}. {{ $kls }}</div>
+                                                @else
+                                                    <div>{{ $kls }}</div>
+                                                @endif
                                             @endforeach
                                         </td>
                                         <td>{{ $item->tahun_ajaran }}</td>
@@ -133,6 +151,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    @if (auth()->user()->hasRole('Admin'))
+                                        <th>Ekstrakurikuler</th>
+                                    @endif
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
                                     <th>Diverifikasi oleh</th>
@@ -143,7 +164,11 @@
                                 @foreach ($kehadiran as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->tanggal }}</td>
+                                        @if (auth()->user()->hasRole('Admin'))
+                                        <td>{{ $item->ekstrakurikuler->nama }}</td>
+                                        @endif
+                                        {{-- <td>{{ $item->tanggal }}</td> --}}
+                                        <td>{{ date('d-m-Y', strtotime($item->tanggal)) }}</td>
                                         <td>
                                             <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a>
@@ -188,6 +213,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    @if (auth()->user()->hasRole('Admin'))
+                                        <th>Ekstrakurikuler</th>
+                                    @endif
                                     <th>Nama Program</th>
                                     <th>Tahun Ajaran</th>
                                     <th>Deskripsi</th>
@@ -199,6 +227,9 @@
                                 @foreach ($programKegiatan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        @if (auth()->user()->hasRole('Admin'))
+                                        <td>{{ $item->ekstrakurikuler->nama }}</td>
+                                        @endif
                                         <td>{{ $item->nama_program }}</td>
                                         <td>{{ $item->tahun_ajaran }}</td>
                                         <td>{{ $item->deskripsi }}</td>
@@ -231,9 +262,7 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/2.1.0/js/dataTables.bootstrap5.js"></script> --}}
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
 <script>
     new DataTable('#tabelEkstrakurikuler');
@@ -246,7 +275,7 @@
 </script>
 <script>
     new DataTable('#tabelProgramKegiatan');
-</script>
+</script> --}}
 @endsection
 
 

@@ -15,7 +15,7 @@ class Prestasi extends Model
     protected $table = 'prestasi';
     protected $primaryKey = 'id_prestasi';
 
-    protected $fillable = ['ekstrakurikuler_id', 'ketua_id', 'verifikasi_id', 'prestasi', 'nama_siswa', 'tahun_ajaran', 'berkas', 'status'];
+    protected $fillable = ['ekstrakurikuler_id', 'ketua_id', 'verifikasi_id', 'prestasi', 'nama_siswa', 'kelas', 'tahun_ajaran', 'berkas', 'status'];
 
     protected $casts = [
         'nama_siswa' => 'array', // Menyimpan nama siswa sebagai array

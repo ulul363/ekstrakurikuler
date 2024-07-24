@@ -45,8 +45,34 @@
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="kelas">Kelas</label>
+                                    <select name="kelas[]" id="kelas" class="form-control @error('kelas.*') is-invalid @enderror" required>
+                                            <option value=""></option>
+                                        <optgroup label="Kelas X">
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="X {{ $i }}">X {{ $i }}</option>
+                                            @endfor
+                                        </optgroup>
+                                        <optgroup label="Kelas XI">
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="XI {{ $i }}">XI {{ $i }}</option>
+                                            @endfor
+                                        </optgroup>
+                                        <optgroup label="Kelas XII">
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <option value="XII {{ $i }}">XII {{ $i }}</option>
+                                            @endfor
+                                        </optgroup>
+                                    </select>
+                                    @error('kelas.*')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama Siswa</button>
+                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama Siswa & Kelas</button>
+
+                            
 
                             <div class="form-group">
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
@@ -78,12 +104,48 @@
 @section('scripts')
     <script>
         document.getElementById('add_nama_siswa').addEventListener('click', function() {
+            // var wrapper = document.getElementById('nama_siswa_wrapper');
+            // var newInput = document.createElement('div');
+            // newInput.className = 'form-group';
+            // newInput.innerHTML =
+            //     '<label for="nama_siswa">Nama Siswa</label><input type="text" name="nama_siswa[]" class="form-control" required>';
+            // wrapper.appendChild(newInput);
             var wrapper = document.getElementById('nama_siswa_wrapper');
-            var newInput = document.createElement('div');
-            newInput.className = 'form-group';
-            newInput.innerHTML =
-                '<label for="nama_siswa">Nama Siswa</label><input type="text" name="nama_siswa[]" class="form-control" required>';
-            wrapper.appendChild(newInput);
+
+            // Create new form group for Nama Siswa
+            var newFormGroup = document.createElement('div');
+            newFormGroup.className = 'form-group';
+            newFormGroup.innerHTML =
+                '<label for="nama_siswa">Nama Siswa</label>' +
+                '<input type="text" name="nama_siswa[]" class="form-control" required>';
+            
+            // Create new form group for Kelas
+            var newFormGroupKelas = document.createElement('div');
+            newFormGroupKelas.className = 'form-group';
+            newFormGroupKelas.innerHTML =
+                '<label for="kelas">Kelas</label>' +
+                '<select name="kelas[]" class="form-control" required>' +
+                '    <option value=""></option>' +
+                '    <optgroup label="Kelas X">' +
+                '        @for ($i = 1; $i <= 10; $i++)' +
+                '            <option value="X {{ $i }}">X {{ $i }}</option>' +
+                '        @endfor' +
+                '    </optgroup>' +
+                '    <optgroup label="Kelas XI">' +
+                '        @for ($i = 1; $i <= 10; $i++)' +
+                '            <option value="XI {{ $i }}">XI {{ $i }}</option>' +
+                '        @endfor' +
+                '    </optgroup>' +
+                '    <optgroup label="Kelas XII">' +
+                '        @for ($i = 1; $i <= 10; $i++)' +
+                '            <option value="XII {{ $i }}">XII {{ $i }}</option>' +
+                '        @endfor' +
+                '    </optgroup>' +
+                '</select>';
+
+            // Append the new form groups to the wrapper in the correct order
+            wrapper.appendChild(newFormGroup);
+            wrapper.appendChild(newFormGroupKelas);
         });
 
         $(document).ready(function() {

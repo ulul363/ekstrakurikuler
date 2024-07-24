@@ -59,6 +59,7 @@ class PrestasiController extends Controller
         $request->validate([
             'prestasi' => 'required|string|max:50',
             'nama_siswa.*' => 'required|string|max:50',
+            'kelas.*' =>'required|string|max:5',
             'tahun_ajaran' => 'required|integer',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
@@ -84,6 +85,7 @@ class PrestasiController extends Controller
             'ekstrakurikuler_id' => $ekstrakurikuler_id,
             'ketua_id' => $ketua_id,
             'nama_siswa' => json_encode($request->nama_siswa), // Jika nama_siswa adalah array
+            'kelas' => json_encode($request->kelas),
             'tahun_ajaran' => $request->tahun_ajaran,
             'berkas' => $berkasPath,
             'status' => 'pending',
