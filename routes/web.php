@@ -11,10 +11,10 @@ use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\KehadiranController;
+use App\Http\Controllers\JadwalPembinaController2;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
 use App\Http\Controllers\JadwalEkstrakurikulerController;
-use App\Http\Controllers\PrestasiEkstrakurikulerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,6 +206,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
     Route::post('kehadiran/verifikasi/{id}', [KehadiranController::class, 'verifikasi'])->name('kehadiran.verifikasi')->middleware('permission:kehadiran.verifikasi');
 
+    // Jadwal Pembina
+
+    // Route::get('/buatjadwal', [JadwalPembinaController::class, 'buatjadwal'])->name('buatjadwal.index')->middleware('permission:buatjadwal.index');
+    // Route::get('/jadwal/pembina/ajukan-pertemuan/{id}', [JadwalPembinaController::class, 'ajukanpertemuan'])->name('jadwal.pembina.ajukanpertemuan');
+    Route::get('/jadwal_pembina2', [JadwalPembinaController2::class, 'index'])->name('jadwal_pembina.index2')->middleware('permission:jadwal_pembina.index2');
+    Route::get('/jadwal_pembina2/create', [JadwalPembinaController2::class, 'create'])->name('jadwal_pembina.create2')->middleware('permission:jadwal_pembina.create2');
+    Route::post('/jadwal_pembina2/store', [JadwalPembinaController2::class, 'store'])->name('jadwal_pembina.store2')->middleware('permission:jadwal_pembina.store2');
+    Route::get('/jadwal_pembina2/{id}/edit', [JadwalPembinaController2::class, 'edit'])->name('jadwal_pembina.edit2')->middleware('permission:jadwal_pembina.edit2');
+    Route::put('/jadwal_pembina2/{id}/update', [JadwalPembinaController2::class, 'update'])->name('jadwal_pembina.update2')->middleware('permission:jadwal_pembina.update2');
+    Route::delete('/jadwal_pembina2/destroy/{id}', [JadwalPembinaController2::class, 'destroy'])->name('jadwal_pembina.destroy2')->middleware('permission:jadwal_pembina.destroy2');
+    Route::get('/jadwal_pembina2/{id}', [JadwalPembinaController2::class, 'show'])->name('jadwal_pembina.show2')->middleware('permission:jadwal_pembina.show2');
+
+
+
+
     // Menu Prestasi
     Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');
     Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create')->middleware('permission:prestasi.create');
@@ -216,11 +231,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
     Route::post('prestasi/verifikasi/{id}', [PrestasiController::class, 'verifikasi'])->name('prestasi.verifikasi')->middleware('permission:prestasi.verifikasi');
 
-
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-
     Route::post('/laporan/generate', [LaporanController::class, 'generatePDF'])->name('pdf');
-    
 });
 
 // Route::middleware(['auth', 'can:view laporan'])->group(function () {

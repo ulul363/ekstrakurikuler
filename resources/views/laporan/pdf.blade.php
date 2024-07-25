@@ -32,9 +32,36 @@
             font-style: italic;
             color: #777;
         }
+        .header {
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .alamat {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .garis {
+            border-top: 1px solid black;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
+    <!-- Kop Surat -->
+    {{-- <div class="header">
+        <img src="{{ asset('assets/images/logo-man3.png') }}" alt="Logo Mandemak" style="width: 80px; height: auto;">
+        <div><b>MADRASAH ALIYAH NEGERI DEMAK</b></div>
+        <div class="alamat">
+            Jl. Diponegoro No. 27 Demak Jogoloyo, Kecamatan Wonosalam,<br>
+            Kabupaten Demak Jawa Tengah 59571<br>
+            Telepon: 0291-681219 | Email: mandemak1@gmail.com
+        </div>
+    </div>
+    <div class="garis"></div> --}}
+
+    <!-- Content Laporan -->
     <h1>Laporan Kehadiran, Program Kegiatan, dan Prestasi</h1>
 
     <!-- Program Kegiatan -->

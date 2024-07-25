@@ -78,13 +78,13 @@
                     @endcan
 
                     @can('laporan.index')
-                    <li class="nav-item">
-                        <a href="{{ route('laporan.index') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
-                            <span class="pcoded-mtext">Laporan</span>
-                        </a>
-                    </li>
-                @endcan
+                        <li class="nav-item">
+                            <a href="{{ route('laporan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
+                                <span class="pcoded-mtext">Laporan</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
                 @hasrole('Ketua|Pembina')
@@ -114,168 +114,17 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('jadwalpembina.index2')
+                        <li class="nav-item">
+                            <a href="{{ route('jadwalpembina.index2') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
+                                <span class="pcoded-mtext">Pertemuan</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
-                {{-- @hasrole('admin')
-                    <li class="nav-item">
-                        <a href="{{ route('manage.users') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-list"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">Daftar Pengguna</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.siswa') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-users"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">Siswa</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.pembina') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-user-check"></i></span>
-                            <span class="pcoded-mtext d-none d-md-inline">Pembina</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('manage.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                            <span class="pcoded-mtext">Ekstrakurikuler</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('manage.program.kegiatan') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                            <span class="pcoded-mtext">Program Kegiatan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.kehadiran') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-check-circle"></i></span>
-                            <span class="pcoded-mtext">Kehadiran</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.jadwal.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
-                            <span class="pcoded-mtext">Jadwal Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.prestasi.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-award"></i></span>
-                            <span class="pcoded-mtext">Prestasi Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('manage.prestasi.peserta') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-star"></i></span>
-                            <span class="pcoded-mtext">Prestasi Peserta</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('chat.with.pembina') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
-                            <span class="pcoded-mtext">Chat</span>
-                        </a>
-                    </li>
-                @endhasrole --}}
-
-                {{-- @hasrole('pembina')
-                    <li class="nav-item">
-                        <a href="{{ route('review.program.kegiatan') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                            <span class="pcoded-mtext">Program Kegiatan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('review.kehadiran') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-check-circle"></i></span>
-                            <span class="pcoded-mtext">Kehadiran</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('view.jadwal.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
-                            <span class="pcoded-mtext">Jadwal Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('view.prestasi.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-award"></i></span>
-                            <span class="pcoded-mtext">Prestasi Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('review.prestasi.peserta') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-star"></i></span>
-                            <span class="pcoded-mtext">Prestasi Peserta</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('chat.with.siswa') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
-                            <span class="pcoded-mtext">Chat with Siswa</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('review.pertemuan') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
-                            <span class="pcoded-mtext">Review Pertemuan</span>
-                        </a>
-                    </li>
-                @endhasrole --}}
-
-                {{-- @hasrole('siswa')
-                    <li class="nav-item">
-                        <a href="{{ route('view.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                            <span class="pcoded-mtext">Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('add.view.program.kegiatan') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                            <span class="pcoded-mtext">Program Kegiatan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('add.view.berkas.kehadiran') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-check-circle"></i></span>
-                            <span class="pcoded-mtext">Berkas Kehadiran</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('view.jadwal.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
-                            <span class="pcoded-mtext">Jadwal Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('add.view.prestasi.ekstrakurikuler') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-award"></i></span>
-                            <span class="pcoded-mtext">Prestasi Ekstrakurikuler</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('add.view.prestasi.siswa') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-star"></i></span>
-                            <span class="pcoded-mtext">Prestasi Siswa</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('request.pertemuan') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
-                            <span class="pcoded-mtext">Request Pertemuan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('chat.with.pembina') }}" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
-                            <span class="pcoded-mtext">Chat with Pembina</span>
-                        </a>
-                    </li>
-                @endhasrole --}}
             </ul>
         </div>
     </div>
