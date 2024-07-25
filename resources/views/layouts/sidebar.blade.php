@@ -18,15 +18,16 @@
                     <label>Menu</label>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <span class="pcoded-micon"><i class="fa fa-dashboard"></i></span>
-                        <span class="pcoded-mtext d-none d-md-inline">Dashboard</span>
-                    </a>
-                </li>
-
-
                 @hasrole('Admin')
+                    @can('dashboard')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="fa fa-dashboard"></i></span>
+                                <span class="pcoded-mtext d-none d-md-inline">Dashboard</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     @can('role.index')
                         <li class="nav-item">
                             <a href="{{ route('role.index') }}" class="nav-link">
@@ -80,6 +81,15 @@
 
 
                 @hasrole('Ketua|Pembina')
+                    @can('dashboard')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="fa fa-dashboard"></i></span>
+                                <span class="pcoded-mtext d-none d-md-inline">Dashboard</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     @can('program_kegiatan.index')
                         <li class="nav-item">
                             <a href="{{ route('program_kegiatan.index') }}" class="nav-link">

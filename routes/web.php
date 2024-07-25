@@ -120,8 +120,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Menu Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('permission:dashboard');
+
     // User Access Management
     Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('permission:user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:user.create');
