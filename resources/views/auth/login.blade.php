@@ -24,7 +24,7 @@
                 <div class="row align-items-center ">
                     <div class="col-md-12">
                         <div class="card-body">
-                            <img src="{{ asset('assets/images/logo man3.png') }}" alt="bg-man" class="img-fluid mb-4">
+                            <img src="{{ asset('assets/images/logo-man3.png') }}" alt="bg-man" class="img-fluid mb-4">
                             <h5 class="mb-3 f-w-400"> <b>Sistem Informasi Ekstrakurikuler</b> </h5>
                             <h5> <b>MA Negeri Demak</b> </h5>
                             <hr>
