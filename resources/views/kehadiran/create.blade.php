@@ -10,7 +10,8 @@
                             <h5 class="m-b-10">Tambah Kehadiran</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                        class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('kehadiran.index') }}">Kehadiran</a></li>
                             <li class="breadcrumb-item">Tambah Kehadiran</li>
                         </ul>
@@ -38,14 +39,30 @@
                             @csrf
 
                             <div class="form-group">
+                                <label for="tahun_ajaran">Tahun Ajaran</label>
+                                <input type="number" name="tahun_ajaran" id="tahun_ajaran"
+                                    class="form-control @error('tahun_ajaran') is-invalid @enderror"
+                                    value="{{ old('tahun_ajaran') }}" required max="9999">
+                                @error('tahun_ajaran')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                @error('tanggal')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="berkas">Berkas (Gambar atau PDF)</label>
                                 <input type="file" class="form-control-file" id="berkas" name="berkas"
                                     accept="image/*,application/pdf" onchange="previewFile()">
+                                @error('berkas')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div id="preview" class="mb-3"></div>
@@ -84,6 +101,16 @@
                 preview.innerHTML = '';
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tahun_ajaran').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
+        });
     </script>
 @endsection
 
