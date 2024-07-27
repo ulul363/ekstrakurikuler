@@ -90,6 +90,7 @@
                                         @if (auth()->user()->hasRole('Admin'))
                                             <th>Ekstrakurikuler</th>
                                         @endif
+                                        <th>Tahun Ajaran</th>
                                         <th>Tanggal</th>
                                         <th>Berkas</th>
                                         <th>Diverifikasi oleh</th>
@@ -103,6 +104,7 @@
                                             @if (auth()->user()->hasRole('Admin'))
                                                 <td>{{ $item->ekstrakurikuler->nama }}</td>
                                             @endif
+                                            <td>{{ $item->tahun_ajaran }}</td>
                                             <td>{{ date('d-m-Y', strtotime($item->tanggal)) }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
