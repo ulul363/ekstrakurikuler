@@ -77,6 +77,15 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('laporan.index')
+                        <li class="nav-item">
+                            <a href="{{ route('laporan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-printer"></i></span>
+                                <span class="pcoded-mtext">Cetak Laporan</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
 

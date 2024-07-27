@@ -10,7 +10,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Cetak Laporan    </a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-body table-border-style">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Program Kegiatan</h4>
+                            <h4 class="card-title">Cetak Laporan Program Kegiatan</h4>
                         </div>
                         <div>
                             <table id="tabelProgramKegiatan" class="display" style="width:100%">
@@ -80,7 +80,7 @@
                 <div class="card">
                     <div class="card-body table-border-style">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Kehadiran</h4>
+                            <h4 class="card-title">Cetak Laporan Kehadiran</h4>
                         </div>
                         <div>
                             <table id="tabelKehadiran" class="display" style="width:100%">
@@ -141,7 +141,7 @@
                 <div class="card">
                     <div class="card-body table-border-style">
                         <div class="card-header">
-                            <h4 class="card-title">Tabel Prestasi</h4>
+                            <h4 class="card-title">Cetak Laporan Prestasi</h4>
                         </div>
                         <div>
                             <table id="tabelPrestasi" class="display" style="width:100%">
