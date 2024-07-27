@@ -13,13 +13,12 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-
-        $ketua = Ketua::all();
         $prestasi = Prestasi::all();
         $kehadiran = Kehadiran::all();
         $programKegiatan = ProgramKegiatan::all();
         $jadwalEkstrakurikuler = JadwalEkstrakurikuler::with('ekstrakurikuler')->get();
+
+        // dd($programKegiatan);
 
         return view('laporan.index', compact('prestasi', 'kehadiran', 'programKegiatan', 'jadwalEkstrakurikuler'));
     }
