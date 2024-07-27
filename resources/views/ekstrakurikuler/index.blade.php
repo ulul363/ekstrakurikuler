@@ -51,23 +51,23 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $ekstrakurikuler->nama }}</td>
-                                        <td>{{ $ekstrakurikuler->deskripsi}}</td>
+                                        <td>{{ $ekstrakurikuler->deskripsi }}</td>
                                         <td>
                                             <form id="delete-ekstrakurikuler-{{ $ekstrakurikuler->id_ekstrakurikuler }}"
                                                 action="{{ route('ekstrakurikuler.destroy', $ekstrakurikuler->id_ekstrakurikuler) }}"
                                                 method="POST">
                                                 @can('ekstrakurikuler.edit')
-                                                    <button type="button" class="btn btn-primary me-2" data-toggle="modal"
-                                                        data-target="#editModal{{ $ekstrakurikuler->id_ekstrakurikuler }}">
-                                                        Edit
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                        data-target="#editModal{{ $ekstrakurikuler->id_ekstrakurikuler }}"><i
+                                                            class="fa fa-edit"></i>
                                                     </button>
                                                 @endcan
                                                 @can('ekstrakurikuler.destroy')
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="confirmDelete('delete-ekstrakurikuler-{{ $ekstrakurikuler->id_ekstrakurikuler }}')">
-                                                        Hapus
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        onclick="confirmDelete('delete-ekstrakurikuler-{{ $ekstrakurikuler->id_ekstrakurikuler }}')"><i
+                                                            class="fa fa-trash"></i>
                                                     </button>
                                                 @endcan
                                             </form>
@@ -104,8 +104,7 @@
                                                                 required>
                                                             <label for="deskripsi">Deskripsi Ekstrakurikuler</label>
                                                             <input type="text" class="form-control" id="deskripsi"
-                                                                name="deskripsi"
-                                                                value="{{ $ekstrakurikuler->deskripsi }}"
+                                                                name="deskripsi" value="{{ $ekstrakurikuler->deskripsi }}"
                                                                 required>
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Simpan
