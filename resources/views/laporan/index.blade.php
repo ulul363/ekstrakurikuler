@@ -94,6 +94,7 @@
                                     <th>No</th>
                                     <th>Ekstrakurikuler</th>
                                     <th>Ketua</th>
+                                    <th>Nama Kegiatan</th>
                                     <th>Tahun Ajaran</th>
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
@@ -107,6 +108,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->ekstrakurikuler->nama }}</td>
                                         <td>{{ $item->ketua->nama }}</td>
+                                        <td>{{ $item->nama_kegiatan }}</td>
                                         <td>{{ $item->tahun_ajaran }}</td>
                                         <td>{{ date('d-m-Y', strtotime($item->tanggal)) }}</td>
                                         <td>

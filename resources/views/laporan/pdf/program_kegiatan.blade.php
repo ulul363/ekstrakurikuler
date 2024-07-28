@@ -57,6 +57,7 @@
         }
 
         .content p {
+            font-size: 12px;
             margin: 0;
         }
 
@@ -98,6 +99,7 @@
     <div class="content">
         <h4>Laporan Program Kegiatan</h4>
         <p>Ekstrakurikuler : {{ $data->first()->ekstrakurikuler->nama }}</p>
+        <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
         <p>Ketua : {{ $data->first()->ketua->nama }}</p>
     </div>
 

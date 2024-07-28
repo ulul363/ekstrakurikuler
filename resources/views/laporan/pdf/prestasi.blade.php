@@ -11,21 +11,15 @@
         }
 
         .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .header img {
             width: 80px;
             height: auto;
-            margin-right: 20px;
-        }
-
-        .header .text {
-            max-width: 500px;
+            display: block;
+            margin: 0 auto;
         }
 
         .header h2,
@@ -63,6 +57,7 @@
         }
 
         .content p {
+            font-size: 12px;
             margin: 0;
         }
 
@@ -99,14 +94,15 @@
             <h3>Madrasah Aliyah Negeri 1 Demak</h3>
             <p>Jl. Diponegoro No. 27 DemakJogoloyo, Kecamatan Wonosalam, Kabupaten Demak, Jawa Tengah 59571</p>
             <p>Telepon : 0291-681219 Email : mandemak1@gmail.com</p>
+            <div class="line"></div>
         </div>
     </div>
 
-    <div class="line"></div>
-
     <div class="content">
         <h4>Laporan Prestasi</h4>
+        <p>Ekstrakurikuler : {{ $data->first()->ekstrakurikuler->nama }}</p>
         <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
+        <p>Ketua : {{ $data->first()->ketua->nama }}</p>
     </div>
 
     <table>
@@ -114,11 +110,12 @@
             <tr>
                 <th>No</th>
                 <th>Ekstrakurikuler</th>
-                <th>Ketua</th>
-                <th>Nama Prestasi</th>
+                <th>Prestasi</th>
+                <th>Nama Siswa</th>
+                <th>Kelas</th>
                 <th>Tahun Ajaran</th>
-                <th>Deskripsi</th>
                 <th>Diverifikasi oleh</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -126,15 +123,24 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->ekstrakurikuler->nama }}</td>
-                    <td>{{ $item->ketua->nama }}</td>
-                    <td>{{ $item->nama_prestasi }}</td>
+                    <td>{{ $item->prestasi }}</td>
+                    <td>{{ $item->nama_siswa }}</td>
+                    <td>{{ $item->kelas }}</td>
                     <td>{{ $item->tahun_ajaran }}</td>
-                    <td>{{ $item->deskripsi }}</td>
                     <td>
                         @if ($item->pembina && $item->pembina->nama)
                             {{ $item->pembina->nama }}
                         @else
                             Belum diverifikasi
+                        @endif
+                    </td>
+                    <td>
+                        @if ($item->status == 'pending')
+                            <span>Pending</span>
+                        @elseif ($item->status == 'disetujui')
+                            <span>Disetujui</span>
+                        @elseif ($item->status == 'ditolak')
+                            <span>Ditolak</span>
                         @endif
                     </td>
                 </tr>

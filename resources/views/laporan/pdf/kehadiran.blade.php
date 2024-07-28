@@ -11,21 +11,15 @@
         }
 
         .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .header img {
             width: 80px;
             height: auto;
-            margin-right: 20px;
-        }
-
-        .header .text {
-            max-width: 500px;
+            display: block;
+            margin: 0 auto;
         }
 
         .header h2,
@@ -63,6 +57,7 @@
         }
 
         .content p {
+            font-size: 12px;
             margin: 0;
         }
 
@@ -94,19 +89,20 @@
 <body>
     <div class="header">
         <img src="{{ public_path('assets/images/logo-man3.png') }}" alt="Logo Sekolah">
-        <div class="text">
-            <h2>Kementerian Agama Republik Indonesia</h2>
-            <h3>Madrasah Aliyah Negeri 1 Demak</h3>
-            <p>Jl. Diponegoro No. 27 DemakJogoloyo, Kecamatan Wonosalam, Kabupaten Demak, Jawa Tengah 59571</p>
-            <p>Telepon : 0291-681219 Email : mandemak1@gmail.com</p>
-        </div>
+        <h2>Kementerian Agama Republik Indonesia</h2>
+        <h3>Madrasah Aliyah Negeri 1 Demak</h3>
+        <p>Jl. Diponegoro No. 27 DemakJogoloyo, Kecamatan Wonosalam, Kabupaten Demak, Jawa Tengah 59571</p>
+        <p>Telepon : 0291-681219 Email : mandemak1@gmail.com</p>
+        <div class="line"></div>
     </div>
 
-    <div class="line"></div>
+
 
     <div class="content">
         <h4>Laporan Kehadiran</h4>
+        <p>Ekstrakurikuler : {{ $data->first()->ekstrakurikuler->nama }}</p>
         <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
+        <p>Ketua : {{ $data->first()->ketua->nama }}</p>
     </div>
 
     <table>
@@ -114,6 +110,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama Kegiatan</th>
+                <th>Tahun Ajaran</th>
                 <th>Tanggal</th>
                 <th>Deskripsi</th>
                 <th>Diverifikasi oleh</th>
@@ -125,6 +122,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nama_kegiatan }}</td>
+                    <td>{{ $item->tahun_ajaran }}</td>
                     <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->deskripsi }}</td>
                     <td>
