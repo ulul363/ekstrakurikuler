@@ -61,6 +61,7 @@ class KehadiranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'tahun_ajaran' => 'required|integer',
             'tanggal' => 'required|date',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
@@ -84,6 +85,7 @@ class KehadiranController extends Controller
         Kehadiran::create([
             'ekstrakurikuler_id' => $ekstrakurikuler_id,
             'ketua_id' => $ketua_id,
+            'tahun_ajaran' => $request->tahun_ajaran,
             'tanggal' => $request->tanggal,
             'berkas' => $berkasPath,
             'status' => 'pending',
@@ -101,6 +103,7 @@ class KehadiranController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'tahun_ajaran' => 'required|integer',
             'tanggal' => 'required|date',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
@@ -113,6 +116,7 @@ class KehadiranController extends Controller
         }
 
         $kehadiran->tanggal = $request->tanggal;
+        $kehadiran->tahun_ajaran = $request->tahun_ajaran;
 
         // Proses update berkas jika ada
         if ($request->hasFile('berkas')) {

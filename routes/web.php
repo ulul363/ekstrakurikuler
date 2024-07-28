@@ -214,6 +214,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Menu Laporan
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index')->middleware('permission:laporan.index');
+    Route::post('/laporan/export', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF');
+
 });
 
 
