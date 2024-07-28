@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ekstrakurikuler_id');
             $table->unsignedBigInteger('ketua_id');
             $table->unsignedBigInteger('verifikasi_id')->nullable();
+            $table->string('nama_kegiatan', 100);
             $table->integer('tahun_ajaran');
             $table->date('tanggal');
             $table->string('berkas', 150);

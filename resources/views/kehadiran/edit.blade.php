@@ -28,6 +28,16 @@
                             @method('PUT')
 
                             <div class="form-group">
+                                <label for="nama_kegiatan">Nama Kegiatan</label>
+                                <input type="text" name="nama_kegiatan" id="nama_kegiaan"
+                                    class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                    value="{{ old('nama_kegiatan', $kehadiran->nama_kegiatan) }}" required>
+                                @error('nama_kegiatan')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
                                     value="{{ old('tanggal', $kehadiran->tanggal) }}" required>

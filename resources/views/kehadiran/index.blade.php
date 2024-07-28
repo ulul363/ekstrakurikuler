@@ -41,6 +41,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama Kegiatan</th>
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
                                     <th>Diverifikasi oleh</th>
@@ -52,6 +53,7 @@
                                 @foreach ($kehadiran as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_kegiatan }}</td>
                                         <td>{{ $item->tanggal }}</td>
                                         <td>
                                             <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat

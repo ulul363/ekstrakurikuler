@@ -39,6 +39,16 @@
                             @csrf
 
                             <div class="form-group">
+                                <label for="nama_kegiatan">Nama Kegiatan</label>
+                                <input type="text" name="nama_kegiatan" id="nama_kegiatan"
+                                    class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                    value="{{ old('nama_kegiatan') }}" required>
+                                @error('nama_kegiatan')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
                                 <input type="number" name="tahun_ajaran" id="tahun_ajaran"
                                     class="form-control @error('tahun_ajaran') is-invalid @enderror"

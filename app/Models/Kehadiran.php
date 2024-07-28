@@ -19,6 +19,7 @@ class Kehadiran extends Model
         'ekstrakurikuler_id',
         'ketua_id',
         'verifikasi_id',
+        'nama_kegiatan',
         'tahun_ajaran',
         'tanggal',
         'berkas',
