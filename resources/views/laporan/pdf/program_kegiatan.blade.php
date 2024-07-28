@@ -21,6 +21,7 @@
 </head>
 <body>
     <h1>Laporan Program Kegiatan</h1>
+    <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
     <table>
         <thead>
             <tr>

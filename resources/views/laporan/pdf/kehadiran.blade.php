@@ -29,6 +29,7 @@
 
 <body>
     <h1>Laporan Kehadiran</h1>
+    <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
     <table>
         <thead>
             <tr>

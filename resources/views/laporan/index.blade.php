@@ -17,6 +17,12 @@
             </div>
         </div>
 
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Program Kegiatan -->
         <div class="row">
             <div class="col-xl-12">
@@ -207,13 +213,14 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('laporan.exportPDF') }}" method="POST" target="_blank">
+                    <form action="{{ route('laporan.exportPDF') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="program_kegiatan">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="ekstrakurikuler_id">Pilih Ekstrakurikuler</label>
-                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control" required>
+                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control">
+                                    <option value="">Pilih Ekstrakurikuler</option>
                                     @foreach ($jadwalEkstrakurikuler as $jadwal)
                                         <option value="{{ $jadwal->ekstrakurikuler_id }}">
                                             {{ $jadwal->ekstrakurikuler->nama }}</option>
@@ -222,7 +229,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="tahun_ajaran">Pilih Tahun Ajaran</label>
-                                <input type="text" class="form-control" id="tahun_ajaran" name="tahun_ajaran">
+                                <select id="tahun_ajaran_program" name="tahun_ajaran" class="form-control">
+                                    <option value="">Pilih Tahun Ajaran</option>
+                                    @foreach ($tahunAjaranProgramKegiatan as $ta)
+                                        <option value="{{ $ta }}">{{ $ta }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="">Semua</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="disetujui">Disetujui</option>
+                                    <option value="ditolak">Ditolak</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -245,13 +266,14 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('laporan.exportPDF') }}" method="POST" target="_blank">
+                    <form action="{{ route('laporan.exportPDF') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="kehadiran">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="ekstrakurikuler_id">Pilih Ekstrakurikuler</label>
-                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control" required>
+                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control">
+                                    <option value="">Pilih Ekstrakurikuler</option>
                                     @foreach ($jadwalEkstrakurikuler as $jadwal)
                                         <option value="{{ $jadwal->ekstrakurikuler_id }}">
                                             {{ $jadwal->ekstrakurikuler->nama }}</option>
@@ -260,7 +282,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="tahun_ajaran">Pilih Tahun Ajaran</label>
-                                <input type="text" class="form-control" id="tahun_ajaran" name="tahun_ajaran">
+                                <select id="tahun_ajaran_kehadiran" name="tahun_ajaran" class="form-control">
+                                    <option value="">Pilih Tahun Ajaran</option>
+                                    @foreach ($tahunAjaranKehadiran as $ta)
+                                        <option value="{{ $ta }}">{{ $ta }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="">Semua</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="disetujui">Disetujui</option>
+                                    <option value="ditolak">Ditolak</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -283,13 +319,14 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('laporan.exportPDF') }}" method="POST" target="_blank">
+                    <form action="{{ route('laporan.exportPDF') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="prestasi">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="ekstrakurikuler_id">Pilih Ekstrakurikuler</label>
-                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control" required>
+                                <select id="ekstrakurikuler_id" name="ekstrakurikuler_id" class="form-control">
+                                    <option value="">Pilih Ekstrakurikuler</option>
                                     @foreach ($jadwalEkstrakurikuler as $jadwal)
                                         <option value="{{ $jadwal->ekstrakurikuler_id }}">
                                             {{ $jadwal->ekstrakurikuler->nama }}</option>
@@ -298,7 +335,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="tahun_ajaran">Pilih Tahun Ajaran</label>
-                                <input type="text" class="form-control" id="tahun_ajaran" name="tahun_ajaran">
+                                <select id="tahun_ajaran_prestasi" name="tahun_ajaran" class="form-control">
+                                    <option value="">Pilih Tahun Ajaran</option>
+                                    @foreach ($tahunAjaranPrestasi as $ta)
+                                        <option value="{{ $ta }}">{{ $ta }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="">Semua</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="disetujui">Disetujui</option>
+                                    <option value="ditolak">Ditolak</option>
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
