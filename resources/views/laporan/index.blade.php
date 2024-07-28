@@ -158,8 +158,10 @@
                                     <th>Ekstrakurikuler</th>
                                     <th>Ketua</th>
                                     <th>Prestasi</th>
-                                    <th>Tahun Ajaran</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Kelas</th>
                                     <th>Berkas</th>
+                                    <th>Tahun Ajaran</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                 </tr>
@@ -171,11 +173,35 @@
                                         <td>{{ $item->ekstrakurikuler->nama }}</td>
                                         <td>{{ $item->ketua->nama }}</td>
                                         <td>{{ $item->prestasi }}</td>
-                                        <td>{{ $item->tahun_ajaran }}</td>
+                                        <td>
+                                            @php
+                                                $siswaList = json_decode($item->nama_siswa);
+                                            @endphp
+                                            @foreach ($siswaList as $index => $siswa)
+                                                @if (count($siswaList) > 1)
+                                                    <div>{{ $loop->iteration }}. {{ $siswa }}</div>
+                                                @else
+                                                    <div>{{ $siswa }}</div>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @php
+                                                $kelasList = json_decode($item->kelas);
+                                            @endphp
+                                            @foreach ($kelasList as $index => $kls)
+                                                @if (count($kelasList) > 1)
+                                                    <div>{{ $loop->iteration }}. {{ $kls }}</div>
+                                                @else
+                                                    <div>{{ $kls }}</div>
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a>
                                         </td>
+                                        <td>{{ $item->tahun_ajaran }}</td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}

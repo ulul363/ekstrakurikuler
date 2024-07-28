@@ -109,7 +109,6 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Ekstrakurikuler</th>
                 <th>Prestasi</th>
                 <th>Nama Siswa</th>
                 <th>Kelas</th>
@@ -122,10 +121,31 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->ekstrakurikuler->nama }}</td>
                     <td>{{ $item->prestasi }}</td>
-                    <td>{{ $item->nama_siswa }}</td>
-                    <td>{{ $item->kelas }}</td>
+                    <td>
+                        @php
+                            $siswaList = json_decode($item->nama_siswa);
+                        @endphp
+                        @foreach ($siswaList as $index => $siswa)
+                            @if (count($siswaList) > 1)
+                                <div>{{ $loop->iteration }}. {{ $siswa }}</div>
+                            @else
+                                <div>{{ $siswa }}</div>
+                            @endif
+                        @endforeach
+                    </td>
+                    <td>
+                        @php
+                            $kelasList = json_decode($item->kelas);
+                        @endphp
+                        @foreach ($kelasList as $index => $kls)
+                            @if (count($kelasList) > 1)
+                                <div>{{ $loop->iteration }}. {{ $kls }}</div>
+                            @else
+                                <div>{{ $kls }}</div>
+                            @endif
+                        @endforeach
+                    </td>
                     <td>{{ $item->tahun_ajaran }}</td>
                     <td>
                         @if ($item->pembina && $item->pembina->nama)
