@@ -151,6 +151,7 @@
                                     <th>Ketua</th>
                                     <th>Prestasi</th>
                                     <th>Tahun Ajaran</th>
+                                    <th>Berkas</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                 </tr>
@@ -163,6 +164,10 @@
                                         <td>{{ $item->ketua->nama }}</td>
                                         <td>{{ $item->prestasi }}</td>
                                         <td>{{ $item->tahun_ajaran }}</td>
+                                        <td>
+                                            <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
+                                                Berkas</a>
+                                        </td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
