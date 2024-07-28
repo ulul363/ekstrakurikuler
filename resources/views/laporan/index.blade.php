@@ -23,8 +23,8 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Program Kegiatan</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal"
-                            data-target="#exportProgramKegiatanModal"> <span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportProgramKegiatanModal">
+                            <span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
                             Laporan</button>
                         <table id="tabelProgramKegiatan" class="display" style="width:100%">
                             <thead>
@@ -79,7 +79,8 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Kehadiran</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportKehadiranModal"><span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportKehadiranModal"><span
+                                class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
                             Laporan</button>
                         <table id="tabelKehadiran" class="display" style="width:100%">
                             <thead>
@@ -139,7 +140,8 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Prestasi</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportPrestasiModal"><span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportPrestasiModal"><span
+                                class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
                             Laporan</button>
                         <table id="tabelPrestasi" class="display" style="width:100%">
                             <thead>
@@ -151,6 +153,7 @@
                                     <th>Tahun Ajaran</th>
                                     <th>Deskripsi</th>
                                     <th>Diverifikasi oleh</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -167,6 +170,17 @@
                                                 {{ $item->pembina->nama }}
                                             @else
                                                 Belum diverifikasi
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif ($item->status == 'disetujui')
+                                                <span class="badge badge-success">Disetujui</span>
+                                            @elseif ($item->status == 'ditolak')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $item->status }}</span>
                                             @endif
                                         </td>
                                     </tr>
