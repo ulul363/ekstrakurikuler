@@ -4,9 +4,73 @@
 <head>
     <title>Laporan Prestasi</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header img {
+            width: 80px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .header .text {
+            max-width: 500px;
+        }
+
+        .header h2,
+        .header h3,
+        .header p {
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .header h3 {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 11px;
+        }
+
+        .line {
+            border-top: 2px solid black;
+            margin: 10px 0;
+        }
+
+        .content {
+            margin: 20px 0;
+        }
+
+        .content h4 {
+            margin: 0 0 10px;
+        }
+
+        .content p {
+            margin: 0;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 11px;
         }
 
         table,
@@ -17,7 +81,7 @@
 
         th,
         td {
-            padding: 10px;
+            padding: 8px;
             text-align: left;
         }
 
@@ -28,8 +92,23 @@
 </head>
 
 <body>
-    <h1>Laporan Prestasi</h1>
-    <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
+    <div class="header">
+        <img src="{{ public_path('assets/images/logo-man3.png') }}" alt="Logo Sekolah">
+        <div class="text">
+            <h2>Kementerian Agama Republik Indonesia</h2>
+            <h3>Madrasah Aliyah Negeri 1 Demak</h3>
+            <p>Jl. Diponegoro No. 27 DemakJogoloyo, Kecamatan Wonosalam, Kabupaten Demak, Jawa Tengah 59571</p>
+            <p>Telepon : 0291-681219 Email : mandemak1@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="content">
+        <h4>Laporan Prestasi</h4>
+        <p>Status: {{ request()->input('status') ? request()->input('status') : 'Semua' }}</p>
+    </div>
+
     <table>
         <thead>
             <tr>
