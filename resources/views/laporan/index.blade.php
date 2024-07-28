@@ -151,7 +151,6 @@
                                     <th>Ketua</th>
                                     <th>Prestasi</th>
                                     <th>Tahun Ajaran</th>
-                                    <th>Deskripsi</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                 </tr>
@@ -162,9 +161,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->ekstrakurikuler->nama }}</td>
                                         <td>{{ $item->ketua->nama }}</td>
-                                        <td>{{ $item->nama_prestasi }}</td>
+                                        <td>{{ $item->prestasi }}</td>
                                         <td>{{ $item->tahun_ajaran }}</td>
-                                        <td>{{ $item->deskripsi }}</td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
