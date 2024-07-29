@@ -93,6 +93,7 @@ class DatabaseSeeder extends Seeder
             'jadwal_ekstrakurikuler.update',
             'jadwal_ekstrakurikuler.destroy',
             'laporan.index',
+            'laporan.exportPDF',
             // Ketua Permissions
             'program_kegiatan.index',
             'program_kegiatan.create',
@@ -139,7 +140,7 @@ class DatabaseSeeder extends Seeder
         if (!Role::where('name', 'Admin')->exists()) {
             $adminRole = Role::create(['name' => 'Admin']);
 
-            $adminPermissions = ['user.index', 'user.create', 'user.store', 'user.edit', 'user.update', 'user.destroy', 'role.index', 'role.create', 'role.store', 'role.edit', 'role.update', 'role.destroy', 'role.getRoutesAllJson', 'role.getRefreshAndDeleteJson', 'dashboard', 'pembina.index', 'pembina.create', 'pembina.store', 'pembina.edit', 'pembina.update', 'pembina.destroy', 'pembina.createuser', 'pembina.storeuser', 'pembina.updateUser', 'ketua.index', 'ketua.create', 'ketua.store', 'ketua.edit', 'ketua.update', 'ketua.destroy', 'ketua.createuser', 'ketua.storeuser', 'ketua.updateUser', 'ekstrakurikuler.index', 'ekstrakurikuler.create', 'ekstrakurikuler.store', 'ekstrakurikuler.edit', 'ekstrakurikuler.update', 'ekstrakurikuler.destroy', 'jadwal_ekstrakurikuler.index', 'jadwal_ekstrakurikuler.create', 'jadwal_ekstrakurikuler.store', 'jadwal_ekstrakurikuler.edit', 'jadwal_ekstrakurikuler.update', 'jadwal_ekstrakurikuler.destroy', 'laporan.index'];
+            $adminPermissions = ['user.index', 'user.create', 'user.store', 'user.edit', 'user.update', 'user.destroy', 'role.index', 'role.create', 'role.store', 'role.edit', 'role.update', 'role.destroy', 'role.getRoutesAllJson', 'role.getRefreshAndDeleteJson', 'dashboard', 'pembina.index', 'pembina.create', 'pembina.store', 'pembina.edit', 'pembina.update', 'pembina.destroy', 'pembina.createuser', 'pembina.storeuser', 'pembina.updateUser', 'ketua.index', 'ketua.create', 'ketua.store', 'ketua.edit', 'ketua.update', 'ketua.destroy', 'ketua.createuser', 'ketua.storeuser', 'ketua.updateUser', 'ekstrakurikuler.index', 'ekstrakurikuler.create', 'ekstrakurikuler.store', 'ekstrakurikuler.edit', 'ekstrakurikuler.update', 'ekstrakurikuler.destroy', 'jadwal_ekstrakurikuler.index', 'jadwal_ekstrakurikuler.create', 'jadwal_ekstrakurikuler.store', 'jadwal_ekstrakurikuler.edit', 'jadwal_ekstrakurikuler.update', 'jadwal_ekstrakurikuler.destroy', 'laporan.index', 'laporan.exportPDF'];
 
             foreach ($adminPermissions as $permission) {
                 $adminRole->givePermissionTo($permission);

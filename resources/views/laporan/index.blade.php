@@ -29,9 +29,11 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Program Kegiatan</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportProgramKegiatanModal">
-                            <span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
-                            Laporan</button>
+                        @can('laporan.exportPDF')
+                            <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportProgramKegiatanModal">
+                                <span class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                                Laporan</button>
+                        @endcan
                         <table id="tabelProgramKegiatan" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -85,9 +87,11 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Kehadiran</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportKehadiranModal"><span
-                                class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
-                            Laporan</button>
+                        @can('laporan.exportPDF')
+                            <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportKehadiranModal"><span
+                                    class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                                Laporan</button>
+                        @endcan
                         <table id="tabelKehadiran" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -150,9 +154,11 @@
                 <div class="card">
                     <div class="card-header"><b>Cetak Laporan Prestasi</b></div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportPrestasiModal"><span
-                                class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
-                            Laporan</button>
+                        @can('laporan.exportPDF')
+                            <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exportPrestasiModal"><span
+                                    class="pcoded-micon"><i class="feather icon-printer"></i></span> Cetak
+                                Laporan</button>
+                        @endcan
                         <table id="tabelPrestasi" class="display" style="width:100%">
                             <thead>
                                 <tr>
