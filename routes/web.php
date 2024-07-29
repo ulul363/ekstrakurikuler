@@ -5,16 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KetuaController;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
+use App\Http\Controllers\PengajuanPertemuanController;
+
 use App\Http\Controllers\JadwalEkstrakurikulerController;
-use App\Http\Controllers\PrestasiEkstrakurikulerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -210,6 +211,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/prestasi/{id}/destroy', [PrestasiController::class, 'destroy'])->name('prestasi.destroy')->middleware('permission:prestasi.destroy');
     Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
     Route::post('prestasi/verifikasi/{id}', [PrestasiController::class, 'verifikasi'])->name('prestasi.verifikasi')->middleware('permission:prestasi.verifikasi');
+
+    // Menu Pertemuan
+    Route::get('/pertemuan', [PengajuanPertemuanController::class, 'index'])->name('pertemuan.index')->middleware('permission:pertemuan.index');
+    Route::get('/pertemuan/create', [PengajuanPertemuanController::class, 'create'])->name('pertemuan.create')->middleware('permission:pertemuan.create');
+    Route::post('/pertemuan/store', [PengajuanPertemuanController::class, 'store'])->name('pertemuan.store')->middleware('permission:pertemuan.store');
+    Route::get('/pertemuan/{id}/edit', [PengajuanPertemuanController::class, 'edit'])->name('pertemuan.edit')->middleware('permission:pertemuan.edit');
+    Route::put('/pertemuan/{id}/update', [PengajuanPertemuanController::class, 'update'])->name('pertemuan.update')->middleware('permission:pertemuan.update');
+    Route::delete('/pertemuan/{id}/destroy', [PengajuanPertemuanController::class, 'destroy'])->name('pertemuan.destroy')->middleware('permission:pertemuan.destroy');
+    Route::get('/pertemuan/{id}', [PengajuanPertemuanController::class, 'show'])->name('pertemuan.show')->middleware('permission:pertemuan.show');
+    Route::post('pertemuan/verifikasi/{id}', [PengajuanPertemuanController::class, 'verifikasi'])->name('pertemuan.verifikasi')->middleware('permission:pertemuan.verifikasi');
+
 });
 
 

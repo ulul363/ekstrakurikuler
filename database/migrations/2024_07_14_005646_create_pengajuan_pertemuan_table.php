@@ -15,15 +15,19 @@ return new class extends Migration
             $table->id('id_pengajuan_pertemuan');
             $table->unsignedBigInteger('ketua_id');
             $table->unsignedBigInteger('pembina_id');
-            $table->dateTime('rencana_pertemuan');
+            $table->unsignedBigInteger('verifikasi_id')->nullable();
+            $table->string('hari'); // Misalnya, Senin, Selasa, dst.
+            $table->date('tanggal'); // Format: YYYY-MM-DD
+            $table->time('waktu'); // Format: HH:MM
             $table->dateTime('waktu_verifikasi')->nullable();
-            $table->enum('status', ['pending', 'diterima', 'ditolak'])->default('pending');
+            $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
-
+    
             $table->foreign('ketua_id')->references('id_ketua')->on('ketua')->onUpdate('restrict')->onDelete('restrict');
-            $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('verifikasi_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
         });
     }
+    
 
     /**
      * Reverse the migrations.
