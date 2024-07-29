@@ -41,6 +41,16 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="tahun_ajaran">Tahun Ajaran</label>
+                                <input type="text" name="tahun_ajaran" id="tahun_ajaran"
+                                    class="form-control @error('tahun_ajaran') is-invalid @enderror"
+                                    value="{{ old('tahun_ajaran', $kehadiran->tahun_ajaran) }}" required>
+                                @error('tahun_ajaran')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" name="tanggal" id="tanggal"
                                     class="form-control @error('tanggal') is-invalid @enderror"
@@ -52,9 +62,8 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                <input type="text" name="deskripsi" id="deskripsi"
-                                    class="form-control @error('deskripsi') is-invalid @enderror"
-                                    value="{{ old('deskripsi', $kehadiran->deskripsi) }}" required>
+                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required
+                                    style="width: 100%; height: 150px;">{{ old('deskripsi', $kehadiran->deskripsi) }}</textarea>
                                 @error('deskripsi')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror

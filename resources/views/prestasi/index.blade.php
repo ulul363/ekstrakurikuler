@@ -133,7 +133,7 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
+                                                    <form id="delete-prestasi-{{ $item->id_prestasi }}" action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
                                                         method="POST" style="display:inline;">
 
                                                         @can('prestasi.edit')

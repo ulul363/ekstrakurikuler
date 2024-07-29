@@ -29,7 +29,10 @@ class ProgramKegiatanController extends Controller
                 ->get();
         } else {
             $ketuaId = $user->ketua->id_ketua;
-            $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
+            $programKegiatan = ProgramKegiatan::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
+
+
+            $kehadiran = Kehadiran::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
         }
 
         return view('program_kegiatan.index', compact('programKegiatan'));

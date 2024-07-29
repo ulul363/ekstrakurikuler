@@ -28,7 +28,7 @@ class PrestasiController extends Controller
                 ->get();
         } else {
             $ketuaId = $user->ketua->id_ketua;
-            $prestasi = Prestasi::with('ekstrakurikuler', 'ketua')->where('ketua_id', $ketuaId)->get();
+            $prestasi = Prestasi::with('ekstrakurikuler', 'ketua', 'pembina')->where('ketua_id', $ketuaId)->get();
         }
 
         return view('prestasi.index', compact('prestasi'));
@@ -97,7 +97,9 @@ class PrestasiController extends Controller
     public function edit($id)
     {
         $prestasi = Prestasi::findOrFail($id);
-        return view('prestasi.edit', compact('prestasi'));
+        $nama_siswa = json_decode($prestasi->nama_siswa, true) ?? [];
+        $kelas = json_decode($prestasi->kelas, true) ?? [];
+        return view('prestasi.edit', compact('prestasi', 'nama_siswa', 'kelas'));
     }
 
     public function update(Request $request, $id)
@@ -105,6 +107,7 @@ class PrestasiController extends Controller
         $request->validate([
             'prestasi' => 'required|string|max:50',
             'nama_siswa.*' => 'required|string|max:50',
+            'kelas.*' =>'required|string|max:5',
             'tahun_ajaran' => 'required|integer',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
@@ -118,6 +121,7 @@ class PrestasiController extends Controller
 
         $prestasi->prestasi = $request->prestasi;
         $prestasi->nama_siswa = json_encode($request->nama_siswa);
+        $prestasi->kelas = json_encode($request->kelas);
         $prestasi->tahun_ajaran = $request->tahun_ajaran;
 
         // Proses upload berkas jika ada

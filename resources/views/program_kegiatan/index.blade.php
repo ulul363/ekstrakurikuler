@@ -112,7 +112,7 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form
+                                                    <form id="delete-program-kegiatan-{{ $item->id_program_kegiatan }}"
                                                         action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
                                                         method="POST" style="display:inline;">
 
@@ -127,7 +127,7 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-danger btn-sm"
-                                                                onclick="confirmDelete('delete-program-{{ $item->id_program_kegiatan }}')">
+                                                                onclick="confirmDelete('delete-program-kegiatan-{{ $item->id_program_kegiatan }}')">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         @endcan

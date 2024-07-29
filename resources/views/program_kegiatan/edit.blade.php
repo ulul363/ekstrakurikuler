@@ -54,9 +54,7 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                <input type="text" name="deskripsi" id="deskripsi"
-                                    class="form-control @error('deskripsi') is-invalid @enderror"
-                                    value="{{ old('deskripsi', $programKegiatan->deskripsi) }}" required>
+                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required style="width: 100%; height: 150px;">{{ old('deskripsi', $programKegiatan->deskripsi) }}</textarea>
                                 @error('deskripsi')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror

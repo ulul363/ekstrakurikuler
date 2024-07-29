@@ -98,6 +98,7 @@
                                     <th>Tahun Ajaran</th>
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
+                                    <th>Deskripsi</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                 </tr>
@@ -115,6 +116,7 @@
                                             <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a>
                                         </td>
+                                        <td>{{ $item->deskripsi }}</td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}

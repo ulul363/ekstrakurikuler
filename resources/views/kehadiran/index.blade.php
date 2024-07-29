@@ -115,7 +115,7 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
+                                                    <form id="delete-kehadiran-{{ $item->id_kehadiran }}" action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
                                                         method="POST" style="display:inline;">
 
                                                         @can('kehadiran.edit')
