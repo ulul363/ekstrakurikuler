@@ -23,7 +23,7 @@
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <span class="pcoded-micon"><i class="fa fa-dashboard"></i></span>
-                                <span class="pcoded-mtext d-none d-md-inline">Beranda</span>
+                                <span class="pcoded-mtext d-none d-md-inline">Beranda Daffa</span>
                             </a>
                         </li>
                     @endcan
