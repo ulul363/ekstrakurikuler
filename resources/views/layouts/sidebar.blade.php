@@ -23,7 +23,7 @@
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <span class="pcoded-micon"><i class="fa fa-dashboard"></i></span>
-                                <span class="pcoded-mtext d-none d-md-inline">Dashboard</span>
+                                <span class="pcoded-mtext d-none d-md-inline">Beranda</span>
                             </a>
                         </li>
                     @endcan
@@ -32,15 +32,14 @@
                         <li class="nav-item">
                             <a href="{{ route('role.index') }}" class="nav-link">
                                 <span class="pcoded-micon"><i class="feather icon-shield"></i></span>
-                                <span class="pcoded-mtext d-none d-md-inline">Role Management</span>
+                                <span class="pcoded-mtext d-none d-md-inline">Managemen Role</span>
                             </a>
                         </li>
                     @endcan
 
                     <li class="nav-item pcoded-hasmenu">
                         <a href="#!" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-layout"></i></span><span class="pcoded-mtext">User
-                                Management</span></a>
+                                    class="feather icon-layout"></i></span><span class="pcoded-mtext">Managemen User</span></a>
                         <ul class="pcoded-submenu">
                             @can('ketua.index')
                                 <li><a href="{{ route('ketua.index') }}">Ketua</a></li>
@@ -74,6 +73,15 @@
                             <a href="{{ route('program_kegiatan.index') }}" class="nav-link">
                                 <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
                                 <span class="pcoded-mtext">Program Kegiatan</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('laporan.index')
+                        <li class="nav-item">
+                            <a href="{{ route('laporan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-printer"></i></span>
+                                <span class="pcoded-mtext">Cetak Laporan</span>
                             </a>
                         </li>
                     @endcan

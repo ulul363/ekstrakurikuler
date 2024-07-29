@@ -41,8 +41,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Tahun Ajaran</th>
                                     <th>Tanggal</th>
                                     <th>Berkas</th>
+                                    <th>Deskripsi</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -52,11 +55,14 @@
                                 @foreach ($kehadiran as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama_kegiatan }}</td>
+                                        <td>{{ $item->tahun_ajaran }}</td>
                                         <td>{{ $item->tanggal }}</td>
                                         <td>
                                             <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
                                                 Berkas</a>
                                         </td>
+                                        <td>{{ $item->deskripsi }}</td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
@@ -109,7 +115,7 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
+                                                    <form id="delete-kehadiran-{{ $item->id_kehadiran }}" action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
                                                         method="POST" style="display:inline;">
 
                                                         @can('kehadiran.edit')

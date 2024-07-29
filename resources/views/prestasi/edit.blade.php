@@ -40,20 +40,48 @@
                             </div>
 
                             <div id="nama_siswa_wrapper">
-                                @foreach (json_decode($prestasi->nama_siswa) as $siswa)
-                                    <div class="form-group">
-                                        <label for="nama_siswa">Nama Siswa</label>
-                                        <input type="text" name="nama_siswa[]"
-                                            class="form-control @error('nama_siswa.*') is-invalid @enderror"
-                                            value="{{ old('nama_siswa[]', $siswa) }}" required>
-                                        @error('nama_siswa.*')
-                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                        @enderror
+                                @forelse ($nama_siswa as $index => $siswa)
+                                    <div class="form-group form-group-wrapper">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <label for="nama_siswa">Nama Siswa</label>
+                                                <input type="text" name="nama_siswa[]"
+                                                    class="form-control @error('nama_siswa.*') is-invalid @enderror"
+                                                    value="{{ old('nama_siswa.' . $index, $siswa) }}" required>
+                                                @error('nama_siswa.*')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col">
+                                                <label for="kelas">Kelas</label>
+                                                <select name="kelas[]"
+                                                    class="form-control @error('kelas.*') is-invalid @enderror" required>
+                                                    <option value="">Pilih Kelas</option>
+                                                    @foreach (['X', 'XI', 'XII'] as $romawi)
+                                                        <optgroup label="Kelas {{ $romawi }}">
+                                                            @for ($i = 1; $i <= 10; $i++)
+                                                                <option value="{{ $romawi }} {{ $i }}"
+                                                                    {{ old('kelas.' . $index, $kelas[$index] ?? '') == $romawi . ' ' . $i ? 'selected' : '' }}>
+                                                                    {{ $romawi }} {{ $i }}
+                                                                </option>
+                                                            @endfor
+                                                        </optgroup>
+                                                    @endforeach
+                                                </select>
+                                                @error('kelas.*')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <button type="button"
+                                            class="btn btn-danger mt-1 remove-form-group">Hapus</button>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <p>Tidak ada siswa untuk ditampilkan</p>
+                                @endforelse
                             </div>
-                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama
-                                Siswa</button>
+                            <button type="button" id="add_nama_siswa" class="btn btn-secondary mb-3">Tambah Nama Siswa &
+                                Kelas</button>
 
                             <div class="form-group">
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
@@ -69,8 +97,10 @@
                                 <label for="berkas">Berkas</label>
                                 <input type="file" name="berkas" id="berkas"
                                     class="form-control @error('berkas') is-invalid @enderror">
-                                <a href="{{ asset('storage/' . $prestasi->berkas) }}" target="_blank">Lihat Berkas Saat
-                                    Ini</a>
+                                @if ($prestasi->berkas)
+                                    <a href="{{ asset('storage/' . $prestasi->berkas) }}" target="_blank">Lihat Berkas Saat
+                                        Ini</a>
+                                @endif
                                 @error('berkas')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -89,11 +119,38 @@
     <script>
         document.getElementById('add_nama_siswa').addEventListener('click', function() {
             var wrapper = document.getElementById('nama_siswa_wrapper');
-            var newInput = document.createElement('div');
-            newInput.className = 'form-group';
-            newInput.innerHTML =
-                '<label for="nama_siswa">Nama Siswa</label><input type="text" name="nama_siswa[]" class="form-control" required>';
-            wrapper.appendChild(newInput);
+
+            var newWrapper = document.createElement('div');
+            newWrapper.className = 'form-group form-group-wrapper';
+            newWrapper.innerHTML =
+                '<div class="form-row">' +
+                '    <div class="col">' +
+                '        <label for="nama_siswa">Nama Siswa</label>' +
+                '        <input type="text" name="nama_siswa[]" class="form-control" required>' +
+                '    </div>' +
+                '    <div class="col">' +
+                '        <label for="kelas">Kelas</label>' +
+                '        <select name="kelas[]" class="form-control" required>' +
+                '            <option value="">Pilih Kelas</option>' +
+                '            @foreach (['X', 'XI', 'XII'] as $romawi)' +
+                '                <optgroup label="Kelas {{ $romawi }}">' +
+                '                    @for ($i = 1; $i <= 10; $i++)' +
+                '                        <option value="{{ $romawi }} {{ $i }}">{{ $romawi }} {{ $i }}</option>' +
+                '                    @endfor' +
+                '                </optgroup>' +
+                '            @endforeach' +
+                '        </select>' +
+                '    </div>' +
+                '</div>' +
+                '<button type="button" class="btn btn-danger mt-1 remove-form-group">Hapus</button>';
+
+            wrapper.appendChild(newWrapper);
+        });
+
+        document.getElementById('nama_siswa_wrapper').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-form-group')) {
+                e.target.closest('.form-group-wrapper').remove();
+            }
         });
     </script>
 @endsection

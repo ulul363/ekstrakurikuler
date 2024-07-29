@@ -5,17 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KetuaController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembinaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
 use App\Http\Controllers\JadwalEkstrakurikulerController;
-use App\Http\Controllers\PrestasiEkstrakurikulerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\PrestasiEkstrakurikulerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -210,6 +211,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/prestasi/{id}/destroy', [PrestasiController::class, 'destroy'])->name('prestasi.destroy')->middleware('permission:prestasi.destroy');
     Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
     Route::post('prestasi/verifikasi/{id}', [PrestasiController::class, 'verifikasi'])->name('prestasi.verifikasi')->middleware('permission:prestasi.verifikasi');
+
+    // Menu Laporan
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index')->middleware('permission:laporan.index');
+    Route::post('/laporan/export', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF')->middleware('permission:laporan.exportPDF');
+
 });
 
 
