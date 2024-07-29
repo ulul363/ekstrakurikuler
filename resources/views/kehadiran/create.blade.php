@@ -67,6 +67,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="deskripsi">Deskripsi</label>
+                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required style="width: 100%; height: 150px;">{{ old('deskripsi') }}</textarea>
+                                @error('deskripsi')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="berkas">Berkas (Gambar atau PDF)</label>
                                 <input type="file" class="form-control-file" id="berkas" name="berkas"
                                     accept="image/*,application/pdf" onchange="previewFile()">

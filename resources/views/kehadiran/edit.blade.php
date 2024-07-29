@@ -9,9 +9,11 @@
                             <h5 class="m-b-10">Edit Kehadiran</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                        class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('kehadiran.index') }}">Kehadiran</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('kehadiran.edit', $kehadiran->id_kehadiran) }}">Edit Kehadiran</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('kehadiran.edit', $kehadiran->id_kehadiran) }}">Edit Kehadiran</a></li>
                         </ul>
                     </div>
                 </div>
@@ -23,7 +25,8 @@
                 <div class="card">
                     <div class="card-header">Edit Kehadiran</div>
                     <div class="card-body">
-                        <form action="{{ route('kehadiran.update', $kehadiran->id_kehadiran) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('kehadiran.update', $kehadiran->id_kehadiran) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -39,7 +42,8 @@
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
+                                <input type="date" name="tanggal" id="tanggal"
+                                    class="form-control @error('tanggal') is-invalid @enderror"
                                     value="{{ old('tanggal', $kehadiran->tanggal) }}" required>
                                 @error('tanggal')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
@@ -47,8 +51,19 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="deskripsi">Deskripsi</label>
+                                <input type="text" name="deskripsi" id="deskripsi"
+                                    class="form-control @error('deskripsi') is-invalid @enderror"
+                                    value="{{ old('deskripsi', $kehadiran->deskripsi) }}" required>
+                                @error('deskripsi')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="berkas">Berkas</label>
-                                <input type="file" name="berkas" id="berkas" class="form-control @error('berkas') is-invalid @enderror">
+                                <input type="file" name="berkas" id="berkas"
+                                    class="form-control @error('berkas') is-invalid @enderror">
                                 @error('berkas')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror

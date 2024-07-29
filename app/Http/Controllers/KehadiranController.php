@@ -64,6 +64,7 @@ class KehadiranController extends Controller
             'nama_kegiatan' => 'required|string|max:100',
             'tahun_ajaran' => 'required|integer',
             'tanggal' => 'required|date',
+            'deskripsi' => 'required|string|max:200',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
 
@@ -89,6 +90,7 @@ class KehadiranController extends Controller
             'nama_kegiatan' => $request->nama_kegiatan,
             'tahun_ajaran' => $request->tahun_ajaran,
             'tanggal' => $request->tanggal,
+            'deskripsi' => $request->deskripsi,
             'berkas' => $berkasPath,
             'status' => 'pending',
         ]);
@@ -108,6 +110,7 @@ class KehadiranController extends Controller
             'nama_kegiatan' => 'required|string|max:50',
             'tahun_ajaran' => 'required|integer',
             'tanggal' => 'required|date',
+            'deskripsi' => 'required|string|max:200',
             'berkas' => 'nullable|mimes:pdf,jpg,jpeg,png|max:2048', // max 2MB
         ]);
 
@@ -121,6 +124,7 @@ class KehadiranController extends Controller
         $kehadiran->nama_kegiatan = $request->nama_kegiatan;
         $kehadiran->tanggal = $request->tanggal;
         $kehadiran->tahun_ajaran = $request->tahun_ajaran;
+        $kehadiran->deskripsi = $request->deskripsi;
 
         // Proses update berkas jika ada
         if ($request->hasFile('berkas')) {

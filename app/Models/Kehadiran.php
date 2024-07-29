@@ -22,6 +22,7 @@ class Kehadiran extends Model
         'nama_kegiatan',
         'tahun_ajaran',
         'tanggal',
+        'deskripsi',
         'berkas',
         'status',
     ];
