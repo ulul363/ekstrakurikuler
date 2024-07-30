@@ -44,7 +44,7 @@
                                     <th>Tanggal</th>
                                     <th>Waktu</th>
                                     <th>Waktu Verifikasi</th>
-                                    <th>Diverifikasi Oleh</th>
+                                    <th>Nama Pembina</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -85,67 +85,69 @@
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('pertemuan.verifikasi')
-                                                        <form
-                                                            action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <form id="approve-form-{{ $item->id_pengajuan_pertemuan }}"
+                                                              action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
+                                                              method="POST" style="display:inline;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="disetujui">
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Disetujui</button>
+                                                            <button type="button" class="btn btn-success btn-sm" onclick="confirmAction('approve', {{ $item->id_pengajuan_pertemuan }})">
+                                                                Disetujui
+                                                            </button>
                                                         </form>
-                                                        <form
-                                                            action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <form id="reject-form-{{ $item->id_pengajuan_pertemuan }}"
+                                                              action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
+                                                              method="POST" style="display:inline;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="ditolak">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm">Ditolak</button>
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmAction('reject', {{ $item->id_pengajuan_pertemuan }})">
+                                                                Ditolak
+                                                            </button>
                                                         </form>
                                                     @endcan
                                                 @else
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form
-                                                        action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
-                                                        method="POST" style="display:inline;">
+                                                    <form action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
+                                                          method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         @can('pertemuan.edit')
                                                             <a href="{{ route('pertemuan.edit', $item->id_pengajuan_pertemuan) }}"
-                                                                class="btn btn-warning btn-sm">
+                                                               class="btn btn-warning btn-sm">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                         @endcan
                                                         @can('pertemuan.destroy')
                                                             <button type="button" class="btn btn-danger btn-sm"
-                                                                onclick="confirmDelete('delete-program-{{ $item->id_pengajuan_pertemuan }}')">
+                                                                    onclick="confirmDelete('delete-program-{{ $item->id_pengajuan_pertemuan }}')">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         @endcan
                                                     </form>
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @else
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                             @endif
                                         </td>
+                                        
                                     </tr>
                                     <!-- Modal -->
                                     <!-- Modal -->
@@ -173,13 +175,14 @@
                                                             Belum diverifikasi
                                                         @endif
                                                     </p>
-                                                    <p><strong>Diverifikasi Oleh:</strong>
-                                                        @if ($item->waktu_verifikasi)
-                                                            {{ $item->pembina ? $item->pembina->nama : 'Belum diverifikasi' }}
+                                                    <p><strong>Nama Pembina:</strong>
+                                                        @if ($item->pembina)
+                                                            {{ $item->pembina->nama }}
                                                         @else
                                                             Belum diverifikasi
                                                         @endif
                                                     </p>
+
                                                     <p><strong>Status:</strong>
                                                         @if ($item->status == 'pending')
                                                             <span class="badge badge-warning">Pending</span>
@@ -206,3 +209,34 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function confirmAction(action, id) {
+      let title, text, confirmButtonText;
+  
+      if (action === 'approve') {
+        title = 'Konfirmasi Setuju';
+        text = 'Apakah Anda benar-benar menyetujui pertemuan ini?';
+        confirmButtonText = 'Setuju';
+      } else if (action === 'reject') {
+        title = 'Konfirmasi Tolak';
+        text = 'Apakah Anda benar-benar menolak pertemuan ini?';
+        confirmButtonText = 'Tolak';
+      }
+  
+      Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: confirmButtonText,
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById(action + '-form-' + id).submit();
+        }
+      });
+    }
+  </script>
+  

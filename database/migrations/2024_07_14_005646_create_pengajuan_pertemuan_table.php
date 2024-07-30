@@ -22,7 +22,8 @@ return new class extends Migration
             $table->dateTime('waktu_verifikasi')->nullable();
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
-    
+
+            $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
             $table->foreign('ketua_id')->references('id_ketua')->on('ketua')->onUpdate('restrict')->onDelete('restrict');
             $table->foreign('verifikasi_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
         });
