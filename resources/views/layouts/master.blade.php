@@ -9,6 +9,9 @@
     <meta name="description" content="" />
     <meta name="keywords" content="">
     <meta name="author" content="Phoenixcoded" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <!-- Favicon icon -->
     <link rel="icon" href="{{ URL::to('assets/images/favicon.ico') }}" type="image/x-icon">
 
@@ -75,22 +78,22 @@
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
 
-        <!-- Atur bahasa global untuk semua DataTable -->
-        <script>
-            $(document).ready(function() {
-                $.extend(true, $.fn.dataTable.defaults, {
-                    "language": {
-                        "url": "https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json"
-                    }
-                });
-
-                $('#tabelKetua').DataTable();
-                $('#tabelEkstrakurikuler').DataTable();
-                $('#tabelPrestasi').DataTable();
-                $('#tabelKehadiran').DataTable();
-                $('#tabelProgramKegiatan').DataTable();
+    <!-- Atur bahasa global untuk semua DataTable -->
+    <script>
+        $(document).ready(function() {
+            $.extend(true, $.fn.dataTable.defaults, {
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/2.1.0/i18n/id.json"
+                }
             });
-        </script>
+
+            $('#tabelKetua').DataTable();
+            $('#tabelEkstrakurikuler').DataTable();
+            $('#tabelPrestasi').DataTable();
+            $('#tabelKehadiran').DataTable();
+            $('#tabelProgramKegiatan').DataTable();
+        });
+    </script>
 
     @yield('scripts')
 </body>

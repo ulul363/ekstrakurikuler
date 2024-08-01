@@ -16,22 +16,11 @@ class Chat extends Model
     protected $primaryKey = 'id_chat';
 
     protected $fillable = [
-        'ketua_id',
-        'pembina_id',
-        'tanggal',
+        'id_chat',
+        'pengirim',
         'pesan',
         'pengajuan_pertemuan_id'
     ];
-
-    public function ketua()
-    {
-        return $this->belongsTo(Ketua::class, 'ketua_id', 'id_ketua');
-    }
-
-    public function pembina()
-    {
-        return $this->belongsTo(Pembina::class, 'pembina_id', 'id_pembina');
-    }
 
     public function pengajuanPertemuan()
     {

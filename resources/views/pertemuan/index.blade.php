@@ -89,14 +89,17 @@
                                                             action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
+                                                            @method('PUT')
                                                             <input type="hidden" name="status" value="disetujui">
                                                             <button type="submit"
                                                                 class="btn btn-success btn-sm">Disetujui</button>
                                                         </form>
+
                                                         <form
                                                             action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
+                                                            @method('PUT')
                                                             <input type="hidden" name="status" value="ditolak">
                                                             <button type="submit"
                                                                 class="btn btn-danger btn-sm">Ditolak</button>
@@ -108,6 +111,15 @@
                                                             data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
+
+                                                        @if ($item->status == 'ditolak')
+                                                            <form
+                                                                action="{{ route('chatroom.show', $item->id_pengajuan_pertemuan) }}"
+                                                                method="GET" style="display:inline;">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-success btn-sm">Chat</button>
+                                                            </form>
+                                                        @endif
                                                     @endcan
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
@@ -142,12 +154,20 @@
                                                             data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
+
+                                                        @if ($item->status == 'ditolak')
+                                                            <form
+                                                                action="{{ route('chatroom.show', $item->id_pengajuan_pertemuan) }}"
+                                                                method="GET" style="display:inline;">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-success btn-sm">Chat</button>
+                                                            </form>
+                                                        @endif
                                                     @endcan
                                                 @endif
                                             @endif
                                         </td>
                                     </tr>
-                                    <!-- Modal -->
                                     <!-- Modal -->
                                     <div class="modal fade" id="showModal{{ $item->id_pengajuan_pertemuan }}"
                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

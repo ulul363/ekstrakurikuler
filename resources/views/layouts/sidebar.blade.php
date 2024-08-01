@@ -125,6 +125,15 @@
                             </a>
                         </li>
                     @endcan
+
+                    {{-- @can('chatroom.show')
+                        <li class="nav-item">
+                            <a href="{{ route('chatroom.show') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-award"></i></span>
+                                <span class="pcoded-mtext">Obrolan</span>
+                            </a>
+                        </li>
+                    @endcan --}}
                 @endhasrole
 
                 {{-- @hasrole('admin')

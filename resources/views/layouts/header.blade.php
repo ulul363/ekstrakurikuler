@@ -3,7 +3,8 @@
         <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
         <a href="#!" class="b-brand">
             <!-- ========   change your logo hear   ============ -->
-            <img src="{{ asset('dist/assets/images/logo.png') }}" alt="" class="logo">
+            <img src="{{ asset('assets/images/logo-man3.png') }}" alt="" class="logo"
+                style="width: 75px; height: 75px; margin-top: 30px;">
             <img src="{{ asset('dist/assets/images/logo-icon.png') }}" alt="" class="logo-thumb">
         </a>
         <a href="#!" class="mob-toggler">
@@ -12,7 +13,7 @@
     </div>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="#!" class="pop-search"><i class="feather icon-search"></i></a>
                 <div class="search-bar">
                     <input type="text" class="form-control border-0 shadow-none" placeholder="Search hear">
@@ -20,8 +21,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            {{-- <li class="nav-item">
                 <div class="dropdown">
                     <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
                         Dropdown
@@ -37,8 +38,8 @@
                         </ul>
                     </div>
                 </div>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            {{-- <li class="nav-item">
                 <div class="dropdown mega-menu">
                     <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
                         Mega
@@ -112,10 +113,10 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> --}}
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li>
+            {{-- <li>
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <i class="icon feather icon-bell"></i>
@@ -186,7 +187,7 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </li> --}}
             <li>
                 <div class="dropdown drp-user">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -197,8 +198,7 @@
                             <img src="{{ asset('dist/assets/images/user/avatar-1.jpg') }}" class="img-radius"
                                 alt="User-Profile-Image">
                             <span>{{ Auth::user()->name }}</span>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                             <a href="javascript:void(0);"
@@ -209,12 +209,12 @@
 
                         </div>
                         <ul class="pro-body">
-                            <li><a href="user-profile.html" class="dropdown-item"><i class="feather icon-user"></i>
-                                    Profile</a></li>
-                            <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My
+                            <li><a href="{{ route('profile.show') }}" class="dropdown-item"><i
+                                        class="feather icon-user"></i> Profile</a></li>
+                            {{-- <li><a href="email_inbox.html" class="dropdown-item"><i class="feather icon-mail"></i> My
                                     Messages</a></li>
                             <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i>
-                                    Lock Screen</a></li>
+                                    Lock Screen</a></li> --}}
                         </ul>
                     </div>
                 </div>

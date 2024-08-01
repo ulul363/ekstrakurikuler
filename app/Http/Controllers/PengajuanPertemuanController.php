@@ -30,6 +30,7 @@ class PengajuanPertemuanController extends Controller
                 ->where('ketua_id', $ketuaId)
                 ->get();
         }
+        // dd($pertemuan);
 
         return view('pertemuan.index', compact('pertemuan'));
     }
@@ -37,15 +38,20 @@ class PengajuanPertemuanController extends Controller
     public function verifikasi(Request $request, $id)
     {
         $pertemuan = PengajuanPertemuan::findOrFail($id);
+        // dd($pertemuan);
 
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
         ]);
 
         $pertemuan->status = $request->input('status');
-        $pertemuan->verifikasi_id = auth()->user()->pembina->id_pembina ?? null; // Ensure this works even if `pembina` is null
-        $pertemuan->waktu_verifikasi = now(); // Set verification time to the current server time
+        $pertemuan->verifikasi_id = auth()->user()->pembina->id_pembina ?? null;
+        $pertemuan->waktu_verifikasi = now();
         $pertemuan->save();
+
+        // if ($pertemuan->status == 'ditolak') {
+        //     return redirect()->route('chatroom.show', $pertemuan->id_pengajuan_pertemuan)->with('success', 'Pertemuan ditolak dan Anda diarahkan ke chatroom.');
+        // }
 
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diverifikasi.');
     }

@@ -173,6 +173,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/ekstrakurikuler/{id}/update', [EkstrakurikulerController::class, 'update'])->name('ekstrakurikuler.update')->middleware('permission:ekstrakurikuler.update');
     Route::delete('/ekstrakurikuler/destroy/{id}', [EkstrakurikulerController::class, 'destroy'])->name('ekstrakurikuler.destroy')->middleware('permission:ekstrakurikuler.destroy');
 
+
     // Meny Jadwal Ekstrakurikuler
     Route::get('/jadwal_ekstrakurikuler', [JadwalEkstrakurikulerController::class, 'index'])->name('jadwal_ekstrakurikuler.index')->middleware('permission:jadwal_ekstrakurikuler.index');
     Route::get('/jadwal_ekstrakurikuler/create', [JadwalEkstrakurikulerController::class, 'create'])->name('jadwal_ekstrakurikuler.create')->middleware('permission:jadwal_ekstrakurikuler.create');
@@ -180,6 +181,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/jadwal_ekstrakurikuler/{id}/edit', [JadwalEkstrakurikulerController::class, 'edit'])->name('jadwal_ekstrakurikuler.edit')->middleware('permission:jadwal_ekstrakurikuler.edit');
     Route::put('/jadwal_ekstrakurikuler/{id}/update', [JadwalEkstrakurikulerController::class, 'update'])->name('jadwal_ekstrakurikuler.update')->middleware('permission:jadwal_ekstrakurikuler.update');
     Route::delete('/jadwal_ekstrakurikuler/destroy/{id}', [JadwalEkstrakurikulerController::class, 'destroy'])->name('jadwal_ekstrakurikuler.destroy')->middleware('permission:jadwal_ekstrakurikuler.destroy');
+
 
     // Menu Program Kegiatan
     Route::get('/program_kegiatan', [ProgramKegiatanController::class, 'index'])->name('program_kegiatan.index')->middleware('permission:program_kegiatan.index');
@@ -202,6 +204,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
     Route::post('kehadiran/verifikasi/{id}', [KehadiranController::class, 'verifikasi'])->name('kehadiran.verifikasi')->middleware('permission:kehadiran.verifikasi');
 
+
     // Menu Prestasi
     Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');
     Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create')->middleware('permission:prestasi.create');
@@ -212,6 +215,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/prestasi/{id}', [PrestasiController::class, 'show'])->name('prestasi.show')->middleware('permission:prestasi.show');
     Route::post('prestasi/verifikasi/{id}', [PrestasiController::class, 'verifikasi'])->name('prestasi.verifikasi')->middleware('permission:prestasi.verifikasi');
 
+
     // Menu Pertemuan
     Route::get('/pertemuan', [PengajuanPertemuanController::class, 'index'])->name('pertemuan.index')->middleware('permission:pertemuan.index');
     Route::get('/pertemuan/create', [PengajuanPertemuanController::class, 'create'])->name('pertemuan.create')->middleware('permission:pertemuan.create');
@@ -220,8 +224,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/pertemuan/{id}/update', [PengajuanPertemuanController::class, 'update'])->name('pertemuan.update')->middleware('permission:pertemuan.update');
     Route::delete('/pertemuan/{id}/destroy', [PengajuanPertemuanController::class, 'destroy'])->name('pertemuan.destroy')->middleware('permission:pertemuan.destroy');
     Route::get('/pertemuan/{id}', [PengajuanPertemuanController::class, 'show'])->name('pertemuan.show')->middleware('permission:pertemuan.show');
-    Route::post('pertemuan/verifikasi/{id}', [PengajuanPertemuanController::class, 'verifikasi'])->name('pertemuan.verifikasi')->middleware('permission:pertemuan.verifikasi');
+    Route::put('pertemuan/verifikasi/{id}', [PengajuanPertemuanController::class, 'verifikasi'])->name('pertemuan.verifikasi')->middleware('permission:pertemuan.verifikasi');
 
+    // profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
+
+    Route::get('/chatroom/{id}', [ChatController::class, 'show'])->name('chatroom.show')->middleware('permission:chat.show');
+    Route::post('/chatroom', [ChatController::class, 'store'])->name('chatroom.store')->middleware('permission:chat.store');
+
+    // routes/web.php
+    Route::get('/chat/fetch/{id}', [ChatController::class, 'fetch'])->name('chatroom.fetch');
+    Route::get('/chat/get-new-messages/{id}', [ChatController::class, 'getNewMessages'])->name('chat.getNewMessages');
 });
 
 
