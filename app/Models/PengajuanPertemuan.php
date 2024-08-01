@@ -23,7 +23,8 @@ class PengajuanPertemuan extends Model
         'tanggal',
         'waktu',
         'waktu_verifikasi',
-        'status'
+        'status',
+        'keterangan'
     ];
 
     // Tambahkan jika 'tanggal' dan 'waktu' perlu di-cast ke tipe tertentu

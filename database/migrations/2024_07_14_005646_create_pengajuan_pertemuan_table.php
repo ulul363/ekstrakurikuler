@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('waktu'); // Format: HH:MM
             $table->dateTime('waktu_verifikasi')->nullable();
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
 
             $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');

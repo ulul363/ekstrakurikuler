@@ -21,7 +21,7 @@ class PengajuanPertemuanController extends Controller
                 abort(403, 'Pembina data not found.');
             }
 
-            $pertemuan = PengajuanPertemuan::with('ketua') // Changed from 'pembina' to 'ketua'
+            $pertemuan = PengajuanPertemuan::with('ketua')
                 ->where('pembina_id', $pembina->id_pembina)
                 ->get();
         } else {
@@ -36,16 +36,17 @@ class PengajuanPertemuanController extends Controller
 
     public function verifikasi(Request $request, $id)
     {
-        $pertemuan = PengajuanPertemuan::findOrFail($id);
-
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
+            'keterangan' => 'nullable|string',
         ]);
 
-        $pertemuan->status = $request->input('status');
-        $pertemuan->verifikasi_id = auth()->user()->pembina->id_pembina ?? null; // Ensure this works even if `pembina` is null
-        $pertemuan->waktu_verifikasi = now(); // Set verification time to the current server time
-        $pertemuan->save();
+        $pengajuanPertemuan = PengajuanPertemuan::findOrFail($id);
+        $pengajuanPertemuan->status = $request->status;
+        $pengajuanPertemuan->keterangan = $request->keterangan;
+        $pengajuanPertemuan->verifikasi_id = auth()->user()->pembina->id_pembina ?? null;
+        $pengajuanPertemuan->waktu_verifikasi = now();
+        $pengajuanPertemuan->save();
 
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diverifikasi.');
     }
@@ -57,7 +58,7 @@ class PengajuanPertemuanController extends Controller
         }
 
         $ekstrakurikuler_id = Auth::user()->ketua->ekstrakurikuler_id;
-        $pembina = Pembina::where('ekstrakurikuler_id', $ekstrakurikuler_id)->get(); // Changed to get() to allow multiple Pembina
+        $pembina = Pembina::where('ekstrakurikuler_id', $ekstrakurikuler_id)->get();
 
         if ($pembina->isEmpty()) {
             return redirect()->route('pertemuan.index')->withErrors('Tidak ada pembina yang ditemukan untuk ekstrakurikuler ini.');
@@ -68,10 +69,8 @@ class PengajuanPertemuanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'pembina_id' => 'required|exists:pembina,id_pembina',
-            // 'rencana_pertemuan' => 'required|date_format:Y-m-d\TH:i',
             'hari' => 'required|string',
             'tanggal' => 'required|date',
             'waktu' => 'required|date_format:H:i',
@@ -86,7 +85,6 @@ class PengajuanPertemuanController extends Controller
         PengajuanPertemuan::create([
             'ketua_id' => $ketua_id,
             'pembina_id' => $request->pembina_id,
-            // 'rencana_pertemuan' => $request->rencana_pertemuan,
             'hari' => $request->hari,
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
@@ -95,7 +93,6 @@ class PengajuanPertemuanController extends Controller
 
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diajukan.');
     }
-
 
     public function edit($id)
     {
@@ -106,8 +103,9 @@ class PengajuanPertemuanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            // 'rencana_pertemuan' => 'required|string', 
-            'waktu_verifikasi' => 'nullable|date_format:Y-m-d\TH:i',
+            'hari' => 'required|string',
+            'tanggal' => 'required|date',
+            'waktu' => 'required|date_format:H:i',
         ]);
 
         $pertemuan = PengajuanPertemuan::findOrFail($id);
@@ -116,8 +114,9 @@ class PengajuanPertemuanController extends Controller
             return redirect()->route('pertemuan.index')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
         }
 
-        // $pertemuan->rencana_pertemuan = $request->rencana_pertemuan;
-        $pertemuan->waktu_verifikasi = $request->waktu_verifikasi;
+        $pertemuan->hari = $request->hari;
+        $pertemuan->tanggal = $request->tanggal;
+        $pertemuan->waktu = $request->waktu;
         $pertemuan->save();
 
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diperbarui.');

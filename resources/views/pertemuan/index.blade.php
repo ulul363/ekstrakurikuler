@@ -46,6 +46,7 @@
                                     <th>Waktu Verifikasi</th>
                                     <th>Nama Pembina</th>
                                     <th>Status</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -82,24 +83,29 @@
                                             @endif
                                         </td>
                                         <td>
+                                            {{ $item->keterangan ?? 'Tidak ada keterangan' }} <!-- Tambahkan ini -->
+                                        </td>
+                                        <td>
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('pertemuan.verifikasi')
                                                         <form id="approve-form-{{ $item->id_pengajuan_pertemuan }}"
-                                                              action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
-                                                              method="POST" style="display:inline;">
+                                                            action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
+                                                            method="POST" style="display:inline;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="disetujui">
-                                                            <button type="button" class="btn btn-success btn-sm" onclick="confirmAction('approve', {{ $item->id_pengajuan_pertemuan }})">
+                                                            <button type="button" class="btn btn-success btn-sm"
+                                                                onclick="confirmAction('approve', {{ $item->id_pengajuan_pertemuan }})">
                                                                 Disetujui
                                                             </button>
                                                         </form>
                                                         <form id="reject-form-{{ $item->id_pengajuan_pertemuan }}"
-                                                              action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
-                                                              method="POST" style="display:inline;">
+                                                            action="{{ route('pertemuan.verifikasi', $item->id_pengajuan_pertemuan) }}"
+                                                            method="POST" style="display:inline;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="ditolak">
-                                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmAction('reject', {{ $item->id_pengajuan_pertemuan }})">
+                                                            <button type="button" class="btn btn-danger btn-sm"
+                                                                onclick="confirmAction('reject', {{ $item->id_pengajuan_pertemuan }})">
                                                                 Ditolak
                                                             </button>
                                                         </form>
@@ -107,49 +113,48 @@
                                                 @else
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
-                                                          method="POST" style="display:inline;">
+                                                    <form
+                                                        action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
+                                                        method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         @can('pertemuan.edit')
                                                             <a href="{{ route('pertemuan.edit', $item->id_pengajuan_pertemuan) }}"
-                                                               class="btn btn-warning btn-sm">
+                                                                class="btn btn-warning btn-sm">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                         @endcan
                                                         @can('pertemuan.destroy')
                                                             <button type="button" class="btn btn-danger btn-sm"
-                                                                    onclick="confirmDelete('delete-program-{{ $item->id_pengajuan_pertemuan }}')">
+                                                                onclick="confirmDelete('delete-program-{{ $item->id_pengajuan_pertemuan }}')">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         @endcan
                                                     </form>
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @else
                                                     @can('pertemuan.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                                data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                             @endif
                                         </td>
-                                        
                                     </tr>
-                                    <!-- Modal -->
                                     <!-- Modal -->
                                     <div class="modal fade" id="showModal{{ $item->id_pengajuan_pertemuan }}"
                                         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -192,6 +197,8 @@
                                                             <span class="badge badge-danger">Ditolak</span>
                                                         @endif
                                                     </p>
+
+                                                    <p><strong>Keterangan:</strong> {{ $item->keterangan ?? 'Tidak ada keterangan' }}</p> 
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -208,35 +215,73 @@
             </div>
         </div>
     </div>
-@endsection
 
-<script>
-    function confirmAction(action, id) {
-      let title, text, confirmButtonText;
-  
-      if (action === 'approve') {
-        title = 'Konfirmasi Setuju';
-        text = 'Apakah Anda benar-benar menyetujui pertemuan ini?';
-        confirmButtonText = 'Setuju';
-      } else if (action === 'reject') {
-        title = 'Konfirmasi Tolak';
-        text = 'Apakah Anda benar-benar menolak pertemuan ini?';
-        confirmButtonText = 'Tolak';
-      }
-  
-      Swal.fire({
-        title: title,
-        text: text,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: confirmButtonText,
-        cancelButtonText: 'Batal',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          document.getElementById(action + '-form-' + id).submit();
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirmDelete(formId) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            });
         }
-      });
-    }
-  </script>
-  
+
+        function confirmAction(action, id) {
+            let title, text, confirmButtonText, formId;
+            if (action === 'approve') {
+                title = 'Konfirmasi Persetujuan';
+                text = 'Apakah Anda yakin ingin menyetujui pertemuan ini?';
+                confirmButtonText = 'Setujui';
+                formId = `approve-form-${id}`;
+            } else if (action === 'reject') {
+                title = 'Konfirmasi Penolakan';
+                text = 'Apakah Anda yakin ingin menolak pertemuan ini?';
+                confirmButtonText = 'Tolak';
+                formId = `reject-form-${id}`;
+            }
+
+            Swal.fire({
+                title: title,
+                text: text,
+                input: 'textarea',
+                inputLabel: 'Keterangan (opsional):',
+                inputPlaceholder: 'Masukkan keterangan...',
+                inputAttributes: {
+                    'aria-label': 'Masukkan keterangan'
+                },
+                showCancelButton: true,
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set the textarea value to the hidden input field
+                    const form = document.getElementById(formId);
+                    const keteranganInput = form.querySelector('input[name="keterangan"]');
+                    if (!keteranganInput) {
+                        // Create hidden input if it does not exist
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'keterangan';
+                        hiddenInput.value = result.value;
+                        form.appendChild(hiddenInput);
+                    } else {
+                        // Update existing hidden input
+                        keteranganInput.value = result.value;
+                    }
+                    form.submit();
+                }
+            });
+        }
+    </script>
+@endsection
