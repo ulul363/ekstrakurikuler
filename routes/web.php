@@ -14,6 +14,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\EkstrakurikulerController;
 use App\Http\Controllers\ProgramKegiatanController;
+use App\Http\Controllers\PengajuanPertemuanController;
+
 use App\Http\Controllers\JadwalEkstrakurikulerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\PrestasiEkstrakurikulerController;
@@ -215,6 +217,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Menu Laporan
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index')->middleware('permission:laporan.index');
     Route::post('/laporan/export', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF')->middleware('permission:laporan.exportPDF');
+    
+    // Menu Pertemuan
+    Route::get('/pertemuan', [PengajuanPertemuanController::class, 'index'])->name('pertemuan.index')->middleware('permission:pertemuan.index');
+    Route::get('/pertemuan/create', [PengajuanPertemuanController::class, 'create'])->name('pertemuan.create')->middleware('permission:pertemuan.create');
+    Route::post('/pertemuan/store', [PengajuanPertemuanController::class, 'store'])->name('pertemuan.store')->middleware('permission:pertemuan.store');
+    Route::get('/pertemuan/{id}/edit', [PengajuanPertemuanController::class, 'edit'])->name('pertemuan.edit')->middleware('permission:pertemuan.edit');
+    Route::put('/pertemuan/{id}/update', [PengajuanPertemuanController::class, 'update'])->name('pertemuan.update')->middleware('permission:pertemuan.update');
+    Route::delete('/pertemuan/{id}/destroy', [PengajuanPertemuanController::class, 'destroy'])->name('pertemuan.destroy')->middleware('permission:pertemuan.destroy');
+    Route::get('/pertemuan/{id}', [PengajuanPertemuanController::class, 'show'])->name('pertemuan.show')->middleware('permission:pertemuan.show');
+    Route::post('pertemuan/verifikasi/{id}', [PengajuanPertemuanController::class, 'verifikasi'])->name('pertemuan.verifikasi')->middleware('permission:pertemuan.verifikasi');
 
 });
 

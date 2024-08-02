@@ -124,6 +124,15 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('pertemuan.index')
+                        <li class="nav-item">
+                            <a href="{{ route('pertemuan.index') }}" class="nav-link">
+                                <span class="pcoded-micon"><i class="feather icon-award"></i></span>
+                                <span class="pcoded-mtext">Pengajuan Pertemuan</span>
+                            </a>
+                        </li>
+                    @endcan
                 @endhasrole
 
                 {{-- @hasrole('admin')
