@@ -210,7 +210,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
     Route::post('kehadiran/verifikasi/{id}', [KehadiranController::class, 'verifikasi'])->name('kehadiran.verifikasi')->middleware('permission:kehadiran.verifikasi');
 
-    
+
     // Menu Prestasi
     Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');
     Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create')->middleware('permission:prestasi.create');
@@ -224,7 +224,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Menu Laporan
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index')->middleware('permission:laporan.index');
     Route::post('/laporan/export', [LaporanController::class, 'exportPDF'])->name('laporan.exportPDF')->middleware('permission:laporan.exportPDF');
-    
+
     // Menu Pertemuan
     Route::get('/pertemuan', [PengajuanPertemuanController::class, 'index'])->name('pertemuan.index')->middleware('permission:pertemuan.index');
     Route::get('/pertemuan/create', [PengajuanPertemuanController::class, 'create'])->name('pertemuan.create')->middleware('permission:pertemuan.create');
@@ -235,6 +235,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pertemuan/{id}', [PengajuanPertemuanController::class, 'show'])->name('pertemuan.show')->middleware('permission:pertemuan.show');
     Route::post('pertemuan/verifikasi/{id}', [PengajuanPertemuanController::class, 'verifikasi'])->name('pertemuan.verifikasi')->middleware('permission:pertemuan.verifikasi');
 
+     // profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
+
+    Route::get('/chatroom/{id}', [ChatController::class, 'show'])->name('chatroom.show')->middleware('permission:chat.show');
+    Route::post('/chatroom', [ChatController::class, 'store'])->name('chatroom.store')->middleware('permission:chat.store');
+
+    // routes/web.php
+    Route::get('/chat/fetch/{id}', [ChatController::class, 'fetch'])->name('chatroom.fetch');
+    Route::get('/chat/get-new-messages/{id}', [ChatController::class, 'getNewMessages'])->name('chat.getNewMessages');
 });
 
 

@@ -16,14 +16,15 @@
                             </h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                        class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('pertemuan.index') }}">
-                                @if (auth()->user()->hasRole('Ketua'))
-                                    Pengajuan Pertemuan
-                                @else
-                                    Daftar Pertemuan
-                                @endif
-                            </a></li>
+                                    @if (auth()->user()->hasRole('Ketua'))
+                                        Pengajuan Pertemuan
+                                    @else
+                                        Daftar Pertemuan
+                                    @endif
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -135,6 +136,16 @@
                                                             data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
+
+                                                        @if ($item->status == 'ditolak')
+                                                            <form
+                                                                action="{{ route('chatroom.show', $item->id_pengajuan_pertemuan) }}"
+                                                                method="GET" style="display:inline;">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-success btn-sm">Chat</button>
+                                                            </form>
+                                                        @endif
                                                     @endcan
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
@@ -157,13 +168,31 @@
                                                             </button>
                                                         </form>
                                                     @endcan
+
+                                                    @can('pertemuan.show')
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    @endcan
+                                                @else
+                                                    @can('pertemuan.show')
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+
+                                                        @if ($item->status == 'ditolak')
+                                                            <form
+                                                                action="{{ route('chatroom.show', $item->id_pengajuan_pertemuan) }}"
+                                                                method="GET" style="display:inline;">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-success btn-sm">Chat</button>
+                                                            </form>
+                                                        @endif
+                                                    @endcan
                                                 @endif
-                                                @can('pertemuan.show')
-                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                        data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
-                                                @endcan
                                             @endif
                                         </td>
                                     </tr>
