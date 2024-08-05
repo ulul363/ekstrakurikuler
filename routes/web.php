@@ -47,11 +47,17 @@ Route::get('user-page', function () {
     return 'Halaman untuk User';
 })->middleware('role:user')->name('user.page');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+// Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+// Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+// Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+// Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // Routes for admin
 // Route::group(['middleware' => ['role:admin']], function () {
@@ -126,12 +132,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('permission:dashboard');
 
     // User Access Management
-    Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('permission:user.index');
-    Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:user.create');
-    Route::post('/user/store', [UserController::class, 'store'])->name('user.store')->middleware('permission:user.store');
-    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('permission:user.edit');
-    Route::patch('/user/{id}/update', [UserController::class, 'update'])->name('user.update')->middleware('permission:user.update');
-    Route::delete('/user/destroy{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('permission:user.destroy');
+    // Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('permission:user.index');
+    // Route::get('/user/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:user.create');
+    // Route::post('/user/store', [UserController::class, 'store'])->name('user.store')->middleware('permission:user.store');
+    // Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('permission:user.edit');
+    // Route::patch('/user/{id}/update', [UserController::class, 'update'])->name('user.update')->middleware('permission:user.update');
+    // Route::delete('/user/destroy{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('permission:user.destroy');
 
     // Role Access Management
     Route::get('/role', [RoleController::class, 'index'])->name('role.index')->middleware('permission:role.index');
@@ -204,6 +210,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/kehadiran/{id}', [KehadiranController::class, 'show'])->name('kehadiran.show')->middleware('permission:kehadiran.show');
     Route::post('kehadiran/verifikasi/{id}', [KehadiranController::class, 'verifikasi'])->name('kehadiran.verifikasi')->middleware('permission:kehadiran.verifikasi');
 
+    
     // Menu Prestasi
     Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi.index')->middleware('permission:prestasi.index');
     Route::get('/prestasi/create', [PrestasiController::class, 'create'])->name('prestasi.create')->middleware('permission:prestasi.create');

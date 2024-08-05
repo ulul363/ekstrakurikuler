@@ -10,9 +10,12 @@
                             <h5 class="m-b-10">Edit Pertemuan</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
+                                        class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('pertemuan.index') }}">Pertemuan</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('pertemuan.edit', $pertemuan->id_pengajuan_pertemuan) }}">Edit Pertemuan</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('pertemuan.edit', $pertemuan->id_pengajuan_pertemuan) }}">Edit
+                                    Pertemuan</a></li>
                         </ul>
                     </div>
                 </div>
@@ -24,7 +27,8 @@
                 <div class="card">
                     <div class="card-header">Edit Pertemuan</div>
                     <div class="card-body">
-                        <form action="{{ route('pertemuan.update', $pertemuan->id_pengajuan_pertemuan) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('pertemuan.update', $pertemuan->id_pengajuan_pertemuan) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -32,18 +36,26 @@
                                 <label for="hari">Hari</label>
                                 <select class="form-control" id="hari" name="hari" required>
                                     <option value="">Pilih Hari</option>
-                                    <option value="senin" {{ old('hari', $pertemuan->hari) == 'senin' ? 'selected' : '' }}>Senin</option>
-                                    <option value="selasa" {{ old('hari', $pertemuan->hari) == 'selasa' ? 'selected' : '' }}>Selasa</option>
-                                    <option value="rabu" {{ old('hari', $pertemuan->hari) == 'rabu' ? 'selected' : '' }}>Rabu</option>
-                                    <option value="kamis" {{ old('hari', $pertemuan->hari) == 'kamis' ? 'selected' : '' }}>Kamis</option>
-                                    <option value="jumat" {{ old('hari', $pertemuan->hari) == 'jumat' ? 'selected' : '' }}>Jumat</option>
-                                    <option value="sabtu" {{ old('hari', $pertemuan->hari) == 'sabtu' ? 'selected' : '' }}>Sabtu</option>
+                                    <option value="senin" {{ old('hari', $pertemuan->hari) == 'senin' ? 'selected' : '' }}>
+                                        Senin</option>
+                                    <option value="selasa"
+                                        {{ old('hari', $pertemuan->hari) == 'selasa' ? 'selected' : '' }}>Selasa</option>
+                                    <option value="rabu" {{ old('hari', $pertemuan->hari) == 'rabu' ? 'selected' : '' }}>
+                                        Rabu</option>
+                                    <option value="kamis" {{ old('hari', $pertemuan->hari) == 'kamis' ? 'selected' : '' }}>
+                                        Kamis</option>
+                                    <option value="jumat" {{ old('hari', $pertemuan->hari) == 'jumat' ? 'selected' : '' }}>
+                                        Jumat</option>
+                                    <option value="sabtu" {{ old('hari', $pertemuan->hari) == 'sabtu' ? 'selected' : '' }}>
+                                        Sabtu</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" required>
+                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                    id="tanggal" name="tanggal"
+                                    value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" required>
                                 @error('tanggal')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -51,7 +63,9 @@
 
                             <div class="form-group">
                                 <label for="waktu">Waktu</label>
-                                <input type="time" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{ old('waktu', $pertemuan->waktu->format('H:i')) }}" required>
+                                <input type="time" class="form-control @error('waktu') is-invalid @enderror"
+                                    id="waktu" name="waktu"
+                                    value="{{ old('waktu', $pertemuan->waktu->format('H:i')) }}" required>
                                 @error('waktu')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -64,4 +78,33 @@
             </div>
         </div>
     </div>
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var waktuInput = document.getElementById('waktu');
+            var tanggalInput = document.getElementById('tanggal');
+
+            function updateMinWaktu() {
+                var tanggal = tanggalInput.value;
+                var sekarang = new Date();
+                var tanggalSekarang = sekarang.toISOString().split('T')[0];
+                var waktuSekarang = sekarang.toTimeString().split(' ')[0].slice(0, 5);
+
+                if (tanggal === tanggalSekarang) {
+                    waktuInput.min = waktuSekarang;
+                } else {
+                    waktuInput.removeAttribute('min');
+                }
+            }
+
+            tanggalInput.addEventListener('change', updateMinWaktu);
+
+            // Initial check
+            updateMinWaktu();
+        });
+    </script>
+@endsection
+
+
 @endsection

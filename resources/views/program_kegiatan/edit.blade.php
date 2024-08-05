@@ -44,9 +44,9 @@
 
                             <div class="form-group">
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
-                                <input type="text" name="tahun_ajaran" id="tahun_ajaran"
+                                <input type="number" name="tahun_ajaran" id="tahun_ajaran"
                                     class="form-control @error('tahun_ajaran') is-invalid @enderror"
-                                    value="{{ old('tahun_ajaran', $programKegiatan->tahun_ajaran) }}" required>
+                                    value="{{ old('tahun_ajaran') }}" required max="9999">
                                 @error('tahun_ajaran')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -54,7 +54,8 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required style="width: 100%; height: 150px;">{{ old('deskripsi', $programKegiatan->deskripsi) }}</textarea>
+                                <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" required
+                                    style="width: 100%; height: 150px;">{{ old('deskripsi', $programKegiatan->deskripsi) }}</textarea>
                                 @error('deskripsi')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -67,4 +68,16 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#tahun_ajaran').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
+        });
+    </script>
 @endsection

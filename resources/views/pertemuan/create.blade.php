@@ -63,13 +63,16 @@
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal" required
+                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="waktu">Waktu</label>
-                                <input type="time" class="form-control" id="waktu" name="waktu" required>
+                                <input type="time" class="form-control" id="waktu" name="waktu" required
+                                    min="{{ \Carbon\Carbon::now()->format('H:i') }}">
                             </div>
+
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <a href="{{ route('pertemuan.index') }}" class="btn btn-secondary">Cancel</a>
@@ -100,4 +103,33 @@
             height: 600px;
         }
     </style>
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var waktuInput = document.getElementById('waktu');
+            var tanggalInput = document.getElementById('tanggal');
+
+            function updateMinWaktu() {
+                var tanggal = tanggalInput.value;
+                var sekarang = new Date();
+                var tanggalSekarang = sekarang.toISOString().split('T')[0];
+                var waktuSekarang = sekarang.toTimeString().split(' ')[0].slice(0, 5);
+
+                if (tanggal === tanggalSekarang) {
+                    waktuInput.min = waktuSekarang;
+                } else {
+                    waktuInput.removeAttribute('min');
+                }
+            }
+
+            tanggalInput.addEventListener('change', updateMinWaktu);
+
+            // Initial check
+            updateMinWaktu();
+        });
+    </script>
+@endsection
+
+
 @endsection

@@ -7,12 +7,23 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Pengajuan Pertemuan</h5>
+                            <h5 class="m-b-10">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Pertemuan
+                                @else
+                                    Daftar Pertemuan
+                                @endif
+                            </h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                        class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('pertemuan.index') }}">Pertemuan</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('pertemuan.index') }}">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Pertemuan
+                                @else
+                                    Daftar Pertemuan
+                                @endif
+                            </a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,7 +33,13 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Pengajuan Pertemuan</div>
+                    <div class="card-header">
+                        @if (auth()->user()->hasRole('Ketua'))
+                            Pengajuan Pertemuan
+                        @else
+                            Daftar Pertemuan
+                        @endif
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -30,13 +47,15 @@
                             </div>
                         @endif
 
-                        @can('pertemuan.create')
-                            <a href="{{ route('pertemuan.create') }}" class="btn btn-primary mb-3">
-                                <i class="fa fa-plus"></i> Tambah Pertemuan
-                            </a>
-                        @endcan
+                        @if (auth()->user()->hasRole('Ketua'))
+                            @can('pertemuan.create')
+                                <a href="{{ route('pertemuan.create') }}" class="btn btn-primary mb-3">
+                                    <i class="fa fa-plus"></i> Tambah Pertemuan
+                                </a>
+                            @endcan
+                        @endif
 
-                        <table class="table table-bordered">
+                        <table id="tabelPembinaPertemuan" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -83,7 +102,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $item->keterangan ?? 'Tidak ada keterangan' }} <!-- Tambahkan ini -->
+                                            {{ $item->keterangan ?? 'Tidak ada keterangan' }}
                                         </td>
                                         <td>
                                             @if (auth()->user()->hasRole('Pembina'))
@@ -120,38 +139,31 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form
-                                                        action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        @can('pertemuan.edit')
-                                                            <a href="{{ route('pertemuan.edit', $item->id_pengajuan_pertemuan) }}"
-                                                                class="btn btn-warning btn-sm">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
-                                                        @endcan
-                                                        @can('pertemuan.destroy')
+                                                    @can('pertemuan.edit')
+                                                        <a href="{{ route('pertemuan.edit', $item->id_pengajuan_pertemuan) }}"
+                                                            class="btn btn-warning btn-sm">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('pertemuan.destroy')
+                                                        <form id="delete-form-{{ $item->id_pengajuan_pertemuan }}"
+                                                            action="{{ route('pertemuan.destroy', $item->id_pengajuan_pertemuan) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
                                                             <button type="button" class="btn btn-danger btn-sm"
-                                                                onclick="confirmDelete('delete-program-{{ $item->id_pengajuan_pertemuan }}')">
+                                                                onclick="confirmDelete('delete-form-{{ $item->id_pengajuan_pertemuan }}')">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
-                                                        @endcan
-                                                    </form>
-                                                    @can('pertemuan.show')
-                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </button>
-                                                    @endcan
-                                                @else
-                                                    @can('pertemuan.show')
-                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </button>
+                                                        </form>
                                                     @endcan
                                                 @endif
+                                                @can('pertemuan.show')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showModal{{ $item->id_pengajuan_pertemuan }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                @endcan
                                             @endif
                                         </td>
                                     </tr>
@@ -198,7 +210,8 @@
                                                         @endif
                                                     </p>
 
-                                                    <p><strong>Keterangan:</strong> {{ $item->keterangan ?? 'Tidak ada keterangan' }}</p> 
+                                                    <p><strong>Keterangan:</strong>
+                                                        {{ $item->keterangan ?? 'Tidak ada keterangan' }}</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

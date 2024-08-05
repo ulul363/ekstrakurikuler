@@ -72,8 +72,20 @@ class PengajuanPertemuanController extends Controller
         $request->validate([
             'pembina_id' => 'required|exists:pembina,id_pembina',
             'hari' => 'required|string',
-            'tanggal' => 'required|date',
-            'waktu' => 'required|date_format:H:i',
+            'tanggal' => 'required|date|after_or_equal:today',
+            'waktu' => [
+                'required',
+                'date_format:H:i',
+                function ($attribute, $value, $fail) use ($request) {
+                    $tanggal = $request->input('tanggal');
+                    $tanggalWaktu = $tanggal . ' ' . $value;
+                    $currentDateTime = now()->format('Y-m-d H:i');
+
+                    if ($tanggalWaktu < $currentDateTime) {
+                        $fail('Waktu harus lebih besar dari waktu saat ini.');
+                    }
+                },
+            ],
         ]);
 
         if (!Auth::user()->ketua) {
@@ -104,8 +116,20 @@ class PengajuanPertemuanController extends Controller
     {
         $request->validate([
             'hari' => 'required|string',
-            'tanggal' => 'required|date',
-            'waktu' => 'required|date_format:H:i',
+            'tanggal' => 'required|date|after_or_equal:today',
+            'waktu' => [
+                'required',
+                'date_format:H:i',
+                function ($attribute, $value, $fail) use ($request) {
+                    $tanggal = $request->input('tanggal');
+                    $tanggalWaktu = $tanggal . ' ' . $value;
+                    $currentDateTime = now()->format('Y-m-d H:i');
+
+                    if ($tanggalWaktu < $currentDateTime) {
+                        $fail('Waktu harus lebih besar dari waktu saat ini.');
+                    }
+                },
+            ],
         ]);
 
         $pertemuan = PengajuanPertemuan::findOrFail($id);

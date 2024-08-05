@@ -38,11 +38,11 @@
                                     <input type="password" class="form-control" name="password" id="Password"
                                         placeholder="Password" required>
                                 </div>
-                                <div class="custom-control custom-checkbox text-left mb-4 mt-2">
+                                {{-- <div class="custom-control custom-checkbox text-left mb-4 mt-2">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1"
                                         name="remember">
                                     <label class="custom-control-label" for="customCheck1">Save credentials.</label>
-                                </div>
+                                </div> --}}
                                 <button type="submit" class="btn btn-block btn-primary mb-4">Masuk</button>
                             </form>
                         </div>
