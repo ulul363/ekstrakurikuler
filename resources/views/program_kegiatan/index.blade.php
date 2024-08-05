@@ -7,7 +7,13 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Pengajuan Program Kegiatan</h5>
+                            <h5 class="m-b-10">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Program Kegiatan
+                                @else
+                                    Daftar Program Kegiatan
+                                @endif
+                            </h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -16,7 +22,13 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{{ route('program_kegiatan.index') }}">Program Kegiatan</a>
+                                <a href="{{ route('program_kegiatan.index') }}">
+                                    @if (auth()->user()->hasRole('Ketua'))
+                                        Pengajuan Program Kegiatan
+                                    @else
+                                        Program Kegiatan
+                                    @endif
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -27,7 +39,13 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Pengajuan Program Kegiatan</div>
+                    <div class="card-header">
+                        @if (auth()->user()->hasRole('Ketua'))
+                            Pengajuan Program Kegiatan
+                        @else
+                            Daftar Program Kegiatan
+                        @endif
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -36,12 +54,14 @@
                         @endif
 
                         @can('program_kegiatan.create')
-                            <a href="{{ route('program_kegiatan.create') }}" class="btn btn-primary mb-3">
-                                <i class="fa fa-plus"></i> Ajukan Program Kegiatan
-                            </a>
+                            @if (auth()->user()->hasRole('Ketua'))
+                                <a href="{{ route('program_kegiatan.create') }}" class="btn btn-primary mb-3">
+                                    <i class="fa fa-plus"></i> Ajukan Program Kegiatan
+                                </a>
+                            @endif
                         @endcan
 
-                        <table class="table table-bordered">
+                        <table id="tabelPembinaProgramKegiatan" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -80,27 +100,27 @@
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('program_kegiatan.verifikasi')
-                                                        <form
+                                                        <form id="form-verifikasi-disetujui-{{ $item->id_program_kegiatan }}"
                                                             action="{{ route('program_kegiatan.verifikasi', $item->id_program_kegiatan) }}"
-                                                            method="POST" style="display:inline;">
-
+                                                            method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="disetujui">
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Disetujui</button>
                                                         </form>
-                                                    @endcan
-                                                    @can('program_kegiatan.verifikasi')
-                                                        <form
+                                                        <button type="button" class="btn btn-success btn-sm"
+                                                            onclick="confirmVerification('form-verifikasi-disetujui-{{ $item->id_program_kegiatan }}', 'disetujui')">
+                                                            Disetujui
+                                                        </button>
+
+                                                        <form id="form-verifikasi-ditolak-{{ $item->id_program_kegiatan }}"
                                                             action="{{ route('program_kegiatan.verifikasi', $item->id_program_kegiatan) }}"
-                                                            method="POST" style="display:inline;">
+                                                            method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="ditolak">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm">Ditolak</button>
                                                         </form>
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="confirmVerification('form-verifikasi-ditolak-{{ $item->id_program_kegiatan }}', 'ditolak')">
+                                                            Ditolak
+                                                        </button>
                                                     @endcan
                                                 @else
                                                     @can('program_kegiatan.show')
@@ -115,14 +135,12 @@
                                                     <form id="delete-program-kegiatan-{{ $item->id_program_kegiatan }}"
                                                         action="{{ route('program_kegiatan.destroy', $item->id_program_kegiatan) }}"
                                                         method="POST" style="display:inline;">
-
                                                         @can('program_kegiatan.edit')
                                                             <a href="{{ route('program_kegiatan.edit', $item->id_program_kegiatan) }}"
                                                                 class="btn btn-warning btn-sm">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                         @endcan
-
                                                         @can('program_kegiatan.destroy')
                                                             @csrf
                                                             @method('DELETE')
@@ -148,6 +166,7 @@
                                                 @endif
                                             @endif
                                         </td>
+
                                     </tr>
                                     <!-- Modal -->
                                     <div class="modal fade" id="showModal{{ $item->id_program_kegiatan }}" tabindex="-1"

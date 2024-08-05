@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @section('content')
     <div class="pcoded-content">
         <div class="page-header">
@@ -6,12 +7,23 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Pengajuan Prestasi</h5>
+                            <h5 class="m-b-10">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Prestasi
+                                @else
+                                    Daftar Prestasi
+                                @endif
+                            </h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                        class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('prestasi.index') }}">Prestasi</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('prestasi.index') }}">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Prestasi
+                                @else
+                                    Daftar Prestasi
+                                @endif
+                            </a></li>
                         </ul>
                     </div>
                 </div>
@@ -21,7 +33,13 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Pengajuan Prestasi</div>
+                    <div class="card-header">
+                        @if (auth()->user()->hasRole('Ketua'))
+                            Pengajuan Prestasi
+                        @else
+                            Daftar Prestasi
+                        @endif
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -29,13 +47,15 @@
                             </div>
                         @endif
 
-                        @can('prestasi.create')
-                            <a href="{{ route('prestasi.create') }}" class="btn btn-primary mb-3">
-                                <i class="fa fa-plus"></i> Tambah Prestasi
-                            </a>
-                        @endcan
+                        @if (auth()->user()->hasRole('Ketua'))
+                            @can('prestasi.create')
+                                <a href="{{ route('prestasi.create') }}" class="btn btn-primary mb-3">
+                                    <i class="fa fa-plus"></i> Tambah Prestasi
+                                </a>
+                            @endcan
+                        @endif
 
-                        <table class="table table-bordered">
+                        <table id="tabelPrestasi" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -59,7 +79,7 @@
                                                 $siswaList = json_decode($item->nama_siswa);
                                             @endphp
                                             @foreach ($siswaList as $index => $siswa)
-                                                @if(count($siswaList) > 1)
+                                                @if (count($siswaList) > 1)
                                                     <div>{{ $loop->iteration }}. {{ $siswa }}</div>
                                                 @else
                                                     <div>{{ $siswa }}</div>
@@ -71,7 +91,7 @@
                                                 $kelasList = json_decode($item->kelas);
                                             @endphp
                                             @foreach ($kelasList as $index => $kls)
-                                                @if(count($kelasList) > 1)
+                                                @if (count($kelasList) > 1)
                                                     <div>{{ $loop->iteration }}. {{ $kls }}</div>
                                                 @else
                                                     <div>{{ $kls }}</div>
@@ -79,8 +99,7 @@
                                             @endforeach
                                         </td>
                                         <td>{{ $item->tahun_ajaran }}</td>
-                                        <td><a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat
-                                                Berkas</a></td>
+                                        <td><a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat Berkas</a></td>
                                         <td>
                                             @if ($item->pembina && $item->pembina->nama)
                                                 {{ $item->pembina->nama }}
@@ -103,81 +122,62 @@
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('prestasi.verifikasi')
-                                                        <form action="{{ route('prestasi.verifikasi', $item->id_prestasi) }}"
-                                                            method="POST" style="display:inline;">
-
+                                                        <form id="form-verifikasi-disetujui-{{ $item->id_prestasi }}" action="{{ route('prestasi.verifikasi', $item->id_prestasi) }}" method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="disetujui">
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Disetujui</button>
                                                         </form>
-                                                    @endcan
-                                                    @can('prestasi.verifikasi')
-                                                        <form action="{{ route('prestasi.verifikasi', $item->id_prestasi) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <button type="button" class="btn btn-success btn-sm" onclick="confirmVerification('form-verifikasi-disetujui-{{ $item->id_prestasi }}', 'disetujui')">
+                                                            Disetujui
+                                                        </button>
+
+                                                        <form id="form-verifikasi-ditolak-{{ $item->id_prestasi }}" action="{{ route('prestasi.verifikasi', $item->id_prestasi) }}" method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="ditolak">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm">Ditolak</button>
                                                         </form>
+                                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmVerification('form-verifikasi-ditolak-{{ $item->id_prestasi }}', 'ditolak')">
+                                                            Ditolak
+                                                        </button>
                                                     @endcan
                                                 @else
                                                     @can('prestasi.show')
-                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_prestasi }}">
+                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#showModal{{ $item->id_prestasi }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form id="delete-prestasi-{{ $item->id_prestasi }}" action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
-                                                        method="POST" style="display:inline;">
-
-                                                        @can('prestasi.edit')
-                                                            <a href="{{ route('prestasi.edit', $item->id_prestasi) }}"
-                                                                class="btn btn-warning btn-sm">
-                                                                <i class="fa fa-edit"></i>
-                                                            </a>
-                                                        @endcan
-
-                                                        @can('prestasi.destroy')
+                                                    @can('prestasi.edit')
+                                                        <a href="{{ route('prestasi.edit', $item->id_prestasi) }}" class="btn btn-warning btn-sm">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('prestasi.destroy')
+                                                        <form id="delete-prestasi-{{ $item->id_prestasi }}" action="{{ route('prestasi.destroy', $item->id_prestasi) }}" method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button" class="btn btn-danger btn-sm"
-                                                                onclick="confirmDelete('delete-prestasi-{{ $item->id_prestasi }}')">
+                                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-prestasi-{{ $item->id_prestasi }}')">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
-                                                        @endcan
-                                                    </form>
-                                                    @can('prestasi.show')
-                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_prestasi }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </button>
-                                                    @endcan
-                                                @else
-                                                    @can('prestasi.show')
-                                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->id_prestasi }}">
-                                                            <i class="fa fa-eye"></i>
-                                                        </button>
+                                                        </form>
                                                     @endcan
                                                 @endif
+                                                @can('prestasi.show')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#showModal{{ $item->id_prestasi }}">
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                @endcan
                                             @endif
                                         </td>
                                     </tr>
+
                                     <!-- Modal -->
-                                    <div class="modal fade" id="showModal{{ $item->id_prestasi }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="showModal{{ $item->id_prestasi }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Detail Prestasi</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -209,8 +209,7 @@
                                                     </p>
                                                     <p><strong>Berkas:</strong>
                                                         @if ($item->berkas)
-                                                            <a href="{{ asset('storage/' . $item->berkas) }}"
-                                                                target="_blank">Lihat Berkas</a>
+                                                            <a href="{{ asset('storage/' . $item->berkas) }}" target="_blank">Lihat Berkas</a>
                                                         @else
                                                             Tidak ada berkas
                                                         @endif
@@ -226,8 +225,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>

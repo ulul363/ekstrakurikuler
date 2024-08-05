@@ -11,16 +11,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('chat', function (Blueprint $table) {
-            $table->id('id_chat');
-            $table->unsignedBigInteger('ketua_id');
-            $table->unsignedBigInteger('pembina_id');
-            $table->date('tanggal');
+            $table->id('id_chat')->autoIncrement();
             $table->text('pesan');
+            $table->string('pengirim');
             $table->unsignedBigInteger('pengajuan_pertemuan_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('ketua_id')->references('id_ketua')->on('ketua')->ondelete('restrict')->onupdate('restrict');
-            $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->ondelete('restrict')->onupdate('restrict');
+            // $table->foreign('ketua_id')->references('id_ketua')->on('ketua')->ondelete('restrict')->onupdate('restrict');
+            // $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->ondelete('restrict')->onupdate('restrict');
             $table->foreign('pengajuan_pertemuan_id')->references('id_pengajuan_pertemuan')->on('pengajuan_pertemuan')->ondelete('restrict')->onupdate('restrict');
         });
     }

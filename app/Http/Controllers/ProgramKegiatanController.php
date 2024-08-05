@@ -50,6 +50,7 @@ class ProgramKegiatanController extends Controller
         return redirect()->route('program_kegiatan.index')->with('success', 'Program kegiatan berhasil diverifikasi.');
     }
 
+
     public function create()
     {
         $ekstrakurikuler = Ekstrakurikuler::all();

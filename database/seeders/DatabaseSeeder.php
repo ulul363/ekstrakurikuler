@@ -123,6 +123,8 @@ class DatabaseSeeder extends Seeder
             'pertemuan.update',
             'pertemuan.destroy',
             'pertemuan.show',
+            'chat.show',
+            'chat.store',
             // Pembina Permissions
             'program_kegiatan.store',
             'program_kegiatan.show',
@@ -176,7 +178,7 @@ class DatabaseSeeder extends Seeder
         // Create Ketua Role
         if (!Role::where('name', 'Ketua')->exists()) {
             $ketuaRole = Role::create(['name' => 'Ketua']);
-            $ketuaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.create', 'program_kegiatan.store', 'program_kegiatan.edit', 'program_kegiatan.update', 'program_kegiatan.destroy', 'program_kegiatan.show', 'kehadiran.index', 'kehadiran.create', 'kehadiran.store', 'kehadiran.edit', 'kehadiran.update', 'kehadiran.destroy', 'kehadiran.show', 'prestasi.index', 'prestasi.create', 'prestasi.store', 'prestasi.edit', 'prestasi.update', 'prestasi.destroy', 'prestasi.show', 'pertemuan.index', 'pertemuan.create', 'pertemuan.store', 'pertemuan.edit', 'pertemuan.update', 'pertemuan.destroy', 'pertemuan.show'];
+            $ketuaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.create', 'program_kegiatan.store', 'program_kegiatan.edit', 'program_kegiatan.update', 'program_kegiatan.destroy', 'program_kegiatan.show', 'kehadiran.index', 'kehadiran.create', 'kehadiran.store', 'kehadiran.edit', 'kehadiran.update', 'kehadiran.destroy', 'kehadiran.show', 'prestasi.index', 'prestasi.create', 'prestasi.store', 'prestasi.edit', 'prestasi.update', 'prestasi.destroy', 'prestasi.show', 'pertemuan.index', 'pertemuan.create', 'pertemuan.store', 'pertemuan.edit', 'pertemuan.update', 'pertemuan.destroy', 'pertemuan.show', 'chat.show', 'chat.store'];
             foreach ($ketuaPermissions as $permission) {
                 $ketuaRole->givePermissionTo($permission);
             }
@@ -185,7 +187,7 @@ class DatabaseSeeder extends Seeder
         // Create Pembina Role
         if (!Role::where('name', 'Pembina')->exists()) {
             $pembinaRole = Role::create(['name' => 'Pembina']);
-            $pembinaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.store', 'program_kegiatan.show', 'program_kegiatan.verifikasi', 'kehadiran.index', 'kehadiran.store', 'kehadiran.show', 'kehadiran.verifikasi', 'prestasi.index', 'prestasi.store', 'prestasi.show', 'prestasi.verifikasi', 'pertemuan.index' ,'pertemuan.store', 'pertemuan.show', 'pertemuan.verifikasi'];
+            $pembinaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.store', 'program_kegiatan.show', 'program_kegiatan.verifikasi', 'kehadiran.index', 'kehadiran.store', 'kehadiran.show', 'kehadiran.verifikasi', 'prestasi.index', 'prestasi.store', 'prestasi.show', 'prestasi.verifikasi', 'pertemuan.index' ,'pertemuan.store', 'pertemuan.show', 'pertemuan.verifikasi', 'chat.show', 'chat.store'];
             foreach ($pembinaPermissions as $permission) {
                 $pembinaRole->givePermissionTo($permission);
             }

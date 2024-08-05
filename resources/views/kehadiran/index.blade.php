@@ -7,12 +7,28 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Pengajuan Kehadiran</h5>
+                            <h5 class="m-b-10">
+                                @if (auth()->user()->hasRole('Ketua'))
+                                    Pengajuan Kehadiran
+                                @else
+                                    Daftar Kehadiran
+                                @endif
+                            </h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
-                                        class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('kehadiran.index') }}">Kehadiran</a>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('dashboard') }}">
+                                    <i class="feather icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('kehadiran.index') }}">
+                                    @if (auth()->user()->hasRole('Ketua'))
+                                        Pengajuan Kehadiran
+                                    @else
+                                        Daftar Kehadiran
+                                    @endif
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -23,7 +39,13 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-header">Pengajuan Kehadiran</div>
+                    <div class="card-header">
+                        @if (auth()->user()->hasRole('Ketua'))
+                            Pengajuan Kehadiran
+                        @else
+                            Daftar Kehadiran
+                        @endif
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -32,12 +54,14 @@
                         @endif
 
                         @can('kehadiran.create')
-                            <a href="{{ route('kehadiran.create') }}" class="btn btn-primary mb-3">
-                                <i class="fa fa-plus"></i> Tambah Kehadiran
-                            </a>
+                            @if (auth()->user()->hasRole('Ketua'))
+                                <a href="{{ route('kehadiran.create') }}" class="btn btn-primary mb-3">
+                                    <i class="fa fa-plus"></i> Tambah Kehadiran
+                                </a>
+                            @endif
                         @endcan
 
-                        <table class="table table-bordered">
+                        <table id="tabelPembinaKehadiran" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -85,25 +109,27 @@
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('kehadiran.verifikasi')
-                                                        <form action="{{ route('kehadiran.verifikasi', $item->id_kehadiran) }}"
-                                                            method="POST" style="display:inline;">
-
+                                                        <form id="form-verifikasi-disetujui-{{ $item->id_kehadiran }}"
+                                                            action="{{ route('kehadiran.verifikasi', $item->id_kehadiran) }}"
+                                                            method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="disetujui">
-                                                            <button type="submit"
-                                                                class="btn btn-success btn-sm">Disetujui</button>
                                                         </form>
-                                                    @endcan
-                                                    @can('kehadiran.verifikasi')
-                                                        <form action="{{ route('kehadiran.verifikasi', $item->id_kehadiran) }}"
-                                                            method="POST" style="display:inline;">
+                                                        <button type="button" class="btn btn-success btn-sm"
+                                                            onclick="confirmVerification('form-verifikasi-disetujui-{{ $item->id_kehadiran }}', 'disetujui')">
+                                                            Disetujui
+                                                        </button>
+
+                                                        <form id="form-verifikasi-ditolak-{{ $item->id_kehadiran }}"
+                                                            action="{{ route('kehadiran.verifikasi', $item->id_kehadiran) }}"
+                                                            method="POST" style="display: none;">
                                                             @csrf
-                                                            @method('POST')
                                                             <input type="hidden" name="status" value="ditolak">
-                                                            <button type="submit"
-                                                                class="btn btn-danger btn-sm">Ditolak</button>
                                                         </form>
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="confirmVerification('form-verifikasi-ditolak-{{ $item->id_kehadiran }}', 'ditolak')">
+                                                            Ditolak
+                                                        </button>
                                                     @endcan
                                                 @else
                                                     @can('kehadiran.show')
@@ -115,16 +141,15 @@
                                                 @endif
                                             @elseif (auth()->user()->hasRole('Ketua'))
                                                 @if ($item->status == 'pending')
-                                                    <form id="delete-kehadiran-{{ $item->id_kehadiran }}" action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
+                                                    <form id="delete-kehadiran-{{ $item->id_kehadiran }}"
+                                                        action="{{ route('kehadiran.destroy', $item->id_kehadiran) }}"
                                                         method="POST" style="display:inline;">
-
                                                         @can('kehadiran.edit')
                                                             <a href="{{ route('kehadiran.edit', $item->id_kehadiran) }}"
                                                                 class="btn btn-warning btn-sm">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                         @endcan
-
                                                         @can('kehadiran.destroy')
                                                             @csrf
                                                             @method('DELETE')
@@ -143,7 +168,7 @@
                                                 @else
                                                     @can('kehadiran.show')
                                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                            data-target="#showModal{{ $item->kehadiran }}">
+                                                            data-target="#showModal{{ $item->id_kehadiran }}">
                                                             <i class="fa fa-eye"></i>
                                                         </button>
                                                     @endcan
@@ -151,14 +176,14 @@
                                             @endif
                                         </td>
                                     </tr>
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="showModal{{ $item->id_kehadiran }}" tabindex="-1"
                                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Detail Kehadiran
-                                                    </h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Detail Kehadiran</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
