@@ -15,18 +15,19 @@ return new class extends Migration
             $table->id('id_prestasi');
             $table->unsignedBigInteger('ekstrakurikuler_id');
             $table->unsignedBigInteger('ketua_id');
-            $table->unsignedBigInteger('verifikasi_id')->nullable();
+            $table->unsignedBigInteger('pembina_id')->nullable();
             $table->string('prestasi', 50);
             $table->json('nama_siswa');
             $table->json('kelas');
             $table->integer('tahun_ajaran');
             $table->string('berkas', 150);
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
 
             $table->foreign('ekstrakurikuler_id')->references('id_ekstrakurikuler')->on('ekstrakurikuler')->onUpdate('restrict')->onDelete('restrict');
             $table->foreign('ketua_id')->references('id_ketua')->on('ketua')->onUpdate('restrict')->onDelete('restrict');
-            $table->foreign('verifikasi_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('pembina_id')->references('id_pembina')->on('pembina')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

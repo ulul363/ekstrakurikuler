@@ -43,10 +43,12 @@ class KehadiranController extends Controller
 
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
+            'keterangan' => 'nullable|string',
         ]);
 
         $kehadiran->status = $request->input('status');
-        $kehadiran->verifikasi_id = auth()->user()->pembina->id_pembina;
+        $kehadiran->keterangan = $request->keterangan;
+        $kehadiran->pembina_id = auth()->user()->pembina->id_pembina;
         $kehadiran->save();
 
         return redirect()->route('kehadiran.index')->with('success', 'Kehadiran berhasil diverifikasi.');

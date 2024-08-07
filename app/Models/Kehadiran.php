@@ -18,13 +18,14 @@ class Kehadiran extends Model
     protected $fillable = [
         'ekstrakurikuler_id',
         'ketua_id',
-        'verifikasi_id',
+        'pembina_id',
         'nama_kegiatan',
         'tahun_ajaran',
         'tanggal',
         'deskripsi',
         'berkas',
         'status',
+        'keterangan',
     ];
 
     /**
@@ -48,6 +49,6 @@ class Kehadiran extends Model
      */
     public function pembina()
     {
-        return $this->belongsTo(Pembina::class, 'verifikasi_id', 'id_pembina');
+        return $this->belongsTo(Pembina::class, 'pembina_id', 'id_pembina');
     }
 }

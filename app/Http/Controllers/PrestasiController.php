@@ -40,10 +40,12 @@ class PrestasiController extends Controller
 
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
+            'keterangan' => 'nullable|string',
         ]);
 
         $prestasi->status = $request->input('status');
-        $prestasi->verifikasi_id = auth()->user()->pembina->id_pembina;
+        $prestasi->keterangan = $request->keterangan;
+        $prestasi->pembina_id = auth()->user()->pembina->id_pembina;
         $prestasi->save();
 
         return redirect()->route('prestasi.index')->with('success', 'Kehadiran berhasil diverifikasi.');

@@ -72,6 +72,7 @@
                                     <th>Deskripsi</th>
                                     <th>Diverifikasi oleh</th>
                                     <th>Status</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -106,6 +107,9 @@
                                             @endif
                                         </td>
                                         <td>
+                                            {{ $item->keterangan ?? 'Tidak ada keterangan' }}
+                                        </td>
+                                        <td>
                                             @if (auth()->user()->hasRole('Pembina'))
                                                 @if ($item->status == 'pending')
                                                     @can('kehadiran.verifikasi')
@@ -114,6 +118,8 @@
                                                             method="POST" style="display: none;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="disetujui">
+                                                            <input type="hidden" name="keterangan"
+                                                                id="keterangan-disetujui-{{ $item->id_kehadiran }}">
                                                         </form>
                                                         <button type="button" class="btn btn-success btn-sm"
                                                             onclick="confirmVerification('form-verifikasi-disetujui-{{ $item->id_kehadiran }}', 'disetujui')">
@@ -125,6 +131,8 @@
                                                             method="POST" style="display: none;">
                                                             @csrf
                                                             <input type="hidden" name="status" value="ditolak">
+                                                            <input type="hidden" name="keterangan"
+                                                                id="keterangan-ditolak-{{ $item->id_kehadiran }}">
                                                         </form>
                                                         <button type="button" class="btn btn-danger btn-sm"
                                                             onclick="confirmVerification('form-verifikasi-ditolak-{{ $item->id_kehadiran }}', 'ditolak')">
@@ -228,4 +236,71 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function confirmVerification(formId, action) {
+            let title, text, confirmButtonText;
+            if (action === 'disetujui') {
+                title = 'Konfirmasi Persetujuan';
+                text = 'Apakah Anda yakin ingin menyetujui program kegiatan ini?';
+                confirmButtonText = 'Setujui';
+            } else if (action === 'ditolak') {
+                title = 'Konfirmasi Penolakan';
+                text = 'Apakah Anda yakin ingin menolak program kegiatan ini?';
+                confirmButtonText = 'Tolak';
+            }
+
+            Swal.fire({
+                title: title,
+                text: text,
+                input: 'textarea',
+                inputLabel: 'Keterangan (opsional):',
+                inputPlaceholder: 'Masukkan keterangan...',
+                inputAttributes: {
+                    'aria-label': 'Masukkan keterangan'
+                },
+                showCancelButton: true,
+                confirmButtonText: confirmButtonText,
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set the textarea value to the hidden input field
+                    const form = document.getElementById(formId);
+                    const keteranganInput = form.querySelector('input[name="keterangan"]');
+                    if (!keteranganInput) {
+                        // Create hidden input if it does not exist
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'keterangan';
+                        hiddenInput.value = result.value;
+                        form.appendChild(hiddenInput);
+                    } else {
+                        // Update existing hidden input
+                        keteranganInput.value = result.value;
+                    }
+                    form.submit();
+                }
+            });
+        }
+
+        function confirmDelete(formId) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Apakah Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            });
+        }
+    </script>
+
 @endsection

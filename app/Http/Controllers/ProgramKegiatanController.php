@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ProgramKegiatan;
 use App\Models\Ekstrakurikuler;
-use App\Models\Ketua;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,31 +40,32 @@ class ProgramKegiatanController extends Controller
 
         $request->validate([
             'status' => 'required|in:disetujui,ditolak',
+            'keterangan' => 'nullable|string',
         ]);
 
         $programKegiatan->status = $request->input('status');
-        $programKegiatan->verifikasi_id = auth()->user()->pembina->id_pembina;
+        $programKegiatan->keterangan = $request->keterangan;
+        $programKegiatan->pembina_id = auth()->user()->pembina->id_pembina;
         $programKegiatan->save();
 
         return redirect()->route('program_kegiatan.index')->with('success', 'Program kegiatan berhasil diverifikasi.');
     }
 
-
     public function create()
     {
-        $ekstrakurikuler = Ekstrakurikuler::all();
-        return view('program_kegiatan.create', compact('ekstrakurikuler'));
+        return view('program_kegiatan.create');
     }
 
     public function store(Request $request)
     {
+        $currentYear = date('Y');
+
         $request->validate([
             'nama_program' => 'required|string|max:50',
-            'tahun_ajaran' => 'required|string|max:11',
-            'deskripsi' => 'required|string|max:50',
+            'tahun_ajaran' => 'required|integer|in:' . $currentYear,
+            'deskripsi' => 'required|string|max:200',
         ]);
 
-        // Pastikan pengguna yang login memiliki data ketua
         if (Auth::user()->ketua) {
             $ekstrakurikuler_id = Auth::user()->ketua->ekstrakurikuler_id;
             $ketua_id = Auth::user()->ketua->id_ketua;
@@ -76,7 +76,7 @@ class ProgramKegiatanController extends Controller
                 'nama_program' => $request->nama_program,
                 'tahun_ajaran' => $request->tahun_ajaran,
                 'deskripsi' => $request->deskripsi,
-                'status' => 'pending', // atau biarkan default di database
+                'status' => 'pending',
             ]);
 
             return redirect()->route('program_kegiatan.index')->with('success', 'Program Kegiatan berhasil diajukan.');
@@ -93,10 +93,12 @@ class ProgramKegiatanController extends Controller
 
     public function update(Request $request, $id)
     {
+        $currentYear = date('Y');
+
         $request->validate([
             'nama_program' => 'required|string|max:50',
-            'tahun_ajaran' => 'required|string|max:11',
-            'deskripsi' => 'required|string|max:50',
+            'tahun_ajaran' => 'required|integer|in:' . $currentYear,
+            'deskripsi' => 'required|string|max:200',
         ]);
 
         $programKegiatan = ProgramKegiatan::findOrFail($id);

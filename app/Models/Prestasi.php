@@ -15,7 +15,7 @@ class Prestasi extends Model
     protected $table = 'prestasi';
     protected $primaryKey = 'id_prestasi';
 
-    protected $fillable = ['ekstrakurikuler_id', 'ketua_id', 'verifikasi_id', 'prestasi', 'nama_siswa', 'kelas', 'tahun_ajaran', 'berkas', 'status'];
+    protected $fillable = ['ekstrakurikuler_id', 'ketua_id', 'pembina_id', 'prestasi', 'nama_siswa', 'kelas', 'tahun_ajaran', 'berkas', 'keterangan' ,'status'];
 
     protected $casts = [
         'nama_siswa' => 'array', // Menyimpan nama siswa sebagai array
@@ -33,6 +33,6 @@ class Prestasi extends Model
 
     public function pembina()
     {
-        return $this->belongsTo(Pembina::class, 'verifikasi_id', 'id_pembina');
+        return $this->belongsTo(Pembina::class, 'pembina_id', 'id_pembina');
     }
 }
