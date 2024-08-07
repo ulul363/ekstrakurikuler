@@ -63,8 +63,10 @@
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" class="form-control" id="tanggal" name="tanggal" required
-                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" required min="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
+                                @error('tanggal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -72,7 +74,6 @@
                                 <input type="time" class="form-control" id="waktu" name="waktu" required
                                     min="{{ \Carbon\Carbon::now()->format('H:i') }}">
                             </div>
-
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <a href="{{ route('pertemuan.index') }}" class="btn btn-secondary">Cancel</a>

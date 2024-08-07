@@ -26,9 +26,7 @@ class PengajuanPertemuanController extends Controller
                 ->get();
         } else {
             $ketuaId = $user->ketua->id_ketua;
-            $pertemuan = PengajuanPertemuan::with('ketua')
-                ->where('ketua_id', $ketuaId)
-                ->get();
+            $pertemuan = PengajuanPertemuan::with('ketua')->where('ketua_id', $ketuaId)->get();
         }
 
         return view('pertemuan.index', compact('pertemuan'));
@@ -69,10 +67,22 @@ class PengajuanPertemuanController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'pembina_id' => 'required|exists:pembina,id_pembina',
             'hari' => 'required|string',
-            'tanggal' => 'required|date|after_or_equal:today',
+            'tanggal' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $minimumDate = now()->addDay()->startOfDay(); // Minimum pengajuan adalah satu hari sebelumnya
+                    $inputDate = \Carbon\Carbon::parse($value)->startOfDay();
+
+                    if ($inputDate < $minimumDate) {
+                        $fail('Tanggal minimal pengajuan pertemuan adalah 1 hari sebelumnya.');
+                    }
+                },
+            ],
             'waktu' => [
                 'required',
                 'date_format:H:i',
@@ -81,19 +91,23 @@ class PengajuanPertemuanController extends Controller
                     $tanggalWaktu = $tanggal . ' ' . $value;
                     $currentDateTime = now()->format('Y-m-d H:i');
 
-                    if ($tanggalWaktu < $currentDateTime) {
+                    // Validasi waktu agar tidak kurang dari waktu saat ini jika tanggal adalah hari ini
+                    if ($tanggal . ' 00:00' == now()->format('Y-m-d') . ' 00:00' && $tanggalWaktu < $currentDateTime) {
                         $fail('Waktu harus lebih besar dari waktu saat ini.');
                     }
                 },
             ],
         ]);
 
+        // Memeriksa apakah pengguna yang login memiliki data ketua yang valid
         if (!Auth::user()->ketua) {
             return redirect()->route('pertemuan.index')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
         }
 
+        // Mendapatkan id_ketua dari pengguna yang sedang login
         $ketua_id = Auth::user()->ketua->id_ketua;
 
+        // Membuat pengajuan pertemuan baru
         PengajuanPertemuan::create([
             'ketua_id' => $ketua_id,
             'pembina_id' => $request->pembina_id,
@@ -103,6 +117,7 @@ class PengajuanPertemuanController extends Controller
             'status' => 'pending',
         ]);
 
+        // Redirect ke halaman pertemuan index dengan pesan sukses
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diajukan.');
     }
 
@@ -116,7 +131,18 @@ class PengajuanPertemuanController extends Controller
     {
         $request->validate([
             'hari' => 'required|string',
-            'tanggal' => 'required|date|after_or_equal:today',
+            'tanggal' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $minimumDate = now()->addDay()->startOfDay(); // Minimum pengajuan adalah satu hari sebelumnya
+                    $inputDate = \Carbon\Carbon::parse($value)->startOfDay();
+
+                    if ($inputDate < $minimumDate) {
+                        $fail('Tanggal minimal pengajuan pertemuan adalah 1 hari sebelumnya.');
+                    }
+                },
+            ],
             'waktu' => [
                 'required',
                 'date_format:H:i',
@@ -125,7 +151,8 @@ class PengajuanPertemuanController extends Controller
                     $tanggalWaktu = $tanggal . ' ' . $value;
                     $currentDateTime = now()->format('Y-m-d H:i');
 
-                    if ($tanggalWaktu < $currentDateTime) {
+                    // Validasi waktu agar tidak kurang dari waktu saat ini jika tanggal adalah hari ini
+                    if ($tanggal . ' 00:00' == now()->format('Y-m-d') . ' 00:00' && $tanggalWaktu < $currentDateTime) {
                         $fail('Waktu harus lebih besar dari waktu saat ini.');
                     }
                 },

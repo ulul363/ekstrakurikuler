@@ -55,7 +55,7 @@
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
                                     id="tanggal" name="tanggal"
-                                    value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" required>
+                                    value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" min="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}" required>
                                 @error('tanggal')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
