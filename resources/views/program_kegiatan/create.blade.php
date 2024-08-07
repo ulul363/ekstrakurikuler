@@ -43,7 +43,7 @@
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
                                 <input type="number" name="tahun_ajaran" id="tahun_ajaran"
                                     class="form-control @error('tahun_ajaran') is-invalid @enderror"
-                                    value="{{ old('tahun_ajaran') }}" required readonly>
+                                    value="{{ old('tahun_ajaran') }}" required max="9999">
                                 @error('tahun_ajaran')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -68,9 +68,12 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
-            const currentYear = new Date().getFullYear();
-            $('#tahun_ajaran').val(currentYear);
+      $(document).ready(function() {
+            $('#tahun_ajaran').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
         });
     </script>
 @endsection

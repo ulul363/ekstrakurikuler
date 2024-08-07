@@ -211,6 +211,7 @@
                                                             Belum diverifikasi
                                                         @endif
                                                     </p>
+                                                     <p><strong>Keterangan:</strong> {{ $item->keterangan }}</p>
                                                     <p><strong>Status:</strong>
                                                         @if ($item->status == 'pending')
                                                             <span class="badge badge-warning">Pending</span>
