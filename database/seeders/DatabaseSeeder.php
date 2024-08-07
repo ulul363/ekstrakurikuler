@@ -187,7 +187,7 @@ class DatabaseSeeder extends Seeder
         // Create Pembina Role
         if (!Role::where('name', 'Pembina')->exists()) {
             $pembinaRole = Role::create(['name' => 'Pembina']);
-            $pembinaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.store', 'program_kegiatan.show', 'program_kegiatan.verifikasi', 'kehadiran.index', 'kehadiran.store', 'kehadiran.show', 'kehadiran.verifikasi', 'prestasi.index', 'prestasi.store', 'prestasi.show', 'prestasi.verifikasi', 'pertemuan.index' ,'pertemuan.store', 'pertemuan.show', 'pertemuan.verifikasi', 'chat.show', 'chat.store'];
+            $pembinaPermissions = ['dashboard', 'program_kegiatan.index', 'program_kegiatan.store', 'program_kegiatan.show', 'program_kegiatan.verifikasi', 'kehadiran.index', 'kehadiran.store', 'kehadiran.show', 'kehadiran.verifikasi', 'prestasi.index', 'prestasi.store', 'prestasi.show', 'prestasi.verifikasi', 'pertemuan.index', 'pertemuan.store', 'pertemuan.show', 'pertemuan.verifikasi', 'chat.show', 'chat.store'];
             foreach ($pembinaPermissions as $permission) {
                 $pembinaRole->givePermissionTo($permission);
             }
@@ -196,19 +196,43 @@ class DatabaseSeeder extends Seeder
 
     private function insertEkstrakurikuler()
     {
-        DB::table('ekstrakurikuler')->insert([['id_ekstrakurikuler' => 1, 'nama' => 'Pramuka', 'deskripsi' => 'Ekstrakurikuler Pramuka', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], ['id_ekstrakurikuler' => 2, 'nama' => 'Fotografi', 'deskripsi' => 'Ekstrakurikuler Fotografi', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]]);
+        DB::table('ekstrakurikuler')->insert([
+            ['id_ekstrakurikuler' => 1, 'nama' => 'Pramuka', 'deskripsi' => 'Pramuka Pangkalan MAN Demak', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 2, 'nama' => 'Paduan Suara', 'deskripsi' => 'Paduan Suara Belezza Choir', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 3, 'nama' => 'Paskibra', 'deskripsi' => 'Barisan Pecinta Tanah Air', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 4, 'nama' => 'PMR', 'deskripsi' => 'Palang Merah Remaja', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 5, 'nama' => 'KIR', 'deskripsi' => 'Karya Ilmiah Remaja', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 6, 'nama' => 'Rebana', 'deskripsi' => 'Rebana Nurut talamidz', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['id_ekstrakurikuler' => 7, 'nama' => 'Musik', 'deskripsi' => 'Manda Band', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ]);
     }
 
     private function insertJadwalEkstrakurikuler()
-    {
-        DB::table('jadwal_ekstrakurikuler')->insert([['id_jadwal_ekstrakurikuler' => 1, 'ekstrakurikuler_id' => 1, 'hari' => 'Jumat', 'waktu' => '16:00:00', 'lokasi' => 'Lapangan Utama', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], ['id_jadwal_ekstrakurikuler' => 2, 'ekstrakurikuler_id' => 2, 'hari' => 'Senin', 'waktu' => '15:00:00', 'lokasi' => 'Ruang Kelas XII MIPA 4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]]);
-    }
+{
+    DB::table('jadwal_ekstrakurikuler')->insert([
+        ['id_jadwal_ekstrakurikuler' => 1, 'ekstrakurikuler_id' => 1, 'hari' => 'Jumat', 'waktu' => '16:00:00', 'lokasi' => 'Lapangan Utama', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 2, 'ekstrakurikuler_id' => 2, 'hari' => 'Senin', 'waktu' => '15:00:00', 'lokasi' => 'Ruang Kelas XII 1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 3, 'ekstrakurikuler_id' => 3, 'hari' => 'Sabtu', 'waktu' => '15:00:00', 'lokasi' => 'Lapangan Kedua', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 4, 'ekstrakurikuler_id' => 4, 'hari' => 'Rabu', 'waktu' => '14:00:00', 'lokasi' => 'Ruang UKS', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 5, 'ekstrakurikuler_id' => 5, 'hari' => 'Kamis', 'waktu' => '10:00:00', 'lokasi' => 'Ruang Kelas X 10', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 6, 'ekstrakurikuler_id' => 6, 'hari' => 'Selasa', 'waktu' => '13:00:00', 'lokasi' => 'Ruang Rebana', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        ['id_jadwal_ekstrakurikuler' => 7, 'ekstrakurikuler_id' => 7, 'hari' => 'Sabtu', 'waktu' => '15:00:00', 'lokasi' => 'Ruang Musik', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+    ]);
+}
 
     private function createKetuaUsers()
     {
-        $this->createKetuaUser(2, 'Ulul Azmi', 'ulul@gmail.com', 'password', 1, '210102014', 'Ulul Azmi', 'Mranggen, Demak', 'L', '0895340452388');
+        $this->createKetuaUser(2, 'Aden Muhammad Noor', 'aden@gmail.com', 'password', 1, '220037', 'Aden Muhammad Noor', 'Mranggen, Demak', 'L', '0895340452388');
 
-        $this->createKetuaUser(3, 'Kukuh Mudhaya', 'kukuh@gmail.com', 'password', 2, '210102001', 'Kukuh Mudhaya', 'Wangon, Banyumas', 'L', '081225011289');
+        $this->createKetuaUser(3, 'Aisya Khosyi', 'aisya@gmail.com', 'password', 2, '220002', 'Aisya Khosyi', 'Bonang, Demak', 'P', '081225011289');
+
+        $this->createKetuaUser(4, 'Ahmad Nabil Jafari', 'ahmad@gmail.com', 'password', 3, '220039', 'Ahmad Nabil Jafari', 'Mranggen, Demak', 'L', '0851789245098');
+
+        $this->createKetuaUser(5, 'Bagus Adlim Aqil', 'bagus@gmail.com', 'password', 4, '220044', 'Bagus Adlim Aqil', 'Cangkring, Demak', 'L', '0891783594621');
+
+        $this->createKetuaUser(6, 'Zidni Azizati', 'zidni@gmail.com', 'password', 5, '220036', 'Zidni Azizati', 'Karanganyar, Demak', 'L', '082150890697');
+
+        $this->createKetuaUser(7, 'Shofa Ilyana', 'shofa@gmail.com', 'password', 6, '220069', 'Shofa Ilyana', 'Karangtengah, Demak', 'L', '082150890530');
     }
 
     private function createKetuaUser($userId, $name, $email, $password, $ekstrakurikulerId, $nis, $nama, $alamat, $jk, $noHp)
@@ -251,10 +275,19 @@ class DatabaseSeeder extends Seeder
 
     private function createPembinaUsers()
     {
-        $this->createPembinaUser(4, 'Dwiyana', 'dwiyana@gmail.com', 'password', 1, 'Dwiyana', '1987210722201', 'Sidanegara, Cilacap', 'L', '081335011279');
+        $this->createPembinaUser(8, 'Mohamad Taufiq', 'taufiq@gmail.com', 'password', 1, 'Mohamad Taufiq', '197012311234567890', 'Sayung, Demak', 'L', '08819555831');
 
-        $this->createPembinaUser(5, 'Lando Archivilando', 'lando@gmail.com', 'password', 2, 'Lando Archivilando', '1987210722063', 'Solo, Jawa Tengah', 'L', '081225044123');
-        $this->createPembinaUser(6, 'Ipo Novianto', 'ipo@gmail.com', 'password', 2, 'Ipo Novianto', '19872107210781', 'Kawunganten, Cilacap', 'L', '081226011298');
+        $this->createPembinaUser(9, 'Anik Hudayati', 'anik@gmail.com', 'password', 1, 'Anik Hudayati', '196904122345678901', 'Cangkring, Demak', 'P', '0857555754');
+
+        $this->createPembinaUser(10, 'Himmatul Aliyah', 'himmatul@gmail.com', 'password', 2, 'Himmatul Aliyah', '197511233456789012', 'Kadilangu, Demak', 'P', '082853555291');
+
+        $this->createPembinaUser(11, 'Nanik Esti Wulandari ', 'nanik@gmail.com', 'password', 3, 'Nanik Esti Wulandari ', '197308154567890123', 'Tempuran, Demak', 'P', '08899555856');
+
+        $this->createPembinaUser(12, 'Mudrikatul Khoiriyah', 'mudrik@gmail.com', 'password', 4, 'Mudrikatul Khoiriyah', '197611085678901234', 'Karanganyar, Demak', 'P', '08814555544');
+
+        $this->createPembinaUser(13, 'Ahmad Lujito', 'lujito@gmail.com', 'password', 5, 'Ahmad Lujito', '196811306789012345', 'Guntur, Demak', 'L', '08818555825');
+
+        $this->createPembinaUser(14, 'Wahid Anwar', 'wahid@gmail.com', 'password', 6, 'Wahid Anwar', '197204277890123456 ', 'Genuk, Semarang', 'L', '0896555160');
     }
 
     private function createPembinaUser($userId, $name, $email, $password, $ekstrakurikulerId, $nama, $nip, $alamat, $jk, $noHp)

@@ -99,7 +99,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+    {{-- <script>
         function confirmVerification(formId, status) {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
@@ -116,7 +116,7 @@
                 }
             });
         }
-    </script>
+    </script> --}}
 
 
     {{-- <script>

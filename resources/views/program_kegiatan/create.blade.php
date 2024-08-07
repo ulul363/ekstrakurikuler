@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @section('content')
     <div class="pcoded-content">
         <div class="page-header">
@@ -42,7 +43,7 @@
                                 <label for="tahun_ajaran">Tahun Ajaran</label>
                                 <input type="number" name="tahun_ajaran" id="tahun_ajaran"
                                     class="form-control @error('tahun_ajaran') is-invalid @enderror"
-                                    value="{{ old('tahun_ajaran') }}" required max="9999">
+                                    value="{{ old('tahun_ajaran') }}" required readonly>
                                 @error('tahun_ajaran')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -56,7 +57,6 @@
                                 @enderror
                             </div>
 
-
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
@@ -65,14 +65,12 @@
         </div>
     </div>
 @endsection
+
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#tahun_ajaran').datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years"
-            });
+            const currentYear = new Date().getFullYear();
+            $('#tahun_ajaran').val(currentYear);
         });
     </script>
 @endsection

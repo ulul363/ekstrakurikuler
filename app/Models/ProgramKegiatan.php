@@ -21,8 +21,9 @@ class ProgramKegiatan extends Model
         'nama_program',
         'tahun_ajaran',
         'deskripsi',
-        'verifikasi_id',
+        'pembina_id',
         'status',
+        'keterangan',
     ];
 
     public function ekstrakurikuler()
@@ -36,7 +37,7 @@ class ProgramKegiatan extends Model
 
     public function pembina()
     {
-        return $this->belongsTo(Pembina::class, 'verifikasi_id', 'id_pembina');
+        return $this->belongsTo(Pembina::class, 'pembina_id', 'id_pembina');
     }
 
 }
