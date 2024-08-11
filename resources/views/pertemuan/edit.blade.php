@@ -55,7 +55,7 @@
                                 <label for="tanggal">Tanggal</label>
                                 <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
                                     id="tanggal" name="tanggal"
-                                    value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" min="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}" required>
+                                    value="{{ old('tanggal', $pertemuan->tanggal->format('Y-m-d')) }}" required>
                                 @error('tanggal')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -78,33 +78,4 @@
             </div>
         </div>
     </div>
-
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var waktuInput = document.getElementById('waktu');
-            var tanggalInput = document.getElementById('tanggal');
-
-            function updateMinWaktu() {
-                var tanggal = tanggalInput.value;
-                var sekarang = new Date();
-                var tanggalSekarang = sekarang.toISOString().split('T')[0];
-                var waktuSekarang = sekarang.toTimeString().split(' ')[0].slice(0, 5);
-
-                if (tanggal === tanggalSekarang) {
-                    waktuInput.min = waktuSekarang;
-                } else {
-                    waktuInput.removeAttribute('min');
-                }
-            }
-
-            tanggalInput.addEventListener('change', updateMinWaktu);
-
-            // Initial check
-            updateMinWaktu();
-        });
-    </script>
-@endsection
-
-
 @endsection

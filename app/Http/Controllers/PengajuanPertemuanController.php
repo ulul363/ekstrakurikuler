@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\PengajuanPertemuan;
+use Carbon\Carbon;
 use App\Models\Ketua;
 use App\Models\Pembina;
+use Illuminate\Http\Request;
+use App\Models\PengajuanPertemuan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PengajuanPertemuanController extends Controller
 {
@@ -67,37 +69,27 @@ class PengajuanPertemuanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
+        // Validasi input dengan validasi kustom untuk tanggal
+        $validator = Validator::make($request->all(), [
             'pembina_id' => 'required|exists:pembina,id_pembina',
-            'hari' => 'required|string',
+            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu',
             'tanggal' => [
                 'required',
                 'date',
                 function ($attribute, $value, $fail) {
-                    $minimumDate = now()->addDay()->startOfDay(); // Minimum pengajuan adalah satu hari sebelumnya
-                    $inputDate = \Carbon\Carbon::parse($value)->startOfDay();
-
-                    if ($inputDate < $minimumDate) {
-                        $fail('Tanggal minimal pengajuan pertemuan adalah 1 hari sebelumnya.');
+                    // Tanggal harus setidaknya satu hari ke depan
+                    if (strtotime($value) <= strtotime('tomorrow')) {
+                        $fail('Tanggal pertemuan harus setidaknya satu hari ke depan.');
                     }
                 },
             ],
-            'waktu' => [
-                'required',
-                'date_format:H:i',
-                function ($attribute, $value, $fail) use ($request) {
-                    $tanggal = $request->input('tanggal');
-                    $tanggalWaktu = $tanggal . ' ' . $value;
-                    $currentDateTime = now()->format('Y-m-d H:i');
-
-                    // Validasi waktu agar tidak kurang dari waktu saat ini jika tanggal adalah hari ini
-                    if ($tanggal . ' 00:00' == now()->format('Y-m-d') . ' 00:00' && $tanggalWaktu < $currentDateTime) {
-                        $fail('Waktu harus lebih besar dari waktu saat ini.');
-                    }
-                },
-            ],
+            'waktu' => 'required|date_format:H:i',
         ]);
+
+        // Jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->route('pertemuan.create')->withErrors($validator)->withInput();
+        }
 
         // Memeriksa apakah pengguna yang login memiliki data ketua yang valid
         if (!Auth::user()->ketua) {
@@ -129,47 +121,48 @@ class PengajuanPertemuanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'hari' => 'required|string',
+        // Validasi input dengan validasi kustom untuk tanggal
+        $validator = Validator::make($request->all(), [
+            'pembina_id' => 'required|exists:pembina,id_pembina',
+            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu',
             'tanggal' => [
                 'required',
                 'date',
                 function ($attribute, $value, $fail) {
-                    $minimumDate = now()->addDay()->startOfDay(); // Minimum pengajuan adalah satu hari sebelumnya
-                    $inputDate = \Carbon\Carbon::parse($value)->startOfDay();
-
-                    if ($inputDate < $minimumDate) {
-                        $fail('Tanggal minimal pengajuan pertemuan adalah 1 hari sebelumnya.');
+                    // Tanggal harus setidaknya satu hari ke depan
+                    if (strtotime($value) <= strtotime('tomorrow')) {
+                        $fail('Tanggal pertemuan harus setidaknya satu hari ke depan.');
                     }
                 },
             ],
-            'waktu' => [
-                'required',
-                'date_format:H:i',
-                function ($attribute, $value, $fail) use ($request) {
-                    $tanggal = $request->input('tanggal');
-                    $tanggalWaktu = $tanggal . ' ' . $value;
-                    $currentDateTime = now()->format('Y-m-d H:i');
-
-                    // Validasi waktu agar tidak kurang dari waktu saat ini jika tanggal adalah hari ini
-                    if ($tanggal . ' 00:00' == now()->format('Y-m-d') . ' 00:00' && $tanggalWaktu < $currentDateTime) {
-                        $fail('Waktu harus lebih besar dari waktu saat ini.');
-                    }
-                },
-            ],
+            'waktu' => 'required|date_format:H:i',
         ]);
 
-        $pertemuan = PengajuanPertemuan::findOrFail($id);
+        // Jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()
+                ->route('pertemuan.edit', ['id' => $id])
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        // Menampilkan pengajuan pertemuan berdasarkan ID
+        $pengajuan = PengajuanPertemuan::findOrFail($id);
+
+        // Memeriksa apakah pengguna yang login memiliki data ketua yang valid
         if (!Auth::user()->ketua) {
             return redirect()->route('pertemuan.index')->withErrors('Pengguna yang login tidak memiliki data ketua yang valid.');
         }
 
-        $pertemuan->hari = $request->hari;
-        $pertemuan->tanggal = $request->tanggal;
-        $pertemuan->waktu = $request->waktu;
-        $pertemuan->save();
+        // Memperbarui data pengajuan pertemuan
+        $pengajuan->update([
+            'pembina_id' => $request->pembina_id,
+            'hari' => $request->hari,
+            'tanggal' => $request->tanggal,
+            'waktu' => $request->waktu,
+        ]);
 
+        // Redirect ke halaman pertemuan index dengan pesan sukses
         return redirect()->route('pertemuan.index')->with('success', 'Pertemuan berhasil diperbarui.');
     }
 

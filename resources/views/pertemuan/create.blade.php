@@ -63,7 +63,7 @@
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal" name="tanggal" required min="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
+                                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" name="tanggal" required >
                                 @error('tanggal')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -71,8 +71,7 @@
 
                             <div class="form-group">
                                 <label for="waktu">Waktu</label>
-                                <input type="time" class="form-control" id="waktu" name="waktu" required
-                                    min="{{ \Carbon\Carbon::now()->format('H:i') }}">
+                                <input type="time" class="form-control" name="waktu" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -104,33 +103,4 @@
             height: 600px;
         }
     </style>
-
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var waktuInput = document.getElementById('waktu');
-            var tanggalInput = document.getElementById('tanggal');
-
-            function updateMinWaktu() {
-                var tanggal = tanggalInput.value;
-                var sekarang = new Date();
-                var tanggalSekarang = sekarang.toISOString().split('T')[0];
-                var waktuSekarang = sekarang.toTimeString().split(' ')[0].slice(0, 5);
-
-                if (tanggal === tanggalSekarang) {
-                    waktuInput.min = waktuSekarang;
-                } else {
-                    waktuInput.removeAttribute('min');
-                }
-            }
-
-            tanggalInput.addEventListener('change', updateMinWaktu);
-
-            // Initial check
-            updateMinWaktu();
-        });
-    </script>
-@endsection
-
-
 @endsection
