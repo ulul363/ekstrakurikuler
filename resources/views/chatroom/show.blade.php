@@ -177,7 +177,7 @@
                         @csrf
                         <input type="hidden" name="pengajuan_pertemuan_id"
                             value="{{ $pertemuan->id_pengajuan_pertemuan }}">
-                        <input type="text" name="pesan" class="form-control" id="pesan" placeholder="Send message">
+                        <input type="text" name="pesan" class="form-control" id="pesan" placeholder="Send message" autocomplete="off">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-paper-plane"></i>
                         </button>
